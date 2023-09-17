@@ -45,11 +45,12 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
     # Create a dataframe with all years and indicators first
     ## This is necessary to add the missing years with "None" values
     df_empty = pd.DataFrame([(year, indicator, country) 
-                            for year in range(start_year_selec, end_year_selec)
+                            for year in range(start_year_selec, end_year_selec+1)
                             for indicator in indicator_selec
                             for country in [country_selec]],
                             columns=['Year', 'Indicator', 'Country'])
 
+    
     # Retrieve the selected data from df
     df_fltr = df_employ[(df_employ['Country'] == country_selec) & 
                        (df_employ['Year'] >= start_year_selec) & 
@@ -65,8 +66,6 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
     for col in ['Country Code', 'Region', 'Sub-region', 'Income Group', 'Least Developed Countries (LDC)', 'Land Locked Developing Countries (LLDC)', 'Small Island Developing States (SIDS)']:
         df_merged[col] = df_merged.groupby('Country')[col].apply(lambda x: x.fillna(method='ffill').fillna(method='bfill'))
 
-    st.write(df_merged)
-    
     # Turn year column into datetime format
 
     return df_merged
@@ -238,8 +237,7 @@ with col3:
                 <br>
                 <div style="text-align: justify;">The table below shows the data for 
                 <span style="color: red;">{selected_country}</span>
-                for the year <span style="color: red;">{selected_end_year}</span>. This is the last available 
-                year in your chosen range. To see earlier years, please adjust the slider in the sidebar.</div>
+                for the year <span style="color: red;">{selected_end_year}</span>. </div>
                 """, unsafe_allow_html=True
     )
     
@@ -259,31 +257,35 @@ with col3:
                         'Labour force, female share']
     
     table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
+
+    # Try whether the data for the given year is available
+    try: 
+        # Create the table 
+        indicator_values = {}
+        for ind in table1_indicators:
+
+            # Retrieve the values
+            indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
+
+        # Create table
+        table1_dict = {
+            'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
+            'Total (Million)': [indicator_values[ind] for ind in table1_indicators[:5]],
+            'Women (Million)': [indicator_values[ind] for ind in table1_indicators[5:]]}
+
+        table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
+        table1.set_index('Indicator', inplace=True)
+
+        # Add women's share column and round to two digits
+        table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
+        table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
+        table1["Women's share (%)"] = table1["Women's share (%)"]
+
+        # Display table
+        st.table(table1)
     
-    # Create the table 
-    indicator_values = {}
-    for ind in table1_indicators:
-
-        # Retrieve the values
-        indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
-
-    # Create table
-    table1_dict = {
-        'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-        'Total (Million)': [indicator_values[ind] for ind in table1_indicators[:5]],
-        'Women (Million)': [indicator_values[ind] for ind in table1_indicators[5:]]}
-
-    table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
-    table1.set_index('Indicator', inplace=True)
-
-    # Add women's share column and round to two digits
-    table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
-    table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
-    table1["Women's share (%)"] = table1["Women's share (%)"]
-
-    # Display table
-    st.table(table1)
-
+    except ValueError: 
+        st.write("Data for this year is not available. Try adjusting the selecting on the side.")
     
     # # Create the table 
     # indicator_values = {}
