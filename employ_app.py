@@ -2,11 +2,13 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+from datetime import datetime
+import altair as alt
 
 # Use full screen 
 st.set_page_config(layout="wide")
 
-#---------------------------------- LOAD DATA AND GET PARAMETERS ---------------------------------
+#---------------------------------- LOAD DATA AND PARAMETERS ---------------------------------
 
 # Create import function with cache (cache so data is only loaded once)
 @st.cache_data
@@ -21,17 +23,16 @@ df_employ = load_data("data/employment_data.xlsx")
 df_countries = df_employ['Country'].unique().tolist()
 df_indicators = df_employ['Indicator'].unique().tolist()
 df_regions = df_employ['Region'].unique().tolist()
+df_subregion = df_employ['Sub-region'].unique().tolist()
+df_sub_region = df_regions + df_subregion
 
 # Turn years into int (str necessary first because Streamlit)
-#df_employ['Year'] = pd.to_numeric(df_employ['Year'])
 df_employ['Year'] = df_employ['Year'].astype(str)
 df_employ['Year'] = df_employ['Year'].astype(int)
 
-# Get start and end year from df 
-START_YEAR = df_employ['Year'].min()
-END_YEAR = df_employ['Year'].max()
+#------------------------------ Functions  ------------------------------------
 
-#------------------------------ Function data selection ------------------------------
+# Data Selection 
 
 def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator_selec):
 
@@ -40,48 +41,96 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
     corresponding data from the dataset. The output is a filtered dataframe. 
 
     """
+
+    # Create a dataframe with all years and indicators first
+    ## This is necessary to add the missing years with "None" values
+    df_empty = pd.DataFrame([(year, indicator, country) 
+                            for year in range(start_year_selec, end_year_selec)
+                            for indicator in indicator_selec
+                            for country in [country_selec]],
+                            columns=['Year', 'Indicator', 'Country'])
+
+    # Retrieve the selected data from df
     df_fltr = df_employ[(df_employ['Country'] == country_selec) & 
                        (df_employ['Year'] >= start_year_selec) & 
                        (df_employ['Indicator'].isin(indicator_selec)) &
                        (df_employ['Year'] <= end_year_selec)]
-    return df_fltr
+    
+    ## Merge 
+    df_merged = pd.merge(df_empty, df_fltr, on=['Year', 'Indicator', 'Country'], how='left')
+
+    ## Fill other columns 
+    df_merged['Indicator Code'] = df_merged.groupby('Indicator')['Indicator Code'].apply(lambda x: x.fillna(method='ffill').fillna(method='bfill'))
+    st.write(df_merged)
+    
+    # Turn year column into datetime format
+
+    return df_merged
+
+# Year Selection 
+def get_years(country_input): 
+
+    """
+    Takes a country as an input and retrieves the corresponding minimum and maximum year
+    available. This can be used to adjust the year slider. 
+
+    """
+    start_year_country = df_employ[df_employ['Country'] == country_input]['Year'].min()
+    end_year_country = df_employ[df_employ['Country'] == country_input]['Year'].max()
+
+    return start_year_country, end_year_country
+
 
 
 #---------------------------------------- SIDEBAR ---------------------------------
 
-# Add title
+# TITLE
 add_title = st.sidebar.title("Customize your data")
 
-# Add country selection
+# COUNTRY SELECTION INPUT WIDGET
+
+# Specify the default options (needs to be first in list)
+df_countries.remove("Germany")
+df_countries.insert(0,"Germany")
+
+# Widget
 selected_country = st.sidebar.selectbox(
     label="Choose your country of interest",
+    placeholder="Choose a country",
     options=df_countries
     )
 
-# Add peer country selection
+# DESCRIPTION REGIONS/PEER COUNTRIES
+st.sidebar.caption("""If you want to compare the values of the chosen country
+                   to a region or peer countries, please make a selection below.""")
+
+# PEER COUNTRY INPUT WIDGET
 selected_peer = st.sidebar.multiselect(
-    "Choose comparison region",
-    df_countries
+    "Choose regions for comparison",
+    df_sub_region
     )
 
+# REGION INPUT WIDGET
 selected_region = st.sidebar.multiselect(
-    "Choose comparison countries",
+    "Choose countries for comparison",
     df_countries
     )
 
-selected_start_year = st.sidebar.slider(
-     "Select the start year",
-     min_value=2000, 
-     max_value=2022
-    )
+# START AND END YEAR SLIDER 
 
-selected_end_year = st.sidebar.slider(
-     "Select the end year",
-     min_value=2000, 
-     max_value=2022
-    )
+# Update based on data availability for chosen country 
+START_YEAR, END_YEAR = get_years(selected_country)
 
-# Download the full dataset 
+# Widget
+selected_years = st.sidebar.slider(
+     "Select the range",
+     START_YEAR, END_YEAR, (START_YEAR,END_YEAR),
+    )
+selected_start_year = selected_years[0]
+selected_end_year = selected_years[1]
+
+# DOWNLOAD WIDGET 
+
 # Create a csv version of the dataframe (cache so it doesn't rerun)
 @st.cache_data
 def convert_df(df):
@@ -98,7 +147,8 @@ st.sidebar.download_button(label="Click here to download data as csv",
 
 st.sidebar.header("")
 
-st.sidebar.info("""Please note that his dashboard is a prototype. 
+# INFO BOX
+st.sidebar.info("""Please note that this dashboard is a prototype. 
                 Users are advised that the tool may contain errors, 
                 bugs, or limitations and should be used with caution 
                 and awareness of potential risks, and the developers 
@@ -135,7 +185,7 @@ col1, col2, col3 = st.columns([1,0.05,1])
 with col1: 
 
     # Display subheading 
-    st.subheader("Who is working in the economy?")
+    st.subheader(f"Who is working in the economy in {selected_country}?")
 
     #### Explanatory text box 1
     st.markdown("""<div style="text-align: justify;">All the goods and services an economy creates are formed 
@@ -153,13 +203,17 @@ with col1:
     #### Graph 1
 
 with col1: 
+
     # Get data
     chart1_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Population', 'Population in working age', 'Labour force', 'Employment'])
-
+    
+    ### Group data by year
+    chart1_data = chart1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+    
     # Configure plot
     fig = px.line(chart1_data,
                     x="Year", 
-                    y="Value", 
+                    y="Value",   
                     color='Indicator',
                     hover_name="Value"
                     )
@@ -167,12 +221,11 @@ with col1:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
-
 ### TABLE AND TEXT 2 ###
 
 with col3: 
  
-    st.subheader("What's the women's share?")
+    st.subheader(f"What's the women's share in {selected_country}?")
 
     st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators can be broken down by sex.  
                 Table 1 shows for a given year for all indicators the total 
@@ -181,8 +234,8 @@ with col3:
                 <br>
                 <div style="text-align: justify;">The table below shows the data for 
                 <span style="color: red;">{selected_country}</span>
-                for the year <span style="color: red;">{selected_end_year}</span>. The choice of year depends on the end year selected in the 
-                sidebar and can be adjusted by moving the slider.</div>
+                for the year <span style="color: red;">{selected_end_year}</span>. This is the last available 
+                year in your chosen range. To see earlier years, please adjust the slider in the sidebar.</div>
                 """, unsafe_allow_html=True
     )
     
@@ -200,18 +253,21 @@ with col3:
                         'Employment, female share',
                         'Youth unemployment, female share',
                         'Labour force, female share']
-
+    
     table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
-
+    
     # Create the table 
     indicator_values = {}
-    for condition in table1_indicators:
-        indicator_values[condition] = round(table1_data[table1_data['Indicator'] == condition].values[0][5])
+    for ind in table1_indicators:
 
+        # Retrieve the values
+        indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
+
+    # Create table
     table1_dict = {
         'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-        'Total (Million)': [indicator_values[condition] for condition in table1_indicators[:5]],
-        'Women (Million)': [indicator_values[condition] for condition in table1_indicators[5:]]}
+        'Total (Million)': [indicator_values[ind] for ind in table1_indicators[:5]],
+        'Women (Million)': [indicator_values[ind] for ind in table1_indicators[5:]]}
 
     table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
     table1.set_index('Indicator', inplace=True)
@@ -220,10 +276,37 @@ with col3:
     table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
     table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
     table1["Women's share (%)"] = table1["Women's share (%)"]
- 
+
     # Display table
     st.table(table1)
 
+    
+    # # Create the table 
+    # indicator_values = {}
+    # for ind in table1_indicators:
+    #     indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
+
+    # table1_dict = {
+    #     'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
+    #     'Total (Million)': [indicator_values[ind] for condition in table1_indicators[:5]],
+    #     'Women (Million)': [indicator_values[ind] for condition in table1_indicators[5:]]}
+
+    # table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
+    # table1.set_index('Indicator', inplace=True)
+
+    # # Add women's share column and round to two digits
+    # table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
+    # table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
+    # table1["Women's share (%)"] = table1["Women's share (%)"]
+
+    # # Display table
+    # st.table(table1)
+
+    # If data is not available
+    #else:
+     #   st.warning("Data for this year is not available. Please adjust the slider.")
+  
+#st.table(chart1_data)
     
 ############################# ROW 2 ###################################
 
@@ -252,22 +335,30 @@ with col1:
                 same way, the unemployment rate is calculated: Divide the working age population by unemployment. 
                 Both rates are shown in chart 2.</div>""", unsafe_allow_html=True
         )
-       
+    st.header("")    
+
 #### Graph 2
+
 with col3:
-    # Get data
-    chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
-    print(chart2_data.columns)
-    # Configure plot
-    fig = px.line(chart2_data,
-                    x="Year", 
-                    y="Value", 
-                    color='Indicator',
-                    hover_name="Value"
-                    )
-    
-    # Display graph
-    st.plotly_chart(fig, use_container_width=True)
+
+    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
+
+    with tab1:
+        # Get data
+        chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
+        print(chart2_data.columns)
+        # Configure plot
+        fig = px.line(chart2_data,
+                        x="Year", 
+                        y="Value", 
+                        color='Indicator',
+                        hover_name="Value"
+                        )
+        # Fix y-axis to always show (100%)
+        fig.update_yaxes(range=[0, 100])
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
 
 ############################# ROW 3 ###################################
 
@@ -287,7 +378,7 @@ st.markdown(f"""<div style="text-align: justify;">Let us take a closer look at t
             often do not sum up to 100%.</div>
             <br>
             <div style="text-align: justify;">When comparing the sectoral GDP shares and 
-            sectoral employment shares, for developing countries you will often observe 
+            sectoral employment shares, for low-income countries you will often observe 
             that while a large share of employment takes place in the primary sector only 
             a relatively small amount of value is produced in that sector. This is one 
             explanation why in low income countries there is such high income inequality: 
@@ -299,6 +390,7 @@ st.markdown(f"""<div style="text-align: justify;">Let us take a closer look at t
 )
 
 st.header("")    
+
 
 #### Table 2
 # Configure columns
@@ -345,6 +437,9 @@ with col1:
     # Add sector column
     table2["Sector"] = table2['Sub Sector'].map(table2_featureMap)
 
+    # Take out employment 
+    table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
+    
     # Reorder columns
     table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
     
@@ -356,7 +451,7 @@ with col3:
 
     # Get data 
     table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
-    table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
+    #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
 
     # Configure plot
     fig_2 = px.pie(table2,
@@ -365,6 +460,9 @@ with col3:
                  names="Sub Sector")
     
     fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+    fig_2.update(layout_showlegend=False)
+    fig_2.update_traces(textposition='inside', textinfo='percent+label')
+
     
     # Display graph
     st.plotly_chart(fig_2, use_container_width=True)
