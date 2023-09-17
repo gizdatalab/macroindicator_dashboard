@@ -15,7 +15,7 @@ import pandas as pd
 
 # #--------------------------------------ILO PARAMETERS---------------------------------------------#
 
-# # Initialize an empty dictionary to store indicators and their parameters
+# Here you define the indicators you want to retrieve and assign them a name that shows up in the dataset
 
 # INDICATORS_ILO = {}
 
@@ -85,7 +85,6 @@ import pandas as pd
 #--------------------------------------FUNCTION---------------------------------------------
 
 #Overall function to retrieve the data 
-#Careful: nested funtion with two dependent functions since they are only used in combination
 
 def get_ilo_data(indicators_dict, start_year_input, end_year_input, featureMap_params_input): 
 
@@ -95,7 +94,9 @@ def get_ilo_data(indicators_dict, start_year_input, end_year_input, featureMap_p
     
     """
 
-    ################################### Define function #####################################
+    ########################### Define data retrieval function #############################
+
+    # Retrieve data for one indicator
 
     def access_ilo_data(indicator_id_input, indicator_name_input, params_input): 
         
@@ -110,14 +111,14 @@ def get_ilo_data(indicators_dict, start_year_input, end_year_input, featureMap_p
         # Specify the request
         ilo = sdmx.Request('ILO')
 
-        # If parameter are specified
+        # If parameter are specified (data filtered for age etc.)
         if params_input:
             resp = ilo.data(
                 f'DF_{indicator_id_input}',
                 key=params_input,
                 params={'startPeriod': start_year_input, 'endPeriod': end_year_input})
         
-        # If no parameters specified
+        # If no parameters specified (data not filtered)
         else:
             resp = ilo.data(
                 f'DF_{indicator_id_input}',

@@ -14,6 +14,8 @@ import pandas as pd
 
 #--------------------------------------IMF PARAMETERS---------------------------------------------
 
+# Here you define the indicators you want to retrieve and assign them a name that shows up in the dataset
+
 # featureMap_indicators = {
 #     'rnna': 'Capital stock (in bil. 2011US$)',
 #     'rnna_pch': 'Growth rate in total capital (%)'

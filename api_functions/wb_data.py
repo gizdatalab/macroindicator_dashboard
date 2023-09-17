@@ -5,19 +5,20 @@ import pandas as pd
 
 #-------------------------------------- WB PARAMETERS---------------------------------------------
 
-# # mapping of feature codes to more meaningful names
-# featureMap_indicators={
-#     'NV.AGR.TOTL.ZS': 'GDP Share Agriculture (%)', 
-#     'NV.IND.TOTL.ZS': 'GDP Share Industry (%)', 
-#     'NV.SRV.TOTL.ZS': 'GDP Share Services (%)',
-#     'NY.GDP.MKTP.PP.KD': 'GDP, PPP (constant 2017 international $)',
-#     'SP.POP.TOTL': 'Total population',
-#     'SP.POP.GROW': 'Population growth (annual %)'
-# }
+# Define the indicators needed here (code from WB page, name will be shown in dataset)
 
-# # Define start and end year
-# START_YEAR = 2020
-# END_YEAR = 2022
+featureMap_indicators={
+    'NV.AGR.TOTL.ZS': 'GDP Share Agriculture (%)', 
+    'NV.IND.TOTL.ZS': 'GDP Share Industry (%)', 
+    'NV.SRV.TOTL.ZS': 'GDP Share Services (%)',
+    'NY.GDP.MKTP.PP.KD': 'GDP, PPP (constant 2017 international $)',
+    'SP.POP.TOTL': 'Total population',
+    'SP.POP.GROW': 'Population growth (annual %)'
+}
+
+# Define start and end year
+START_YEAR = 2020
+END_YEAR = 2022
 
 #--------------------------------------FUNCTION---------------------------------------------
 
@@ -25,25 +26,13 @@ import pandas as pd
 def get_wb_data(feature_map_input, start_year_input, end_year_input):
 
     """
-    Function that takes a list of indicators and parameters as an input and retrieves the
+    Function that takes a list of indicator codes as an input and retrieves the
     values through the world bank API. The output is a dataframe and a csv file of the data 
     that is stored in the directory.  
 
     """
 
-    ############################### Standardized params #################################
-
-    # constant parameters used in sending the request.
-    params = dict()
-    # to ensure we receive a JSON response
-    params['format']='json'
-    # The data we fetch is for 59 years.
-    # Hence we change the default page size of 50 to 100 to ensure we need only one API call per feature.
-    params['per_page']='100'
-    # Range of years for which the data is needed
-    params['date']=(f"{start_year_input}:{end_year_input}")
-
-    ################################### Access data #####################################
+    ################################### Access data through API #####################################
 
     # Create a list of all indicators used retrieved from the featureMap
 
@@ -101,4 +90,4 @@ def get_wb_data(feature_map_input, start_year_input, end_year_input):
 
     return df
 
-#print(get_wb_data(featureMap_indicators, START_YEAR, END_YEAR))
+print(get_wb_data(featureMap_indicators, START_YEAR, END_YEAR))

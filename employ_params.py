@@ -1,7 +1,7 @@
 ########################### SPECIFY START AND END YEAR ###############################
 
 START_YEAR = 2000
-END_YEAR = 2025
+END_YEAR = 2023
 
 ########################### SPECIFY THE WB INDICATORS NEEDED ##########################
 

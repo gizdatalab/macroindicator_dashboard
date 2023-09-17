@@ -61,6 +61,10 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
 
     ## Fill other columns 
     df_merged['Indicator Code'] = df_merged.groupby('Indicator')['Indicator Code'].apply(lambda x: x.fillna(method='ffill').fillna(method='bfill'))
+
+    for col in ['Country Code', 'Region', 'Sub-region', 'Income Group', 'Least Developed Countries (LDC)', 'Land Locked Developing Countries (LLDC)', 'Small Island Developing States (SIDS)']:
+        df_merged[col] = df_merged.groupby('Country')[col].apply(lambda x: x.fillna(method='ffill').fillna(method='bfill'))
+
     st.write(df_merged)
     
     # Turn year column into datetime format
