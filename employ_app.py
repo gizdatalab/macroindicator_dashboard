@@ -288,7 +288,7 @@ with col3:
         st.table(table1)
     
     except ValueError: 
-        st.write("Data for this year is not available. Try adjusting the selecting on the side.")
+        st.write("Data for this year is not available. Try adjusting the selection on the side.")
     
   
 #st.table(chart1_data)
