@@ -8,7 +8,7 @@ import altair as alt
 # Use full screen 
 st.set_page_config(layout="wide")
 
-#---------------------------------- LOAD DATA AND PARAMETERS ---------------------------------
+#---------------------------------- LOAD DATA AND PARAMETERS ---------------------------------#
 
 # Create import function with cache (cache so data is only loaded once)
 @st.cache_data
@@ -30,7 +30,7 @@ df_sub_region = df_regions + df_subregion
 df_employ['Year'] = df_employ['Year'].astype(str)
 df_employ['Year'] = df_employ['Year'].astype(int)
 
-#------------------------------ Functions  ------------------------------------
+#------------------------------ Functions  ------------------------------------#
 
 # Data Selection 
 
@@ -41,18 +41,21 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
     corresponding data from the dataset. The output is a filtered dataframe. 
 
     """
+    # Turn country selection into list if not list 
+    if isinstance(country_selec, str):
+        country_selec = [country_selec]
 
     # Create a dataframe with all years and indicators first
     ## This is necessary to add the missing years with "None" values
     df_empty = pd.DataFrame([(year, indicator, country) 
                             for year in range(start_year_selec, end_year_selec+1)
                             for indicator in indicator_selec
-                            for country in [country_selec]],
+                            for country in country_selec],
                             columns=['Year', 'Indicator', 'Country'])
 
     
     # Retrieve the selected data from df
-    df_fltr = df_employ[(df_employ['Country'] == country_selec) & 
+    df_fltr = df_employ[(df_employ['Country'].isin(country_selec)) & 
                        (df_employ['Year'] >= start_year_selec) & 
                        (df_employ['Indicator'].isin(indicator_selec)) &
                        (df_employ['Year'] <= end_year_selec)]
@@ -108,14 +111,14 @@ st.sidebar.caption("""If you want to compare the values of the chosen country
                    to a region or peer countries, please make a selection below.""")
 
 # PEER COUNTRY INPUT WIDGET
-selected_peer = st.sidebar.multiselect(
+selected_region = st.sidebar.multiselect(
     "Choose regions for comparison",
     df_sub_region
     )
 
 # REGION INPUT WIDGET
-selected_region = st.sidebar.multiselect(
-    "Choose countries for comparison",
+selected_peer = st.sidebar.multiselect(
+    "Choose peer countries for comparison",
     df_countries
     )
 
@@ -287,30 +290,6 @@ with col3:
     except ValueError: 
         st.write("Data for this year is not available. Try adjusting the selecting on the side.")
     
-    # # Create the table 
-    # indicator_values = {}
-    # for ind in table1_indicators:
-    #     indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
-
-    # table1_dict = {
-    #     'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-    #     'Total (Million)': [indicator_values[ind] for condition in table1_indicators[:5]],
-    #     'Women (Million)': [indicator_values[ind] for condition in table1_indicators[5:]]}
-
-    # table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
-    # table1.set_index('Indicator', inplace=True)
-
-    # # Add women's share column and round to two digits
-    # table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
-    # table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
-    # table1["Women's share (%)"] = table1["Women's share (%)"]
-
-    # # Display table
-    # st.table(table1)
-
-    # If data is not available
-    #else:
-     #   st.warning("Data for this year is not available. Please adjust the slider.")
   
 #st.table(chart1_data)
     
@@ -347,12 +326,17 @@ with col1:
 
 with col3:
 
+    # Get data for country and for comparison chosen
+    chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
+    chart2_data_unemp = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Unemployment rate'])
+    chart2_data_lf = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
+    st.write(chart2_data_unemp)
+    
+    #  Graphs
     tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
 
     with tab1:
-        # Get data
-        chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
-        print(chart2_data.columns)
+      
         # Configure plot
         fig = px.line(chart2_data,
                         x="Year", 
@@ -362,6 +346,32 @@ with col3:
                         )
         # Fix y-axis to always show (100%)
         fig.update_yaxes(range=[0, 100])
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+    
+    with tab2: 
+
+        # Configure plot
+        fig = px.line(chart2_data_unemp,
+                        x="Year", 
+                        y="Value", 
+                        color='Country',
+                        hover_name="Value"
+                        )
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+    with tab3: 
+
+        # Configure plot
+        fig = px.line(chart2_data_lf,
+                        x="Year", 
+                        y="Value", 
+                        color='Country',
+                        hover_name="Value"
+                        )
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
@@ -455,15 +465,16 @@ with col1:
 ### PIE CHART 
 with col3: 
 
+    
     # Get data 
     table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
     #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
 
     # Configure plot
     fig_2 = px.pie(table2,
-                 values="Employment Share (%)",
-                 title=f"Employment Shares for {selected_country} in {selected_end_year}",
-                 names="Sub Sector")
+                values="Employment Share (%)",
+                title=f"Employment Shares for {selected_country} in {selected_end_year}",
+                names="Sub Sector")
     
     fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
     fig_2.update(layout_showlegend=False)
