@@ -7,18 +7,18 @@ import pandas as pd
 
 # Define the indicators needed here (code from WB page, name will be shown in dataset)
 
-featureMap_indicators={
-    'NV.AGR.TOTL.ZS': 'GDP Share Agriculture (%)', 
-    'NV.IND.TOTL.ZS': 'GDP Share Industry (%)', 
-    'NV.SRV.TOTL.ZS': 'GDP Share Services (%)',
-    'NY.GDP.MKTP.PP.KD': 'GDP, PPP (constant 2017 international $)',
-    'SP.POP.TOTL': 'Total population',
-    'SP.POP.GROW': 'Population growth (annual %)'
-}
+# featureMap_indicators={
+#     'NV.AGR.TOTL.ZS': 'GDP Share Agriculture (%)', 
+#     'NV.IND.TOTL.ZS': 'GDP Share Industry (%)', 
+#     'NV.SRV.TOTL.ZS': 'GDP Share Services (%)',
+#     'NY.GDP.MKTP.PP.KD': 'GDP, PPP (constant 2017 international $)',
+#     'SP.POP.TOTL': 'Total population',
+#     'SP.POP.GROW': 'Population growth (annual %)'
+# }
 
-# Define start and end year
-START_YEAR = 2020
-END_YEAR = 2022
+# # Define start and end year
+# START_YEAR = 2020
+# END_YEAR = 2022
 
 #--------------------------------------FUNCTION---------------------------------------------
 
@@ -90,4 +90,4 @@ def get_wb_data(feature_map_input, start_year_input, end_year_input):
 
     return df
 
-print(get_wb_data(featureMap_indicators, START_YEAR, END_YEAR))
+#print(get_wb_data(featureMap_indicators, START_YEAR, END_YEAR))

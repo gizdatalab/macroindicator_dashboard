@@ -41,6 +41,7 @@ def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator
     corresponding data from the dataset. The output is a filtered dataframe. 
 
     """
+
     # Turn country selection into list if not list 
     if isinstance(country_selec, str):
         country_selec = [country_selec]
@@ -250,14 +251,14 @@ with col3:
 
     table1_indicators = ['Population', 
                         'Population in working age',
+                        'Labour force',
                         'Employment',
                         'Youth unemployment', 
-                        'Labour force', 
                         'Population, female share', 
                         'Population in working age, female share',
+                        'Labour force, female share',
                         'Employment, female share',
-                        'Youth unemployment, female share',
-                        'Labour force, female share']
+                        'Youth unemployment, female share']
     
     table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
 
@@ -282,13 +283,21 @@ with col3:
         # Add women's share column and round to two digits
         table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
         table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
-        table1["Women's share (%)"] = table1["Women's share (%)"]
+
+        #add commas 
+        table1['Total (Million)'] = table1["Total (Million)"].apply(lambda x: format (x, ',d'))
+        table1['Women (Million)'] = table1["Women (Million)"].apply(lambda x: format (x, ',d'))
+
+        # Round to millions 
+        #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+        #table1["Women (Million)"] = table1["Women (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+
 
         # Display table
         st.table(table1)
     
     except ValueError: 
-        st.write("Data for this year is not available. Try adjusting the selection on the side.")
+        st.error("Data for this year is not available. Try adjusting the selection on the side.")
     
   
 #st.table(chart1_data)
@@ -330,7 +339,6 @@ with col3:
     chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
     chart2_data_unemp = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Unemployment rate'])
     chart2_data_lf = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
-    st.write(chart2_data_unemp)
     
     #  Graphs
     tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
