@@ -1,3 +1,9 @@
+import streamlit as st 
+import pandas as pd
+import matplotlib.pyplot as plt
+import plotly.express as px
+
+# Git checkout
 # Use full screen 
 st.set_page_config(layout="wide")
 
