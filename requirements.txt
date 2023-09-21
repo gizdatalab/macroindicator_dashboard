@@ -3,5 +3,6 @@ streamlit==1.20.0
 plotly==5.13.1
 numpy==1.22.4
 matplotlib==3.5.1
-openpyxl
 plotly.express
+openpyxl
+altair
