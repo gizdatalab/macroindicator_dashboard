@@ -482,6 +482,9 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         # Display table
         st.table(table2)
 
+        # Caption graph
+        st.caption('Data Source: International Labour Organization')
+
     ### PIE CHART 
     with col3: 
 
@@ -502,9 +505,6 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         
         # Display graph
         st.plotly_chart(fig_2, use_container_width=True)
-
-        # Caption graph
-        st.caption('Data Source: International Labour Organization')
 
 else: 
     with col1:
