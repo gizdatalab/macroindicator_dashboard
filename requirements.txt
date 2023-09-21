@@ -1,6 +1,7 @@
-pandas==1.5.3
-streamlit==1.20.0
+pandas==1.5.3 as pd
+streamlit==1.20.0 as st
 plotly==5.13.1
-numpy==1.22.4
-matplotlib==3.5.1
+numpy==1.22.4 as np
+matplotlib==3.5.1 as plt
 openpyxl
+plotly.express as px
