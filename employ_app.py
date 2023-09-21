@@ -228,6 +228,10 @@ with col1:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+
+
 ### TABLE AND TEXT 2 ###
 
 with col3: 
@@ -383,6 +387,10 @@ with col3:
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
+    
+with col3: 
+    st.caption('Data Sources: International Labour Organization')
+
 
 ############################# ROW 3 ###################################
 
@@ -420,74 +428,85 @@ st.header("")
 # Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 
-with col1: 
-    table2_featureMap = {'Employment Agriculture': 'Primary',
-                        'Employment Mining and quarrying': 'Secondary',
-                        'Employment Manufacturing': 'Secondary',
-                        'Employment Utilities': 'Secondary',
-                        'Employment Construct': 'Secondary',
-                        'Employment Wholesale': 'Tertiary', 
-                        'Employment Transport': 'Tertiary',
-                        'Employment Accomodation': 'Tertiary',
-                        'Employment Financial': 'Tertiary',
-                        'Employment Real estate': 'Tertiary',
-                        'Employment Public administration and defence': 'Tertiary',
-                        'Employment Education': 'Tertiary',
-                        'Employment Human health and social work activities': 'Tertiary',
-                        'Employment Other services': 'Tertiary'}             
 
-    table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
+table2_featureMap = {'Employment Agriculture': 'Primary',
+                    'Employment Mining and quarrying': 'Secondary',
+                    'Employment Manufacturing': 'Secondary',
+                    'Employment Utilities': 'Secondary',
+                    'Employment Construct': 'Secondary',
+                    'Employment Wholesale': 'Tertiary', 
+                    'Employment Transport': 'Tertiary',
+                    'Employment Accomodation': 'Tertiary',
+                    'Employment Financial': 'Tertiary',
+                    'Employment Real estate': 'Tertiary',
+                    'Employment Public administration and defence': 'Tertiary',
+                    'Employment Education': 'Tertiary',
+                    'Employment Human health and social work activities': 'Tertiary',
+                    'Employment Other services': 'Tertiary'}             
 
-    #  Retrieve employment value for the year
-    employment_in_year = get_filtered_data(selected_country, selected_end_year, selected_end_year, ["Employment"]).values[0][5]
+table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
 
-    # Create the table 
-    indicator_values_table2 = {}
+#  Retrieve employment value for the year
+employment_in_year = get_filtered_data(selected_country, selected_end_year, selected_end_year, ["Employment"]).values[0][5]
 
-    for ind in table2_featureMap.keys():
+# Create the table 
+indicator_values_table2 = {}
 
-        # Retrieve the value 
-        employ_value = table2_data[table2_data['Indicator'] == ind].values[0][5]
+for ind in table2_featureMap.keys():
 
-        # Assign value
-        indicator_values_table2[ind] = format(round((employ_value / employment_in_year) *100,2),".2f")
+    # Retrieve the value 
+    employ_value = table2_data[table2_data['Indicator'] == ind].values[0][5]
 
-    table2_dict = {
-        'Sub Sector': indicator_values_table2.keys(),
-        'Employment Share (%)': indicator_values_table2.values()}
+    # Assign value
+    indicator_values_table2[ind] = format(round((employ_value / employment_in_year) *100,2),".2f")
 
-    table2 = pd.DataFrame(table2_dict).reset_index(drop=True)
+table2_dict = {
+    'Sub Sector': indicator_values_table2.keys(),
+    'Employment Share (%)': indicator_values_table2.values()}
 
-    # Add sector column
-    table2["Sector"] = table2['Sub Sector'].map(table2_featureMap)
+table2 = pd.DataFrame(table2_dict).reset_index(drop=True)
 
-    # Take out employment 
-    table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
-    
-    # Reorder columns
-    table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
-    
-    # Display table
-    st.table(table2)
+# Add sector column
+table2["Sector"] = table2['Sub Sector'].map(table2_featureMap)
 
-### PIE CHART 
-with col3: 
+# Take out employment 
+table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
 
-    
-    # Get data 
-    table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
-    #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
+# Reorder columns
+table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
 
-    # Configure plot
-    fig_2 = px.pie(table2,
-                values="Employment Share (%)",
-                title=f"Employment Shares for {selected_country} in {selected_end_year}",
-                names="Sub Sector")
-    
-    fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
-    fig_2.update(layout_showlegend=False)
-    fig_2.update_traces(textposition='inside', textinfo='percent+label')
+# Check if data available
+if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
-    
-    # Display graph
-    st.plotly_chart(fig_2, use_container_width=True)
+    with col1: 
+
+        # Display table
+        st.table(table2)
+
+    ### PIE CHART 
+    with col3: 
+
+        # Get data 
+        table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
+        #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
+
+        # Configure plot
+        fig_2 = px.pie(table2,
+                    values="Employment Share (%)",
+                    title=f"Employment Shares for {selected_country} in {selected_end_year}",
+                    names="Sub Sector")
+        
+        fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+        fig_2.update(layout_showlegend=False)
+        fig_2.update_traces(textposition='inside', textinfo='percent+label')
+
+        
+        # Display graph
+        st.plotly_chart(fig_2, use_container_width=True)
+
+        # Caption graph
+        st.caption('Data Source: International Labour Organization')
+
+else: 
+    with col1:
+        st.error("Data for this year is not available. Try adjusting the selection on the side.")
