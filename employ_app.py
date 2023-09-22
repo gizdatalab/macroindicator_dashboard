@@ -102,7 +102,6 @@ df_countries.insert(0,"Germany")
 # Widget
 selected_country = st.sidebar.selectbox(
     label="Choose your country of interest",
-    placeholder="Choose a country",
     options=df_countries
     )
 
