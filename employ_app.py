@@ -12,7 +12,7 @@ st.set_page_config(layout="wide")
 # Create import function with cache (cache so data is only loaded once)
 @st.cache_data
 def load_data(path):
-    df = pd.read_excel(path)
+    df = pd.read_excel(path, engine='openpyxl')
     return df
 
 # Load data 
