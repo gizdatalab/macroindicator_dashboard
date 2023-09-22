@@ -205,6 +205,8 @@ with col1:
                 the number of children or rather those under 15 years in the country of interest.</div>""", unsafe_allow_html=True
     )
     
+    st.header("")
+
     #### Graph 1
 
 with col1: 
@@ -222,6 +224,15 @@ with col1:
                     color='Indicator',
                     hover_name="Value"
                     )
+    
+    # Move legend 
+    fig.update_layout(legend=dict(
+       # orientation="h",
+        yanchor="bottom",
+        y=1.05,
+        xanchor="left",
+        x=0.01
+        ))
     
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
@@ -357,6 +368,15 @@ with col3:
         # Fix y-axis to always show (100%)
         fig.update_yaxes(range=[0, 100])
 
+        # Move legend 
+        fig.update_layout(legend=dict(
+            #orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="left",
+            x=0.01
+            ))
+
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
     
@@ -369,6 +389,15 @@ with col3:
                         color='Country',
                         hover_name="Value"
                         )
+        
+        # Move legend 
+        fig.update_layout(legend=dict(
+            #orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="left",
+            x=0.01
+            ))
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
@@ -382,6 +411,15 @@ with col3:
                         color='Country',
                         hover_name="Value"
                         )
+        
+        # Move legend 
+        fig.update_layout(legend=dict(
+            #orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="left",
+            x=0.01
+            ))
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
