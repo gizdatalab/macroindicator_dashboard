@@ -129,7 +129,7 @@ START_YEAR, END_YEAR = get_years(selected_country)
 # Widget
 selected_years = st.sidebar.slider(
      "Select the range",
-     START_YEAR, END_YEAR, (START_YEAR,END_YEAR),
+     START_YEAR, END_YEAR, (START_YEAR,END_YEAR-1),
     )
 selected_start_year = selected_years[0]
 selected_end_year = selected_years[1]
