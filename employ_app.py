@@ -81,8 +81,8 @@ def get_years(country_input):
     available. This can be used to adjust the year slider. 
 
     """
-    start_year_country = df_employ[df_employ['Country'] == country_input]['Year'].min()
-    end_year_country = df_employ[df_employ['Country'] == country_input]['Year'].max()
+    start_year_country = int(df_employ[df_employ['Country'] == country_input]['Year'].min())
+    end_year_country = int(df_employ[df_employ['Country'] == country_input]['Year'].max())
 
     return start_year_country, end_year_country
 
