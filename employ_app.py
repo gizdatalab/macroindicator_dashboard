@@ -287,19 +287,19 @@ with col3:
         # Create table
         table1_dict = {
             'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-            'Total (Million)': [indicator_values[ind] for ind in table1_indicators[:5]],
-            'Women (Million)': [indicator_values[ind] for ind in table1_indicators[5:]]}
+            'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
+            'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
 
         table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
         table1.set_index('Indicator', inplace=True)
 
         # Add women's share column and round to two digits
-        table1["Women's share (%)"] = round(table1['Women (Million)'] / table1['Total (Million)'].apply(lambda x: round(x / 100)),2)
+        table1["Women's share (%)"] = round(table1['Women'] / table1['Total'].apply(lambda x: round(x / 100)),2)
         table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
 
         #add commas 
-        table1['Total (Million)'] = table1["Total (Million)"].apply(lambda x: format (x, ',d'))
-        table1['Women (Million)'] = table1["Women (Million)"].apply(lambda x: format (x, ',d'))
+        table1['Total'] = table1["Total"].apply(lambda x: format (x, ',d'))
+        table1['Women'] = table1["Women"].apply(lambda x: format (x, ',d'))
 
         # Round to millions 
         #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
