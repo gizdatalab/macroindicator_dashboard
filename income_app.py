@@ -235,7 +235,7 @@ with col1:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    hover_name="Value"
+                    hover_name="Country"
                     )
     
     # Move legend 
@@ -284,8 +284,8 @@ with col3:
     fig = px.line(chart2_data,
                     x="Year", 
                     y="Value",   
-                    color='Indicator',
-                    hover_name="Value"
+                    color='Country',
+                    hover_name="Country"
                     )
     
     # Move legend 
@@ -339,13 +339,15 @@ with col1:
     chart3_data = get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
     
     ### Group data by year
-    chart3_data = chart3_data.groupby(['Indicator', 'Country'],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+    chart3_data = chart3_data.groupby(['Indicator'],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,['Year'])
     
     # Configure plot
     fig = px.line(chart3_data,
                   x='Year', 
                   y='Value',
                   color='Indicator',
+                  line_group='Country',  # Group lines by Country
+                  labels={'Value': 'Indicator Value'},# Update y-axis label
                   hover_name='Country'
                   )
 
@@ -357,6 +359,7 @@ with col1:
         xanchor="left",
         x=0.01
         ))
+    
     
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
@@ -377,8 +380,6 @@ with col3:
                                            'Income share held by fourth 20%',
                                            'Income share held by lowest 20%',
                                            ])
-
-
     ### Group data by year
     area1_data = area1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
@@ -386,10 +387,13 @@ with col3:
     # Configure plot
     fig = px.area(area1_data,
                   x="Year", 
-                  y="Value", 
-                  color='Country',
-                  hover_name="Value"
+                  y="Value",
+                  color='Indicator',
+                  facet_col='Country',
+                  facet_col_wrap=2,
+                  hover_name="Country"
                   )
+    
     # Fix y-axis to always show (100%)
     fig.update_yaxes(range=[0, 100])
 
@@ -417,10 +421,12 @@ with col3:
     fig = px.line(chart4_data,
                     x="Year", 
                     y="Value",   
-                    color='Country',
-                    hover_name="Value"
+                    color='Indicator',
+                    line_group='Country',  # Group lines by Country
+                    labels={'Value': 'Indicator Value'},# Update y-axis label
+                    hover_name="Country"
                     )
-    
+
     # Move legend 
     fig.update_layout(legend=dict(
        # orientation="h",
