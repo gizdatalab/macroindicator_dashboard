@@ -248,18 +248,18 @@ with col1:
                 someone sells a house that has been build two years ago, it will not be part of 
                 this year's GDP. Also, if someone resells a car that has been manufactured and that 
                 she has bought this year it will only be counted once into the GDP since reselling 
-                is not producing.Examples for <strong>services</strong> are a haircut, entertainment, a taxi ride, 
+                is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
                 consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
                 They all have in common that you cannot store them.</div> 
                 <br>
-                <div style="text-align: justify;"><strong>Goods</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
+                <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
                 computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
                 mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
                 the car are not final goods. That is: All the goods and services which directly end up 
                 in a product are not final goods. Machines, however, are final goods since they are used 
                 to produce goods, but do not directly end up in them.</div>  
                 <br>
-                <div style="text-align: justify;"><strong>Domestic</strong>: Only those final goods and services are part of the GDP that are produced 
+                <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
                 in the considered country. Whether a domestic factory belongs to a foreign owner or 
                 a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
     )
@@ -305,45 +305,51 @@ with col3:
 ############################# ROW 2 ###################################
 
 # Text 
-st.header("So how do people actually manage that their economies grow?")
+st.subheader("So how do people actually manage that their economies grow?")
 
-st.markdown("""<div style="text-align: justify;">In chart 1, we can see that 
-            the economies of a lot of countries (if selected) tend to grow. That is, 
-            year by year most countries manage to establish new "high scores" in terms 
-            of the total value of final goods and services they have produced in that 
-            year (GDP). So how do people actually manage that their economies grow?</div>  
-            <br>
-            <div style="text-align: justify;">Production depends on three so-called factors of production: Economists 
-            call the first land – which is a synonym for natural resources. They 
-            provide the material input for all the goods and services that an economy 
-            produces. Obviously, the material boundaries of our planet set an upper 
-            limit for material growth on earth.</div>   
-            <br>
-            <div style="text-align: justify;">The second factor is capital: Capital are all those products that can 
-            be used to produce further products and do not end up in them: machines, 
-            tools and equipment, patents, buildings, a country's infrastructure. The 
-            more of these products are available, the more goods and services an economy 
-            can produce. Or, in turn, without any factories there will not be any industrial 
-            products. Hence, increasing the capital stock is one way to make an economy grow.</div>    
-            <br>
-            <div style="text-align: justify;">The last and third factor of production is labour. Labour is provided by people. 
-            That means, if the population is growing, there are more people around who can work. 
-            Thus, usually, an economy grows when its population is growing (for more 
-            information on employment, check out our other dashboards).</div>  
-            <br>
-            <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the quality of 
-            both factors matters as well: If people are better educated and trained they 
-            will, most likely, be able to work more efficient and will consequently produce 
-            more per hour than before. In this context, one also often refers to the 
-            term “human capital”. What education is to humans, innovation (or science) is 
-            to capital: If the same number of machines and production processes suddenly 
-            function with a more efficient technology, due to an innovation, then again 
-            production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
-    )
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
+
+with col1: 
+    
+    st.markdown("""<div style="text-align: justify;">In chart 1, we can see that 
+                the economies of a lot of countries (if selected) tend to grow. That is, 
+                year by year most countries manage to establish new "high scores" in terms 
+                of the total value of final goods and services they have produced in that 
+                year (GDP). So how do people actually manage that their economies grow?</div>  
+                <br>
+                <div style="text-align: justify;">Production depends on three so-called factors of production: Economists 
+                call the first land – which is a synonym for natural resources. They 
+                provide the material input for all the goods and services that an economy 
+                produces. Obviously, the material boundaries of our planet set an upper 
+                limit for material growth on earth.</div>   
+                <br>
+                <div style="text-align: justify;">The second factor is capital: Capital are all those products that can 
+                be used to produce further products and do not end up in them: machines, 
+                tools and equipment, patents, buildings, a country's infrastructure. The 
+                more of these products are available, the more goods and services an economy 
+                can produce. Or, in turn, without any factories there will not be any industrial 
+                products. Hence, increasing the capital stock is one way to make an economy grow.</div>""", unsafe_allow_html=True
+        )    
+with col3:
+                
+    st.markdown("""<div style="text-align: justify;">The last and third factor of production is labour. Labour is provided by people. 
+                That means, if the population is growing, there are more people around who can work. 
+                Thus, usually, an economy grows when its population is growing (for more 
+                information on employment, check out our other dashboards).</div>  
+                <br>
+                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the quality of 
+                both factors matters as well: If people are better educated and trained they 
+                will, most likely, be able to work more efficient and will consequently produce 
+                more per hour than before. In this context, one also often refers to the 
+                term “human capital”. What education is to humans, innovation (or science) is 
+                to capital: If the same number of machines and production processes suddenly 
+                function with a more efficient technology, due to an innovation, then again 
+                production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
+        )
 
 # Configure columns
 col1, col2, col3 = st.columns([1,1,1])
-
 
 ### Chart GDP ###
 
