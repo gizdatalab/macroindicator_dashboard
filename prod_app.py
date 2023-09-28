@@ -5,7 +5,8 @@ import plotly.express as px
 
 # Git checkout
 # Use full screen 
-# st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
+
 
 #---------------------------------- LOAD DATA AND PARAMETERS ---------------------------------#
 
@@ -269,6 +270,7 @@ with col1:
 
 
 with col3: 
+
     # Get data
     chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
 
@@ -280,8 +282,9 @@ with col3:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    title='GDP per capita',
-                    hover_name="Value"
+                    title='Chart 1 - GDP per capita',
+                    hover_name="Value",
+                    color_discrete_sequence=px.colors.qualitative.Plotly
                     )
 
     # # Move legend 
@@ -337,3 +340,113 @@ st.markdown("""<div style="text-align: justify;">In chart 1, we can see that
             function with a more efficient technology, due to an innovation, then again 
             production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
     )
+
+# Configure columns
+col1, col2, col3 = st.columns([1,1,1])
+
+
+### Chart GDP ###
+
+with col1: 
+
+  # Get data
+    chart2_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP'])
+
+    # ### Group data by year
+    chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+    # Configure plot
+    fig = px.line(chart2_data,
+                    x="Year", 
+                    y="Value",   
+                    color='Country',
+                    title='Chart 2 - GDP',
+                    hover_name="Value",
+                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    )
+
+    # # Move legend 
+    # fig.update_layout(legend=dict(
+    #     # orientation="h",
+    #     yanchor="bottom",
+    #     y=1.05,
+    #     xanchor="left",
+    #     x=0.01
+    #     ))
+
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI)')
+
+### Chart Capital ###
+
+with col2: 
+    
+  # Get data
+    chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Total population'])
+
+    # ### Group data by year
+    chart3_data = chart3_data.groupby([chart3_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+    # Configure plot
+    fig = px.line(chart3_data,
+                    x="Year", 
+                    y="Value",   
+                    color='Country',
+                    title='Chart 3 - Total Population',
+                    hover_name="Value",
+                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    )
+
+    # # Move legend 
+    # fig.update_layout(legend=dict(
+    #     # orientation="h",
+    #     yanchor="bottom",
+    #     y=1.05,
+    #     xanchor="left",
+    #     x=0.01
+    #     ))
+
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI)')
+
+
+    ### Chart Capital ###
+
+with col3: 
+    
+  # Get data
+    chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
+
+    # ### Group data by year
+    chart4_data = chart4_data.groupby([chart4_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+    # Configure plot
+    fig = px.line(chart4_data,
+                    x="Year", 
+                    y="Value",   
+                    color='Country',
+                    title='Chart 4 - Capital stock (in bil. 2011US$)',
+                    hover_name="Value",
+                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    )
+
+    # # Move legend 
+    # fig.update_layout(legend=dict(
+    #     # orientation="h",
+    #     yanchor="bottom",
+    #     y=1.05,
+    #     xanchor="left",
+    #     x=0.01
+    #     ))
+
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Caption graph
+    st.caption('International Monetary Fund (IMF)')
