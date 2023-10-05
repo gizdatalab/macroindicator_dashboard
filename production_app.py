@@ -170,7 +170,7 @@ st.sidebar.info("""Please note that this dashboard is a prototype.
 st.title("Production dashboard")
 
 st.write("""
-         Explore a comprehensive employment dashboard that provides a holistic view of key employment indicators. 
+         Explore a comprehensive production dashboard that provides a holistic view of key employment indicators. 
          This interactive platform synthesizes diverse metrics, offering insights into job market trends, labor 
          force participation, and economic vitality. With intuitive visualizations and data-driven analysis, gain 
          a deeper understanding of workforce dynamics and make informed decisions for the future.
@@ -191,7 +191,7 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 # st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
 
 # Configure columns
-col1, col2, col3 = st.columns([1,0.05,1])
+col1, col2, col3 = st.columns([1,0.02,1])
 
 # ### GRAPH AND TEXT 1 ###
 
@@ -268,39 +268,77 @@ with col1:
 
 #### Graph 1
 
-
 with col3: 
 
-    # Get data
-    chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
+    # Create tabs 
+    tab1, tab2 = st.tabs(['GDP per capita', 'GDP'])
 
-    # ### Group data by year
-    chart1_data = chart1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+    with tab1: 
 
-    # Configure plot
-    fig = px.line(chart1_data,
-                    x="Year", 
-                    y="Value",   
-                    color='Country',
-                    title='Chart 1 - GDP per capita',
-                    hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
-                    )
+        # Get data
+        chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
 
-    # # Move legend 
-    # fig.update_layout(legend=dict(
-    #     # orientation="h",
-    #     yanchor="bottom",
-    #     y=1.05,
-    #     xanchor="left",
-    #     x=0.01
-    #     ))
+        # ### Group data by year
+        chart1_data = chart1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
-    # Display graph
-    st.plotly_chart(fig, use_container_width=True)
+        # Configure plot
+        fig = px.line(chart1_data,
+                        x="Year", 
+                        y="Value",   
+                        color='Country',
+                        title='Chart 1 - GDP per capita',
+                        hover_name="Value",
+                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        )
 
-    # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI)')
+        # # Move legend 
+        # fig.update_layout(legend=dict(
+        #     # orientation="h",
+        #     yanchor="bottom",
+        #     y=1.05,
+        #     xanchor="left",
+        #     x=0.01
+        #     ))
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Caption graph
+        st.caption('Data Sources: World Development Indicators (WDI)')
+    
+    with tab2: 
+        
+        # Get data
+        chart2_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP'])
+
+        # ### Group data by year
+        chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+        # Configure plot
+        fig = px.line(chart2_data,
+                        x="Year", 
+                        y="Value",   
+                        color='Country',
+                        title='Chart 2 - GDP',
+                        hover_name="Value",
+                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        )
+
+        # # Move legend 
+        # fig.update_layout(legend=dict(
+        #     # orientation="h",
+        #     yanchor="bottom",
+        #     y=1.05,
+        #     xanchor="left",
+        #     x=0.01
+        #     ))
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Caption graph
+        st.caption('Data Sources: World Development Indicators (WDI)')
+
 
 ############################# ROW 2 ###################################
 
@@ -308,7 +346,7 @@ with col3:
 st.subheader("So how do people actually manage that their economies grow?")
 
 # Configure columns
-col1, col2, col3 = st.columns([1,0.05,1])
+col1, col2, col3 = st.columns([1,0.02,1])
 
 with col1: 
     
@@ -329,7 +367,13 @@ with col1:
                 tools and equipment, patents, buildings, a country's infrastructure. The 
                 more of these products are available, the more goods and services an economy 
                 can produce. Or, in turn, without any factories there will not be any industrial 
-                products. Hence, increasing the capital stock is one way to make an economy grow.</div>""", unsafe_allow_html=True
+                products. Hence, increasing the capital stock is one way to make an economy grow.
+                <br>
+                <div style="text-align: justify;">The last and third factor of production is labour. Labour is provided by people. 
+                That means, if the population is growing, there are more people around who can work. 
+                Thus, usually, an economy grows when its population is growing (for more 
+                information on employment, check out our other dashboards).</div>
+                </div>""", unsafe_allow_html=True
         )    
 with col3:
                 
@@ -345,50 +389,19 @@ with col3:
                 term “human capital”. What education is to humans, innovation (or science) is 
                 to capital: If the same number of machines and production processes suddenly 
                 function with a more efficient technology, due to an innovation, then again 
-                production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
+                production increases – thus, the economy grows.</div>
+                <br>
+                <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
+                and production processes suddenly function with a more efficient technology, due to an innovation, 
+                then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
         )
 
 # Configure columns
 col1, col2, col3 = st.columns([1,1,1])
 
-### Chart GDP ###
-
-with col1: 
-
-  # Get data
-    chart2_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP'])
-
-    # ### Group data by year
-    chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-    # Configure plot
-    fig = px.line(chart2_data,
-                    x="Year", 
-                    y="Value",   
-                    color='Country',
-                    title='Chart 2 - GDP',
-                    hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
-                    )
-
-    # # Move legend 
-    # fig.update_layout(legend=dict(
-    #     # orientation="h",
-    #     yanchor="bottom",
-    #     y=1.05,
-    #     xanchor="left",
-    #     x=0.01
-    #     ))
-
-    # Display graph
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI)')
-
 ### Chart Capital ###
 
-with col2: 
+with col1: 
     
   # Get data
     chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Total population'])
@@ -406,14 +419,14 @@ with col2:
                     color_discrete_sequence=px.colors.qualitative.Plotly
                     )
 
-    # # Move legend 
-    # fig.update_layout(legend=dict(
-    #     # orientation="h",
-    #     yanchor="bottom",
-    #     y=1.05,
-    #     xanchor="left",
-    #     x=0.01
-    #     ))
+    # Move legend 
+    fig.update_layout(legend=dict(
+        # orientation="h",
+        yanchor="bottom",
+        y=-0.5,
+        xanchor="left",
+        x=0.01
+        ))
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
@@ -422,9 +435,9 @@ with col2:
     st.caption('Data Sources: World Development Indicators (WDI)')
 
 
-    ### Chart Capital ###
+### Chart Capital ###
 
-with col3: 
+with col2: 
     
   # Get data
     chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
@@ -442,14 +455,49 @@ with col3:
                     color_discrete_sequence=px.colors.qualitative.Plotly
                     )
 
-    # # Move legend 
-    # fig.update_layout(legend=dict(
-    #     # orientation="h",
-    #     yanchor="bottom",
-    #     y=1.05,
-    #     xanchor="left",
-    #     x=0.01
-    #     ))
+    # Move legend 
+    fig.update_layout(legend=dict(
+        # orientation="h",
+        yanchor="bottom",
+        y=-0.5,
+        xanchor="left",
+        x=0.01
+        ))
+
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
+
+    # Caption graph
+    st.caption('International Monetary Fund (IMF)')
+
+    ### Chart Capital ###
+
+with col3: 
+    
+  # Get data
+    chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
+
+    # ### Group data by year
+    chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+    # Configure plot
+    fig = px.line(chart5_data,
+                    x="Year", 
+                    y="Value",   
+                    color='Indicator',
+                    title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
+                    hover_name="Value",
+                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    )
+
+    # Move legend 
+    fig.update_layout(legend=dict(
+        # orientation="h",
+        yanchor="bottom",
+        y=-0.5,
+        xanchor="left",
+        x=0.01
+        ))
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
