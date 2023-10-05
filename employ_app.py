@@ -169,7 +169,9 @@ st.write("""
          This dashboard provides a holistic overview of the employment situation in different
          countries, using the most important macroeconomic indicators for employment. The data 
          displayed is derived from reputable international organizations. More information can
-         be found in the data sources tab below. This interactive platform sy
+         be found in the data sources tab below. This interactive platform allows users to get 
+         a quick overview of the current employment situation in different countries while taking
+         a gender perspective and allowing for comparison with peer countries. 
          """)
 
 
