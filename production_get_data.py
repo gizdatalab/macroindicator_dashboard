@@ -8,7 +8,7 @@ from api_functions.imf_data import get_imf_data
 # end_year > 2017 
 
 START_YEAR = 2000
-END_YEAR = 2017
+END_YEAR = 2023
 
 ########################### SPECIFY THE WB INDICATORS NEEDED ##########################
 
@@ -34,7 +34,7 @@ DATASET = "PGCS"
 wb_data = get_wb_data(featureMap_indicators_wb, START_YEAR, END_YEAR)
 
 # IMF 
-imf_data = get_imf_data(featureMap_indicators_imf, START_YEAR, END_YEAR, DATASET)
+imf_data = get_imf_data(featureMap_indicators_imf, 2000, 2017, DATASET)
 
 
 ########################### MANUALLY CALCULATE GDP GROWTH ##########################

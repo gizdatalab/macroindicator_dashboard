@@ -166,10 +166,10 @@ st.sidebar.info("""Please note that this dashboard is a prototype.
 # Add a title and intro text
 st.title("Employment Indicators")
 st.write("""
-         Explore a comprehensive employment dashboard that provides a holistic view of key employment indicators. 
-         This interactive platform synthesizes diverse metrics, offering insights into job market trends, labor 
-         force participation, and economic vitality. With intuitive visualizations and data-driven analysis, gain 
-         a deeper understanding of workforce dynamics and make informed decisions for the future.
+         This dashboard provides a holistic overview of the employment situation in different
+         countries, using the most important macroeconomic indicators for employment. The data 
+         displayed is derived from reputable international organizations. More information can
+         be found in the data sources tab below. This interactive platform sy
          """)
 
 
