@@ -528,7 +528,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     with col3: 
 
         # Get data 
-        table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
+        #table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
         #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
 
         # Configure plot

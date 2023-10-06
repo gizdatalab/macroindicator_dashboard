@@ -354,35 +354,32 @@ with col1:
                 the economies of a lot of countries (if selected) tend to grow. That is, 
                 year by year most countries manage to establish new "high scores" in terms 
                 of the total value of final goods and services they have produced in that 
-                year (GDP). So how do people actually manage that their economies grow?</div>  
+                year (GDP). <strong>So how do people actually manage that their economies grow?</strong></div>  
                 <br>
                 <div style="text-align: justify;">Production depends on three so-called factors of production: Economists 
-                call the first land – which is a synonym for natural resources. They 
+                call the first <strong>land</strong> – which is a synonym for natural resources. They 
                 provide the material input for all the goods and services that an economy 
                 produces. Obviously, the material boundaries of our planet set an upper 
                 limit for material growth on earth.</div>   
                 <br>
-                <div style="text-align: justify;">The second factor is capital: Capital are all those products that can 
+                <div style="text-align: justify;">The second factor is <strong>capital</strong>: Capital are all those products that can 
                 be used to produce further products and do not end up in them: machines, 
                 tools and equipment, patents, buildings, a country's infrastructure. The 
                 more of these products are available, the more goods and services an economy 
                 can produce. Or, in turn, without any factories there will not be any industrial 
-                products. Hence, increasing the capital stock is one way to make an economy grow.
+                products. Hence, increasing the capital stock is one way to make an economy grow.</div>  
                 <br>
-                <div style="text-align: justify;">The last and third factor of production is labour. Labour is provided by people. 
-                That means, if the population is growing, there are more people around who can work. 
-                Thus, usually, an economy grows when its population is growing (for more 
-                information on employment, check out our other dashboards).</div>
+                <div style="text-align: justify;">The last and third factor of production is <strong>labour</strong>. Labour is provided by people. 
+                That means, if the population is growing, there are more people around who can work.
                 </div>""", unsafe_allow_html=True
         )    
 with col3:
                 
-    st.markdown("""<div style="text-align: justify;">The last and third factor of production is labour. Labour is provided by people. 
-                That means, if the population is growing, there are more people around who can work. 
-                Thus, usually, an economy grows when its population is growing (for more 
+    st.markdown("""<div style="text-align: justify;">Thus, usually, an economy grows when its population is growing (for more 
                 information on employment, check out our other dashboards).</div>  
                 <br>
-                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the quality of 
+                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
+                <strong>quality</strong> of 
                 both factors matters as well: If people are better educated and trained they 
                 will, most likely, be able to work more efficient and will consequently produce 
                 more per hour than before. In this context, one also often refers to the 
