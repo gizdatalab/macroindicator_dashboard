@@ -513,6 +513,18 @@ table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
 # Reorder columns
 table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
 
+# Drop old other column and add new other so that percentages add up to 100% 
+table2 = table2[table2['Sub Sector'] != 'Other services']
+sum_columns = table2['Employment Share (%)'].apply(lambda x: float(x)).sum()
+missing_value = 100 - sum_columns
+missing_value = round(missing_value,2)
+new_row = pd.DataFrame({'Sector': ['Other'],
+                         'Sub Sector': ['Other'],
+                         'Employment Share (%)': [missing_value]})
+
+# Append the new row to the DataFrame
+table2 = table2.append(new_row, ignore_index=True)
+
 # Check if data available
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
