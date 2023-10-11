@@ -38,9 +38,11 @@ def get_imf_data(feature_map_input, start_year_input, end_year_input, dataset_in
   
   ######################### Prepare indicators and country names ############################
 
+  # Get a list of all countries and their ids
   country_code_list = requests.get(f"http://dataservices.imf.org/REST/SDMX_JSON.svc/CodeList/CL_Country_{dataset_input}").json()\
       ['Structure']['CodeLists']['CodeList']['Code']
 
+  # Create feature map for countries and ids
   featureMap_countries = {code['@value']: code['Description']['#text'] for code in country_code_list}
 
   ################################### Define function ####################################
