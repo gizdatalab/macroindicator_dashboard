@@ -252,11 +252,11 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
-    # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+# Caption graph
+st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
 
-    # Create distance
-    st.header("")
+# Create distance
+st.header("")
 
 
 ############################# ROW 2 ###################################
@@ -377,8 +377,8 @@ with col3:
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
     
-with col3: 
-    st.caption('Data Sources: International Labour Organization')
+#with col3: 
+st.caption('Data Sources: International Labour Organization')
 
 
 ############################# ROW 2 ###################################
@@ -391,74 +391,72 @@ st.subheader(f"What's the women's share in {selected_country}?")
 # Configure columns
 col1, col2, col3 = st.columns([0.9,0.05,1])
 
-with col1: 
+#with col1: 
  
-    st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators can be broken down by sex.  
-                Table 1 shows for a given year for all indicators the total 
-                number of persons, the number of women within each group, and 
-                lastly their relative share.</div>
-                <br>
-                <div style="text-align: justify;">The table below shows the data for 
-                <span style="color: red;">{selected_country}</span>
-                for the year <span style="color: red;">{selected_end_year}</span>. </div>
-                """, unsafe_allow_html=True
-    )
+st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators can be broken down by sex.  
+            Table 1 shows for a given year for all indicators the total 
+            number of persons, the number of women within each group, and 
+            lastly their relative share. The table below shows the data for 
+            <span style="color: red;">{selected_country}</span>
+            for the year <span style="color: red;">{selected_end_year}</span>. </div>
+            """, unsafe_allow_html=True
+)
     
-    st.header("")    
+st.header("")    
 
     #### (3) Table 1
 
-    with col3:
+    #with col3:
 
-        table1_indicators = ['Population', 
-                            'Population in working age',
-                            'Labour force',
-                            'Employment',
-                            'Youth unemployment', 
-                            'Population, female share', 
-                            'Population in working age, female share',
-                            'Labour force, female share',
-                            'Employment, female share',
-                            'Youth unemployment, female share']
-        
-        table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
+table1_indicators = ['Population', 
+                    'Population in working age',
+                    'Labour force',
+                    'Employment',
+                    'Youth unemployment', 
+                    'Population, female share', 
+                    'Population in working age, female share',
+                    'Labour force, female share',
+                    'Employment, female share',
+                    'Youth unemployment, female share']
 
-        # Try whether the data for the given year is available
-        try: 
-            # Create the table 
-            indicator_values = {}
-            for ind in table1_indicators:
+table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
 
-                # Retrieve the values
-                indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
+# Try whether the data for the given year is available
+try: 
+    # Create the table 
+    indicator_values = {}
+    for ind in table1_indicators:
 
-            # Create table
-            table1_dict = {
-                'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-                'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
-                'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
+        # Retrieve the values
+        indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
 
-            table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
-            table1.set_index('Indicator', inplace=True)
+    # Create table
+    table1_dict = {
+        'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
+        'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
+        'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
 
-            # Add women's share column and round to two digits
-            table1["Women's share (%)"] = round(table1['Women'] / table1['Total'].apply(lambda x: round(x / 100)),2)
-            table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
+    table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
+    table1.set_index('Indicator', inplace=True)
 
-            #add commas 
-            table1['Total'] = table1["Total"].apply(lambda x: format (x, ',d'))
-            table1['Women'] = table1["Women"].apply(lambda x: format (x, ',d'))
+    # Add women's share column and round to two digits
+    table1["Women's share (%)"] = round(table1['Women'] / table1['Total'].apply(lambda x: round(x / 100)),2)
+    table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
 
-            # Round to millions 
-            #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
-            #table1["Women (Million)"] = table1["Women (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+    #add commas 
+    table1['Total'] = table1["Total"].apply(lambda x: format (x, ',d'))
+    table1['Women'] = table1["Women"].apply(lambda x: format (x, ',d'))
+
+    # Round to millions 
+    #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+    #table1["Women (Million)"] = table1["Women (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
 
 
-            # Display table
-            st.table(table1)
-        
-        except ValueError: 
-            st.error("Data for this year is not available. Try adjusting the selection on the side.")
+    # Display table
+    st.table(table1)
+
+except ValueError: 
+    st.error("Data for this year is not available. Try adjusting the selection on the side.")
     
   
 #st.table(chart1_data)
