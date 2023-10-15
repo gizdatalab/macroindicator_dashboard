@@ -188,10 +188,9 @@ st.header("")
 
 # Display subheading 
 st.subheader(f"Who is working in the economy in {selected_country}?")
-#st.header("")
 
 # Configure columns
-col1, col2, col3 = st.columns([0.8,0.05,1])
+col1, col2, col3 = st.columns([1,0.05,1])
 
 ### GRAPH AND TEXT 1 ###
 
@@ -245,7 +244,7 @@ with col3:
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
-        y=1.05,
+        y=1.1,
         xanchor="left",
         x=0.01
         ))
@@ -267,7 +266,7 @@ st.subheader("Who is being paid for their work?")
 
 ### GRAPH AND TEXT 2 ###
 # Configure columns
-col1, col2, col3 = st.columns([0.8,0.05,1])
+col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1: 
 
@@ -390,7 +389,7 @@ with col3:
 st.subheader(f"What's the women's share in {selected_country}?")
 
 # Configure columns
-col1, col2, col3 = st.columns([0.8,0.05,1])
+col1, col2, col3 = st.columns([0.9,0.05,1])
 
 with col1: 
  
