@@ -253,9 +253,8 @@ with col3:
     # Set yaxis to zero
     #fig.update_yaxes(rangemode="tozero")
 
-    # Fix y-axis to always show (100%)
+    # Fix y-axis to zero and add margin
     fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
-    #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
@@ -305,7 +304,7 @@ with col3:
     chart2_data_lf = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
     
     #  Graphs
-    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment: Country Comparison", "Labour Force: Country Comparison"])
+    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
 
     with tab1:
       
@@ -339,7 +338,7 @@ with col3:
 
         # If the peer selection is empty show error message
         if not selected_peer: 
-            st.error("Please choose one or several countries for comparison in the sidebar to see this graph.")
+            st.error("Please choose one or several comparison countries.")
         
         # if peer selection chosen display graph
         else:
@@ -363,8 +362,8 @@ with col3:
                 x=0.01
                 ))
             
-            # Set yaxis to zero
-            fig.update_yaxes(rangemode="tozero")
+            # Fix y-axis to zero and add margin
+            fig.update_yaxes(range = [0, ((max(chart2_data_unemp.Value))*1.2)])
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
@@ -373,7 +372,7 @@ with col3:
         
         # If the peer selection is empty show error message
         if not selected_peer: 
-            st.error("Please choose one or several countries for comparison in the sidebar to see this graph.")
+            st.error("Please choose one or several countries in the sidebar.")
         
         # if peer selection chosen display graph
         else:
@@ -397,8 +396,8 @@ with col3:
                 x=0.01
                 ))
             
-            # Set yaxis to zero
-            fig.update_yaxes(rangemode="tozero")
+            # Fix y-axis to zero and add margin
+            fig.update_yaxes(range = [0, ((max(chart2_data_lf.Value))*1.2)])
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
@@ -527,7 +526,7 @@ st.header("")
 
 #### Table 2
 # Configure columns
-col1, col2, col3 = st.columns([1,0.05,1])
+col1, col2, col3 = st.columns([1,0.05,0.7])
 
 
 table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
@@ -594,7 +593,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     with col1: 
 
         # Display table
-        st.table(table2)
+        st.table(table2.set_index("Sub Sector"))
 
         # Caption graph
         st.caption('Data Source: International Labour Organization')
@@ -602,22 +601,47 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     ### PIE CHART 
     with col3: 
 
+        on = st.toggle('Show aggregates')
+
         # Get data 
         #table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
         #table2.loc[table2['Employment Share (%)'] < 2, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
 
-        # Configure plot
-        fig_2 = px.pie(table2,
-                    values="Employment Share (%)",
-                    title=f"Employment Shares for {selected_country} in {selected_end_year}",
-                    names="Sub Sector")
-        
-        fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
-        fig_2.update(layout_showlegend=False)
-        fig_2.update_traces(textposition='inside', textinfo='percent+label')
-        
-        # Display graph
-        st.plotly_chart(fig_2, use_container_width=True)
+        # If the toggle is activated 
+        if on:
+
+            # Aggregate data
+            table2_agg = table2
+            table2_agg['Employment Share (%)'] = table2_agg['Employment Share (%)'].astype(float)
+            table2_agg = table2_agg.groupby("Sector")["Employment Share (%)"].sum()
+            table2_agg = table2_agg.reset_index()
+            
+            # Display aggregate pie chart 
+            fig_2 = px.pie(table2_agg,
+                            values="Employment Share (%)",
+                            #title=f"Employment Shares for {selected_country} in {selected_end_year}",
+                            names="Sector")
+                        
+            fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+            fig_2.update(layout_showlegend=False)
+            fig_2.update_traces(textposition='inside', textinfo='percent+label')
+            
+            # Display graph
+            st.plotly_chart(fig_2, use_container_width=True)
+        # If toggle not activated
+        else:
+            # Configure detailed pie chart
+            fig_2 = px.pie(table2,
+                        values="Employment Share (%)",
+                        #title=f"Employment Shares for {selected_country} in {selected_end_year}",
+                        names="Sub Sector")
+            
+            fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+            fig_2.update(layout_showlegend=False)
+            fig_2.update_traces(textposition='inside', textinfo='percent+label')
+            
+            # Display graph
+            st.plotly_chart(fig_2, use_container_width=True)
 
 else: 
     with col1:
