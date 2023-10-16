@@ -589,6 +589,8 @@ new_row = pd.DataFrame({'Sector': ['Other'],
 table2 = table2.append(new_row, ignore_index=True)
 
 # Check if data available
+with col1:
+    st.table(table2)
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
     with col1: 
