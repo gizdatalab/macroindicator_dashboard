@@ -326,7 +326,7 @@ with col3:
         fig.update_layout(legend=dict(
             #orientation="h",
             yanchor="bottom",
-            y=1.05,
+            y=1.10,
             xanchor="left",
             x=0.01
             ))
@@ -357,13 +357,13 @@ with col3:
             fig.update_layout(legend=dict(
                 orientation="h",
                 yanchor="bottom",
-                y=1.05,
+                y=1.10,
                 xanchor="left",
                 x=0.01
                 ))
             
-            # Fix y-axis to zero and add margin
-            fig.update_yaxes(range = [0, ((max(chart2_data_unemp.Value))*1.2)])
+            # Fix y-axis to always show (100%)
+            fig.update_yaxes(range=[0, 100])
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
@@ -383,7 +383,7 @@ with col3:
                             color='Country',
                             hover_name="Value",
                             labels={
-                            "Value": "Number of people"
+                            "Value": "Percentage"
                         }
                             )
             
@@ -391,13 +391,13 @@ with col3:
             fig.update_layout(legend=dict(
                 orientation="h",
                 yanchor="bottom",
-                y=1.05,
+                y=1.10,
                 xanchor="left",
                 x=0.01
                 ))
             
-            # Fix y-axis to zero and add margin
-            fig.update_yaxes(range = [0, ((max(chart2_data_lf.Value))*1.2)])
+            # Fix y-axis to always show (100%)
+            fig.update_yaxes(range=[0, 100])
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
