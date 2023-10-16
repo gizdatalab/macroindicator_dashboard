@@ -546,7 +546,7 @@ table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
                     'Employment Other service activities': 'Tertiary'}             
 
 table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
-st.write(table2_data)
+
 #  Retrieve employment value for the year
 employment_in_year = get_filtered_data(selected_country, selected_end_year, selected_end_year, ["Employment"]).values[0][5]
 
@@ -566,7 +566,7 @@ table2_dict = {
     'Employment Share (%)': indicator_values_table2.values()}
 
 table2 = pd.DataFrame(table2_dict).reset_index(drop=True)
-st.write(table2_data)
+
 # Add sector column
 table2["Sector"] = table2['Sub Sector'].map(table2_featureMap)
 
@@ -575,7 +575,7 @@ table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
 
 # Reorder columns
 table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
-st.write(table2)
+
 # Drop old other column and add new other so that percentages add up to 100% 
 table2 = table2[table2['Sub Sector'] != 'Other service activities']
 sum_columns = table2['Employment Share (%)'].apply(lambda x: float(x)).sum()
@@ -589,7 +589,6 @@ new_row = pd.DataFrame({'Sector': ['Other'],
 table2 = table2.append(new_row, ignore_index=True)
 
 # Check if data available
-st.write(table2)
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
     with col1: 
