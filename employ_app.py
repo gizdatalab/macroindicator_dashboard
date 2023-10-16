@@ -546,7 +546,7 @@ table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
                     'Employment Other service activities': 'Tertiary'}             
 
 table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
-
+st.write(table2_data)
 #  Retrieve employment value for the year
 employment_in_year = get_filtered_data(selected_country, selected_end_year, selected_end_year, ["Employment"]).values[0][5]
 
@@ -566,7 +566,7 @@ table2_dict = {
     'Employment Share (%)': indicator_values_table2.values()}
 
 table2 = pd.DataFrame(table2_dict).reset_index(drop=True)
-
+st.write(table2_data)
 # Add sector column
 table2["Sector"] = table2['Sub Sector'].map(table2_featureMap)
 
