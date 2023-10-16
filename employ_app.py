@@ -248,11 +248,14 @@ with col3:
         y=1.1,
         xanchor="left",
         x=0.01,
-        ),
-        yaxis=dict(range=[0, max(chart1_data["Indicator"])]))
+        ))
     
     # Set yaxis to zero
-    fig.update_yaxes(rangemode="tozero")
+    #fig.update_yaxes(rangemode="tozero")
+
+    # Fix y-axis to always show (100%)
+    fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
+    #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
