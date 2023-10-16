@@ -31,7 +31,7 @@ df_income['Year'] = df_income['Year'].astype(int)
 #------------------------------ Functions  ------------------------------------#
 
 # Data Selection 
-def get_filtered_data(country_selec, peer_selec, region_select, start_year_selec, end_year_selec, indicator_selec):
+def get_filtered_data(country_selec, peer_selec, start_year_selec, end_year_selec, indicator_selec):
 
     """
     Function takes the user selection of the dashboard as an input and retrieves the
@@ -45,12 +45,9 @@ def get_filtered_data(country_selec, peer_selec, region_select, start_year_selec
     
     if isinstance(peer_selec, str):
         peer_selec = [peer_selec]
-    
-    if isinstance(region_select, str):
-        region_select = [region_select]
 
     # Combine selected countries
-    countries_selec = country_selec + peer_selec + region_select
+    countries_selec = country_selec + peer_selec
 
     # Create a dataframe with all years and indicators first
     ## This is necessary to add the missing years with "None" values
@@ -114,13 +111,8 @@ selected_country = st.sidebar.selectbox(
 
 # DESCRIPTION REGIONS/PEER COUNTRIES
 st.sidebar.caption("""If you want to compare the values of the chosen country
-                   to a region or peer countries, please make a selection below.""")
+                   to peer countries, please make a selection below.""")
 
-# PEER COUNTRY INPUT WIDGET
-selected_region = st.sidebar.multiselect(
-    "Choose regions for comparison",
-    df_sub_region
-    )
 
 # REGION INPUT WIDGET
 selected_peer = st.sidebar.multiselect(
@@ -215,17 +207,18 @@ with col1:
                 estimates of these two shares.</div>""", unsafe_allow_html=True
                 )
     
+
+
+ #### Graph 1
+
+with col3: 
     st.subheader("Labour income share estimates as percent of GDP")
     st.markdown("""*Note that for each country, the capital income share corresponds with the space above each country line, 
             while the labor income share with the space below.*""")
 
 
- #### Graph 1
-
-with col1: 
-
     # Get data
-    chart1_data = get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, ['Labour income share estimates'])
+    chart1_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['Labour income share estimates'])
     
     ### Group data by year
     chart1_data = chart1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
@@ -253,8 +246,11 @@ with col1:
     # Caption graph
     st.caption('Data Sources: World Development Indicators (WDI)')
 
+############### Row 2 ####################
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
 
-with col3: 
+with col1: 
  
     st.header(f"How's the income distributed within {selected_country}?")
 
@@ -272,11 +268,11 @@ with col3:
                 """, unsafe_allow_html=True
                 )
     
-    #st.subheader("Gini Coefficient")    
-
+        
+with col3:
+    st.subheader("Gini Index")
     # Get data
-    chart2_data = get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, ['Gini index'])
-    
+    chart2_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['Gini index'])
     ### Group data by year
     chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
     
@@ -326,17 +322,19 @@ with col1:
                 (or GDP per capita) as a perfect benchmark for your personal annual: Bear in mind that GNI per capita is calculated by 
                 dividing GNI by the total population; however, not everyone is working full-time, and some are not working at all (e.g., 
                 children). A large fraction of society is also doing unpaid work, for example childcare or home production for own use. 
-                Also, GNI does not only reflect wages and salaries but also the capital share. Bearing all this in mind, GNI per capita 
-                still gives you some orientation whether your gross income, and thus somehow your standard of living, is above average 
-                or below.</div>""", unsafe_allow_html=True
+                Also, GNI does not only reflect wages and salaries but also the capital share.</div>""", unsafe_allow_html=True
                 )
     st.header("")    
 
 #### Graph 3
-with col1: 
-
+with col3: 
+    st.markdown("""<div style="text-align: justify;"> Bearing all this in mind, GNI per capita 
+                still gives you some orientation whether your gross income, and thus somehow your standard of living, is above average 
+                or below.
+            </div>""", unsafe_allow_html=True
+            )
     # Get data
-    chart3_data = get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
+    chart3_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
     
     ### Group data by year
     chart3_data = chart3_data.groupby(['Indicator'],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,['Year'])
@@ -367,13 +365,15 @@ with col1:
     # Caption graph
     st.caption('Data Sources: World Development Indicators (WDI)')
 
-
-with col3: 
+###################### Row 3 ######################
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
+with col1: 
     #### (3) Area Chart
     st.subheader("Income Shares GNI per Capita")
 
     # Get data
-    area1_data =  get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, 
+    area1_data =  get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, 
                                           ['Income share held by highest 20%', 
                                            'Income share held by second 20%',
                                            'Income share held by third 20%',
@@ -408,11 +408,11 @@ with col3:
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
-
+with col3:
     # Subheader for poverty share
     st.subheader("Share of population that lives with less than 6$ per person a day")
     # Get data for the poverty share
-    chart4_data = get_filtered_data(selected_country, selected_peer, selected_region, selected_start_year, selected_end_year, ['Poverty Share'])
+    chart4_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['Poverty Share'])
     
     ### Group data by year
     chart4_data = chart4_data.groupby([chart4_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
