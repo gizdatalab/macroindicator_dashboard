@@ -146,7 +146,7 @@ csv = convert_df(df_employ)
 # Add empty space to create some distance 
 st.sidebar.header("")
 
-st.sidebar.download_button(label="Click here to download data as csv",
+st.sidebar.download_button(label="Download full data as csv",
                    data=csv, 
                    file_name='employment_data.csv')
 
@@ -215,7 +215,10 @@ with col1:
     )
     
     #st.header("")
-
+    
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+    
     #### Graph 1
 
 with col3: 
@@ -255,9 +258,6 @@ with col3:
     
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
-
-# Caption graph
-st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
 
 # Create distance
 st.header("")
@@ -462,7 +462,9 @@ try:
 except ValueError: 
     st.error("Data for this year is not available. Try adjusting the selection on the side.")
     
-  
+# Caption graph
+st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+
 #st.table(chart1_data)
 # Create distance
 st.header("")
