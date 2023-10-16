@@ -148,7 +148,7 @@ st.sidebar.header("")
 
 st.sidebar.download_button(label="Click here to download data as csv",
                    data=csv, 
-                   file_name='employment_data.xlsx')
+                   file_name='employment_data.csv')
 
 st.sidebar.header("")
 
