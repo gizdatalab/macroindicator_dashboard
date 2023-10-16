@@ -107,7 +107,7 @@ selected_country = st.sidebar.selectbox(
 
 # DESCRIPTION REGIONS/PEER COUNTRIES
 st.sidebar.caption("""If you want to compare the values of the chosen country
-                   to a region or peer countries, please make a selection below.""")
+                   to one or more peer countries, please make a selection below.""")
 
 # PEER COUNTRY INPUT WIDGET
 #selected_region = st.sidebar.multiselect(
@@ -209,7 +209,7 @@ with col1:
                 can be thought of as a starting point. However, children must not work. Hence, 
                 the working-age population is the population above the legal working age. Although 
                 the legal working age might be higher, the ILO sets the minimum working age for 
-                statistical purposes at 15 years. You can see the corresponding ILO estimates of 
+                statistical purposes at 15 years. You can see the corresponding ILO <em>estimates</em> of 
                 the working age population in chart 1. The gap to the population line is consequently 
                 the number of children or rather those under 15 years in the country of interest.</div>""", unsafe_allow_html=True
     )
@@ -246,8 +246,12 @@ with col3:
         yanchor="bottom",
         y=1.1,
         xanchor="left",
-        x=0.01
-        ))
+        x=0.01,
+        ),
+        yaxis=dict(range=[0, max(chart1_data["Indicator"])]))
+    
+    #fig.update_layout(yaxis=dict(range=[0, None]))
+
     
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
@@ -262,7 +266,7 @@ st.header("")
 ############################# ROW 2 ###################################
 
 # Subheader 
-st.subheader("Who is being paid for their work?")
+st.subheader("Who is being paid for work?")
 
 ### GRAPH AND TEXT 2 ###
 # Configure columns
@@ -271,7 +275,7 @@ col1, col2, col3 = st.columns([1,0.05,1])
 with col1: 
 
     #### Explanatory text box 1
-    st.markdown("""<div style="text-align: justify;">Next, let us ask who among those persons in working age is paid for their work. For instance, 
+    st.markdown("""<div style="text-align: justify;">Next, let us ask who among those persons in working age is paid for work. For instance, 
                 household work (which is worldwide predominantly performed by women) such as cleaning and cooking, 
                 or childcare and caring for elderly are all not being paid. Also, be aware that subsistence farmers 
                 who mainly produce for their own consumption and not for the market do not gain income. In this sense, 
@@ -297,7 +301,7 @@ with col3:
     chart2_data_lf = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
     
     #  Graphs
-    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
+    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment: Country Comparison", "Labour Force: Country Comparison"])
 
     with tab1:
       
@@ -378,7 +382,7 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
     
 #with col3: 
-st.caption('Data Sources: International Labour Organization')
+st.caption('Data Source: International Labour Organization')
 
 
 ############################# ROW 2 ###################################
@@ -432,7 +436,7 @@ try:
 
     # Create table
     table1_dict = {
-        'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
+        'Indicator': ['Population', 'Working age population', 'Labour force', 'Employment', 'Youth unemployment'],
         'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
         'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
 
