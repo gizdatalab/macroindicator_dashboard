@@ -575,7 +575,7 @@ table2["Sub Sector"] = table2["Sub Sector"].apply(lambda x: x[11:])
 
 # Reorder columns
 table2 = table2[['Sector', 'Sub Sector', 'Employment Share (%)']]
-
+st.write(table2)
 # Drop old other column and add new other so that percentages add up to 100% 
 table2 = table2[table2['Sub Sector'] != 'Other service activities']
 sum_columns = table2['Employment Share (%)'].apply(lambda x: float(x)).sum()
@@ -589,6 +589,7 @@ new_row = pd.DataFrame({'Sector': ['Other'],
 table2 = table2.append(new_row, ignore_index=True)
 
 # Check if data available
+st.write(table2)
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
     with col1: 
