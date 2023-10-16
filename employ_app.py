@@ -615,7 +615,6 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
         fig_2.update(layout_showlegend=False)
         fig_2.update_traces(textposition='inside', textinfo='percent+label')
-
         
         # Display graph
         st.plotly_chart(fig_2, use_container_width=True)
