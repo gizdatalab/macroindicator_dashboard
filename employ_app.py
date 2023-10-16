@@ -216,8 +216,6 @@ with col1:
     
     #st.header("")
     
-    # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
     
     #### Graph 1
 
@@ -253,11 +251,14 @@ with col3:
         ),
         yaxis=dict(range=[0, max(chart1_data["Indicator"])]))
     
-    #fig.update_layout(yaxis=dict(range=[0, None]))
+    # Set yaxis to zero
+    fig.update_yaxes(rangemode="tozero")
 
-    
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
+
+# Caption graph
+st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
 
 # Create distance
 st.header("")
@@ -333,53 +334,71 @@ with col3:
     
     with tab2: 
 
-        # Configure plot
-        fig = px.line(chart2_data_unemp,
-                        x="Year", 
-                        y="Value", 
-                        color='Country',
-                        hover_name="Value",
-                        labels={
-                        "Value": "Percentage"
-                     }
-                        )
+        # If the peer selection is empty show error message
+        if not selected_peer: 
+            st.error("Please choose one or several countries for comparison in the sidebar to see this graph.")
         
-        # Move legend 
-        fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.05,
-            xanchor="left",
-            x=0.01
-            ))
+        # if peer selection chosen display graph
+        else:
+            # Configure plot
+            fig = px.line(chart2_data_unemp,
+                            x="Year", 
+                            y="Value", 
+                            color='Country',
+                            hover_name="Value",
+                            labels={
+                            "Value": "Percentage"
+                        }
+                            )
+            
+            # Move legend 
+            fig.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.05,
+                xanchor="left",
+                x=0.01
+                ))
+            
+            # Set yaxis to zero
+            fig.update_yaxes(rangemode="tozero")
 
-        # Display graph
-        st.plotly_chart(fig, use_container_width=True)
-
+            # Display graph
+            st.plotly_chart(fig, use_container_width=True)
+    
     with tab3: 
-
-        # Configure plot
-        fig = px.line(chart2_data_lf,
-                        x="Year", 
-                        y="Value", 
-                        color='Country',
-                        hover_name="Value",
-                        labels={
-                        "Value": "Number of people"
-                     }
-                        )
         
-        # Move legend 
-        fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.05,
-            xanchor="left",
-            x=0.01
-            ))
+        # If the peer selection is empty show error message
+        if not selected_peer: 
+            st.error("Please choose one or several countries for comparison in the sidebar to see this graph.")
+        
+        # if peer selection chosen display graph
+        else:
+            # Configure plot
+            fig = px.line(chart2_data_lf,
+                            x="Year", 
+                            y="Value", 
+                            color='Country',
+                            hover_name="Value",
+                            labels={
+                            "Value": "Number of people"
+                        }
+                            )
+            
+            # Move legend 
+            fig.update_layout(legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.05,
+                xanchor="left",
+                x=0.01
+                ))
+            
+            # Set yaxis to zero
+            fig.update_yaxes(rangemode="tozero")
 
-        # Display graph
-        st.plotly_chart(fig, use_container_width=True)
+            # Display graph
+            st.plotly_chart(fig, use_container_width=True)
     
 #with col3: 
 st.caption('Data Source: International Labour Organization')
@@ -481,8 +500,9 @@ st.markdown(f"""<div style="text-align: justify;">Let us take a closer look at t
             persons who are employed: In which sectors do they work? Table 2 provides 
             a listing for the sectors Agriculture, Forestry and Fishing (primary sector), 
             Industry (secondary sector), and services (tertiary sector). The two latter 
-            sectors are again broken down by further sub-sectors following the 2008 
-            International Standard Industrial Classification (ISIC, revision 4). 
+            sectors are again broken down by further sub-sectors following the 
+            <a href="https://unstats.un.org/unsd/publication/seriesm/seriesm_4rev4e.pdf">2008 
+            International Standard Industrial Classification (ISIC, revision 4)</a>. 
             For comparison, the table also provides information what share of GDP is 
             created in which sector. Note that due to statistical reasons these GDP shares 
             often do not sum up to 100%.</div>
@@ -507,20 +527,20 @@ st.header("")
 col1, col2, col3 = st.columns([1,0.05,1])
 
 
-table2_featureMap = {'Employment Agriculture': 'Primary',
+table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
                     'Employment Mining and quarrying': 'Secondary',
                     'Employment Manufacturing': 'Secondary',
-                    'Employment Utilities': 'Secondary',
-                    'Employment Construct': 'Secondary',
-                    'Employment Wholesale': 'Tertiary', 
-                    'Employment Transport': 'Tertiary',
-                    'Employment Accomodation': 'Tertiary',
-                    'Employment Financial': 'Tertiary',
-                    'Employment Real estate': 'Tertiary',
-                    'Employment Public administration and defence': 'Tertiary',
+                    'Employment Electricity; gas; steam and air conditioning supply': 'Secondary',
+                    'Employment Construction': 'Secondary',
+                    'Employment Wholesale and retail trade; repair of motor vehicles and motorcycles': 'Tertiary', 
+                    'Employment Transportation and storage': 'Tertiary',
+                    'Employment Accomodation and food service activities': 'Tertiary',
+                    'Employment Financial and insurance activities': 'Tertiary',
+                    'Employment Real estate activities': 'Tertiary',
+                    'Employment Public administration and defence; compulsory social security': 'Tertiary',
                     'Employment Education': 'Tertiary',
                     'Employment Human health and social work activities': 'Tertiary',
-                    'Employment Other services': 'Tertiary'}             
+                    'Employment Other service activities': 'Tertiary'}             
 
 table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
 
