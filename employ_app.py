@@ -107,17 +107,17 @@ selected_country = st.sidebar.selectbox(
 
 # DESCRIPTION REGIONS/PEER COUNTRIES
 st.sidebar.caption("""If you want to compare the values of the chosen country
-                   to a region or peer countries, please make a selection below.""")
+                   to one or more peer countries, please make a selection below.""")
 
 # PEER COUNTRY INPUT WIDGET
-selected_region = st.sidebar.multiselect(
-    "Choose regions for comparison",
-    df_sub_region
-    )
+#selected_region = st.sidebar.multiselect(
+#    "Choose regions for comparison",
+#    df_sub_region
+#    )
 
-# REGION INPUT WIDGET
+# PEER COUNTRY INPUT WIDGET
 selected_peer = st.sidebar.multiselect(
-    "Choose peer countries for comparison",
+    "Choose comparison countries",
     df_countries
     )
 
@@ -146,9 +146,9 @@ csv = convert_df(df_employ)
 # Add empty space to create some distance 
 st.sidebar.header("")
 
-st.sidebar.download_button(label="Click here to download data as csv",
+st.sidebar.download_button(label="Download full data as csv",
                    data=csv, 
-                   file_name='employment_data.xlsx')
+                   file_name='employment_data.csv')
 
 st.sidebar.header("")
 
@@ -184,6 +184,11 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
     
 ############################# ROW 1 ###################################
 
+st.header("")
+
+# Display subheading 
+st.subheader(f"Who is working in the economy in {selected_country}?")
+
 # Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 
@@ -191,27 +196,35 @@ col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1: 
 
-    # Display subheading 
-    st.subheader(f"Who is working in the economy in {selected_country}?")
+    # Create distance
+    #st.header("")
 
     #### Explanatory text box 1
     st.markdown("""<div style="text-align: justify;">All the goods and services an economy creates are formed 
                 by three different factors of production: <strong>land</strong>, <strong>capital</strong>, and 
                 <strong>labour</strong>. Let us take a closer look at 
-                the latter: Who is working in an economy? Naturally, the population of a country 
+                the latter: Who is working in an economy?</div> 
+                <br>
+                <div style="text-align: justify;">Naturally, the population of a country 
                 can be thought of as a starting point. However, children must not work. Hence, 
                 the working-age population is the population above the legal working age. Although 
                 the legal working age might be higher, the ILO sets the minimum working age for 
-                statistical purposes at 15 years. You can see the corresponding ILO estimates of 
+                statistical purposes at 15 years. You can see the corresponding ILO <em>estimates</em> of 
                 the working age population in chart 1. The gap to the population line is consequently 
                 the number of children or rather those under 15 years in the country of interest.</div>""", unsafe_allow_html=True
     )
     
-    st.header("")
-
+    #st.header("")
+    
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+    
     #### Graph 1
 
-with col1: 
+with col3: 
+
+    # Create distance
+    #st.header("")
 
     # Get data
     chart1_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Population', 'Population in working age', 'Labour force', 'Employment'])
@@ -222,102 +235,38 @@ with col1:
     # Configure plot
     fig = px.line(chart1_data,
                     x="Year", 
-                    y="Value",   
+                    y="Value", 
                     color='Indicator',
-                    hover_name="Value"
+                    hover_name="Value",
+                    labels={
+                     "Value": "Number of people",
+                 }
                     )
     
     # Move legend 
     fig.update_layout(legend=dict(
-       # orientation="h",
+        orientation="h",
         yanchor="bottom",
-        y=1.05,
+        y=1.1,
         xanchor="left",
-        x=0.01
-        ))
+        x=0.01,
+        ),
+        yaxis=dict(range=[0, max(chart1_data["Indicator"])]))
+    
+    #fig.update_layout(yaxis=dict(range=[0, None]))
+
     
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
-    # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+# Create distance
+st.header("")
 
 
-### TABLE AND TEXT 2 ###
-
-with col3: 
- 
-    st.subheader(f"What's the women's share in {selected_country}?")
-
-    st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators can be broken down by sex.  
-                Table 1 shows for a given year for all indicators the total 
-                number of persons, the number of women within each group, and 
-                lastly their relative share.</div>
-                <br>
-                <div style="text-align: justify;">The table below shows the data for 
-                <span style="color: red;">{selected_country}</span>
-                for the year <span style="color: red;">{selected_end_year}</span>. </div>
-                """, unsafe_allow_html=True
-    )
-    
-    st.header("")    
-
-    #### (3) Table 1
-
-    table1_indicators = ['Population', 
-                        'Population in working age',
-                        'Labour force',
-                        'Employment',
-                        'Youth unemployment', 
-                        'Population, female share', 
-                        'Population in working age, female share',
-                        'Labour force, female share',
-                        'Employment, female share',
-                        'Youth unemployment, female share']
-    
-    table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
-
-    # Try whether the data for the given year is available
-    try: 
-        # Create the table 
-        indicator_values = {}
-        for ind in table1_indicators:
-
-            # Retrieve the values
-            indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
-
-        # Create table
-        table1_dict = {
-            'Indicator': ['Population', 'Working age population', 'Labour force', 'Formal employment', 'Youth unemployment'],
-            'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
-            'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
-
-        table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
-        table1.set_index('Indicator', inplace=True)
-
-        # Add women's share column and round to two digits
-        table1["Women's share (%)"] = round(table1['Women'] / table1['Total'].apply(lambda x: round(x / 100)),2)
-        table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
-
-        #add commas 
-        table1['Total'] = table1["Total"].apply(lambda x: format (x, ',d'))
-        table1['Women'] = table1["Women"].apply(lambda x: format (x, ',d'))
-
-        # Round to millions 
-        #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
-        #table1["Women (Million)"] = table1["Women (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
-
-
-        # Display table
-        st.table(table1)
-    
-    except ValueError: 
-        st.error("Data for this year is not available. Try adjusting the selection on the side.")
-    
-  
-#st.table(chart1_data)
-    
 ############################# ROW 2 ###################################
+
+# Subheader 
+st.subheader("Who is being paid for work?")
 
 ### GRAPH AND TEXT 2 ###
 # Configure columns
@@ -325,12 +274,8 @@ col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1: 
 
-    # Subheader 
-    st.subheader("Who is being paid for their work?")
-
-
     #### Explanatory text box 1
-    st.markdown("""<div style="text-align: justify;">Next, let us ask who among those persons in working age is paid for their work. For instance, 
+    st.markdown("""<div style="text-align: justify;">Next, let us ask who among those persons in working age is paid for work. For instance, 
                 household work (which is worldwide predominantly performed by women) such as cleaning and cooking, 
                 or childcare and caring for elderly are all not being paid. Also, be aware that subsistence farmers 
                 who mainly produce for their own consumption and not for the market do not gain income. In this sense, 
@@ -352,11 +297,11 @@ with col3:
 
     # Get data for country and for comparison chosen
     chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Labour force participation rate', 'Unemployment rate'])
-    chart2_data_unemp = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Unemployment rate'])
-    chart2_data_lf = get_filtered_data([selected_country] + selected_region + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
+    chart2_data_unemp = get_filtered_data([selected_country]  + selected_peer, selected_start_year, selected_end_year, ['Unemployment rate'])
+    chart2_data_lf = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
     
     #  Graphs
-    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
+    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment: Country Comparison", "Labour Force: Country Comparison"])
 
     with tab1:
       
@@ -365,8 +310,12 @@ with col3:
                         x="Year", 
                         y="Value", 
                         color='Indicator',
-                        hover_name="Value"
+                        hover_name="Value",
+                        labels={
+                        "Value": "Percentage",
+                    }
                         )
+        
         # Fix y-axis to always show (100%)
         fig.update_yaxes(range=[0, 100])
 
@@ -389,12 +338,15 @@ with col3:
                         x="Year", 
                         y="Value", 
                         color='Country',
-                        hover_name="Value"
+                        hover_name="Value",
+                        labels={
+                        "Value": "Percentage"
+                     }
                         )
         
         # Move legend 
         fig.update_layout(legend=dict(
-            #orientation="h",
+            orientation="h",
             yanchor="bottom",
             y=1.05,
             xanchor="left",
@@ -411,12 +363,15 @@ with col3:
                         x="Year", 
                         y="Value", 
                         color='Country',
-                        hover_name="Value"
+                        hover_name="Value",
+                        labels={
+                        "Value": "Number of people"
+                     }
                         )
         
         # Move legend 
         fig.update_layout(legend=dict(
-            #orientation="h",
+            orientation="h",
             yanchor="bottom",
             y=1.05,
             xanchor="left",
@@ -426,11 +381,96 @@ with col3:
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
     
-with col3: 
-    st.caption('Data Sources: International Labour Organization')
+#with col3: 
+st.caption('Data Source: International Labour Organization')
 
 
-############################# ROW 3 ###################################
+############################# ROW 2 ###################################
+
+
+### TABLE AND TEXT 2 ###
+
+st.subheader(f"What's the women's share in {selected_country}?")
+
+# Configure columns
+col1, col2, col3 = st.columns([0.9,0.05,1])
+
+#with col1: 
+ 
+st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators can be broken down by sex.  
+            Table 1 shows for a given year for all indicators the total 
+            number of persons, the number of women within each group, and 
+            lastly their relative share. The table below shows the data for 
+            <span style="color: red;">{selected_country}</span>
+            for the year <span style="color: red;">{selected_end_year}</span>. </div>
+            """, unsafe_allow_html=True
+)
+    
+st.header("")    
+
+    #### (3) Table 1
+
+    #with col3:
+
+table1_indicators = ['Population', 
+                    'Population in working age',
+                    'Labour force',
+                    'Employment',
+                    'Youth unemployment', 
+                    'Population, female share', 
+                    'Population in working age, female share',
+                    'Labour force, female share',
+                    'Employment, female share',
+                    'Youth unemployment, female share']
+
+table1_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table1_indicators)
+
+# Try whether the data for the given year is available
+try: 
+    # Create the table 
+    indicator_values = {}
+    for ind in table1_indicators:
+
+        # Retrieve the values
+        indicator_values[ind] = round(table1_data[table1_data['Indicator'] == ind].values[0][5])
+
+    # Create table
+    table1_dict = {
+        'Indicator': ['Population', 'Working age population', 'Labour force', 'Employment', 'Youth unemployment'],
+        'Total': [indicator_values[ind] for ind in table1_indicators[:5]],
+        'Women': [indicator_values[ind] for ind in table1_indicators[5:]]}
+
+    table1 = pd.DataFrame(table1_dict).reset_index(drop=True)
+    table1.set_index('Indicator', inplace=True)
+
+    # Add women's share column and round to two digits
+    table1["Women's share (%)"] = round(table1['Women'] / table1['Total'].apply(lambda x: round(x / 100)),2)
+    table1["Women's share (%)"] = table1["Women's share (%)"].apply(lambda x: format(x,".2f" ))
+
+    #add commas 
+    table1['Total'] = table1["Total"].apply(lambda x: format (x, ',d'))
+    table1['Women'] = table1["Women"].apply(lambda x: format (x, ',d'))
+
+    # Round to millions 
+    #table1["Total (Million)"] = table1["Total (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+    #table1["Women (Million)"] = table1["Women (Million)"].apply(lambda x: x/1000000).apply(lambda x: round(x,2)).apply(lambda x: format(x,".2f" ))
+
+
+    # Display table
+    st.table(table1)
+
+except ValueError: 
+    st.error("Data for this year is not available. Try adjusting the selection on the side.")
+    
+# Caption graph
+st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+
+#st.table(chart1_data)
+# Create distance
+st.header("")
+
+
+############################# ROW 4 ###################################
 
 ### TABLE AND TEXT 2 ###
 

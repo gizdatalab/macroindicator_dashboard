@@ -36,20 +36,20 @@ INDICATORS_ILO['Labour force, female share'] = {'indicator': 'EAP_TEAP_SEX_AGE_N
 INDICATORS_ILO['Employment, female share'] = {'indicator': 'EMP_TEMP_SEX_AGE_NB', 'SEX': 'SEX_F', 'FREQ': 'A', 'AGE': 'AGE_YTHADULT_YGE15'}
 INDICATORS_ILO['Youth unemployment'] = {'indicator': 'UNE_TUNE_SEX_AGE_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'AGE': 'AGE_YTHADULT_Y15-24'}
 INDICATORS_ILO['Youth unemployment, female share'] = {'indicator': 'UNE_TUNE_SEX_AGE_NB', 'SEX': 'SEX_F', 'FREQ': 'A', 'AGE': 'AGE_YTHADULT_Y15-24'}
-INDICATORS_ILO['Employment Agriculture'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_A'}
+INDICATORS_ILO['Employment Agriculture; forestry and fishing'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_A'}
 INDICATORS_ILO['Employment Mining and quarrying'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_B'}
 INDICATORS_ILO['Employment Manufacturing'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_C'}
-INDICATORS_ILO['Employment Utilities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_D'} 
-INDICATORS_ILO['Employment Construct'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_F'}
-INDICATORS_ILO['Employment Wholesale'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_G'}
-INDICATORS_ILO['Employment Transport'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_H'} 
-INDICATORS_ILO['Employment Accomodation'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_I'}
-INDICATORS_ILO['Employment Financial'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_K'}
-INDICATORS_ILO['Employment Real estate'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_L'}
-INDICATORS_ILO['Employment Public administration and defence'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_O'}
+INDICATORS_ILO['Employment Electricity; gas; steam and air conditioning supply'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_D'} 
+INDICATORS_ILO['Employment Construction'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_F'}
+INDICATORS_ILO['Employment Wholesale and retail trade; repair of motor vehicles and motorcycles'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_G'}
+INDICATORS_ILO['Employment Transportation and storage'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_H'} 
+INDICATORS_ILO['Employment Accomodation and food service activities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_I'}
+INDICATORS_ILO['Employment Financial and insurance activities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_K'}
+INDICATORS_ILO['Employment Real estate activities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_L'}
+INDICATORS_ILO['Employment Public administration and defence; compulsory social security'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_O'}
 INDICATORS_ILO['Employment Education'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_P'}
 INDICATORS_ILO['Employment Human health and social work activities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_Q'}
-INDICATORS_ILO['Employment Other services'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_S'}
+INDICATORS_ILO['Employment Other service activities'] = {'indicator': 'EMP_TEMP_SEX_ECO_NB', 'SEX': 'SEX_T', 'FREQ': 'A', 'ECO': 'ECO_ISIC4_S'}
 
 # Parameters 
 # Define featureMap for parameters 
@@ -95,24 +95,24 @@ df_employ = pd.concat([wb_data, ilo_data])
 
 # Calculate region values for the indicators and attach to df
 
-# Region 
-mean_values = df_employ.groupby(['Region' , 'Indicator', 'Year'])['Value'].mean().reset_index()
-mean_values = mean_values[~(mean_values['Region'] == 0)]
-mean_values.rename(columns={'Region': 'Country'}, inplace=True)
-df_employ = pd.concat([df_employ, mean_values])
+# # Region 
+# mean_values = df_employ.groupby(['Region' , 'Indicator', 'Year'])['Value'].mean().reset_index()
+# mean_values = mean_values[~(mean_values['Region'] == 0)]
+# mean_values.rename(columns={'Region': 'Country'}, inplace=True)
+# df_employ = pd.concat([df_employ, mean_values])
 
 
-# Other
-selected_cols  = ['Income Group', 'Least Developed Countries (LDC)', 
-                  'Land Locked Developing Countries (LLDC)', 
-                  'Small Island Developing States (SIDS)']
+# # Other
+# selected_cols  = ['Income Group', 'Least Developed Countries (LDC)', 
+#                   'Land Locked Developing Countries (LLDC)', 
+#                   'Small Island Developing States (SIDS)']
 
-for ele in selected_cols: 
-    mean_values = df_employ.groupby([ele , 'Indicator', 'Year'])['Value'].mean().reset_index()
-    mean_values = mean_values[~(mean_values[ele] == 0)]
-    mean_values[ele] = mean_values[ele].apply(lambda x: ele)
-    mean_values.rename(columns={ele: 'Country'}, inplace=True)
-    df_employ = pd.concat([df_employ, mean_values])
+# for ele in selected_cols: 
+#     mean_values = df_employ.groupby([ele , 'Indicator', 'Year'])['Value'].mean().reset_index()
+#     mean_values = mean_values[~(mean_values[ele] == 0)]
+#     mean_values[ele] = mean_values[ele].apply(lambda x: ele)
+#     mean_values.rename(columns={ele: 'Country'}, inplace=True)
+#     df_employ = pd.concat([df_employ, mean_values])
 
 # Save as excel file
 df_employ.to_excel('data/employment_data.xlsx', index=False)
