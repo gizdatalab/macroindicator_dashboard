@@ -192,15 +192,15 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 
 # ### GRAPH AND TEXT 1 ###
 
-st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
-                by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
-                have been produced within a defined time period (typically a year).  If this year, 
-                someone sells a house that has been build two years ago, it will not be part of 
-                this year's GDP. Also, if someone resells a car that has been manufactured and that 
-                she has bought this year it will only be counted once into the GDP since reselling 
-                is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
-                consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
-                They all have in common that you cannot store them.</div>""", unsafe_allow_html=True)
+# st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
+#                 by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
+#                 have been produced within a defined time period (typically a year).  If this year, 
+#                 someone sells a house that has been build two years ago, it will not be part of 
+#                 this year's GDP. Also, if someone resells a car that has been manufactured and that 
+#                 she has bought this year it will only be counted once into the GDP since reselling 
+#                 is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
+#                 consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
+#                 They all have in common that you cannot store them.</div>""", unsafe_allow_html=True)
 
 st.subheader("")
 
