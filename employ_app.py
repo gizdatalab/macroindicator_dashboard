@@ -304,7 +304,7 @@ with col3:
     chart2_data_lf = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Labour force participation rate'])
     
     #  Graphs
-    tab1, tab2, tab3 = st.tabs(["Country Data", "Unemployment Comparison", "Labour Force Comparison"])
+    tab1, tab2, tab3 = st.tabs([selected_country, "Unemployment Comparison", "Labour Force Comparison"])
 
     with tab1:
       
