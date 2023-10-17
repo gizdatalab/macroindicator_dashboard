@@ -187,21 +187,6 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 
 ############################ ROW 1 ###################################
 
-# # Display subheading 
-# st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
-
-# ### GRAPH AND TEXT 1 ###
-
-# st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
-#                 by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
-#                 have been produced within a defined time period (typically a year).  If this year, 
-#                 someone sells a house that has been build two years ago, it will not be part of 
-#                 this year's GDP. Also, if someone resells a car that has been manufactured and that 
-#                 she has bought this year it will only be counted once into the GDP since reselling 
-#                 is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
-#                 consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
-#                 They all have in common that you cannot store them.</div>""", unsafe_allow_html=True)
-
 st.subheader("")
 
 # Configure columns
@@ -262,7 +247,10 @@ with col3:
                         color='Country',
                         title='Chart 1 - GDP per capita',
                         hover_name="Value",
-                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        color_discrete_sequence=px.colors.qualitative.Plotly,
+                        labels={
+                        "Value": "US Dollar",
+                    }
                         )
 
         # Move legend 
@@ -298,7 +286,10 @@ with col3:
                         color='Country',
                         title='Chart 2 - GDP',
                         hover_name="Value",
-                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        color_discrete_sequence=px.colors.qualitative.Plotly,
+                        labels={
+                        "Value": "US Dollar",
+                    }
                         )
 
         # Move legend 
@@ -393,7 +384,10 @@ with col1:
                     color='Country',
                     title='Chart 3 - Total Population',
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "Number of people",
+                    }
                     )
 
     # Move legend 
@@ -432,7 +426,10 @@ with col2:
                     color='Country',
                     title='Chart 4 - Capital stock (in bil. 2011US$)',
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "US Dollars",
+                    }
                     )
 
     # Move legend 
@@ -470,7 +467,10 @@ with col3:
                     color='Indicator',
                     title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "Percentage",
+                    }
                     )
 
     # Move legend 
