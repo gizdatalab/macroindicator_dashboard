@@ -267,7 +267,7 @@ with col3:
 
         # Move legend 
         fig.update_layout(legend=dict(
-            orientation="h",
+            #orientation="h",
             yanchor="bottom",
             y=1.01,
             xanchor="left",
@@ -317,7 +317,7 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         # Caption graph
-        st.caption('Data Sources: World Development Indicators (WDI)')
+        st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ############################# ROW 2 ###################################
@@ -412,7 +412,7 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI)')
+    st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ### Chart Capital ###
@@ -451,14 +451,14 @@ with col2:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('International Monetary Fund (IMF)')
+    st.caption('Data Source: International Monetary Fund (IMF)')
 
     ### Chart Capital ###
 
 with col3: 
     
   # Get data
-    chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
+    chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
 
     # ### Group data by year
     chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
@@ -489,4 +489,4 @@ with col3:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('International Monetary Fund (IMF)')
+    st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')

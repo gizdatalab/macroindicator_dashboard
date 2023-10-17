@@ -79,14 +79,14 @@ df_prod = pd.concat([wb_data, imf_data])
 
 # Calculate region values for the indicators and attach to df
 
-selected_cols  = ['Region', 'Income Group', 'Least Developed Countries (LDC)', 
-                  'Land Locked Developing Countries (LLDC)', 
-                  'Small Island Developing States (SIDS)']
+# selected_cols  = ['Region', 'Income Group', 'Least Developed Countries (LDC)', 
+#                   'Land Locked Developing Countries (LLDC)', 
+#                   'Small Island Developing States (SIDS)']
 
-for ele in selected_cols: 
-    mean_values = df_prod.groupby([ele , 'Indicator', 'Year'])['Value'].mean().reset_index()
-    mean_values = mean_values[~(mean_values[ele] == 0)]
-    df_prod = pd.concat([df_prod, mean_values])
+# for ele in selected_cols: 
+#     mean_values = df_prod.groupby([ele , 'Indicator', 'Year'])['Value'].mean().reset_index()
+#     mean_values = mean_values[~(mean_values[ele] == 0)]
+#     df_prod = pd.concat([df_prod, mean_values])
 
 # Save as excel file
 df_prod.to_excel('data/production_data.xlsx', index=False)
