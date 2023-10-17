@@ -530,19 +530,28 @@ col1, col2, col3 = st.columns([1,0.05,0.7])
 
 
 table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
-                    'Employment Mining and quarrying': 'Secondary',
+                    'Employment Mining and quarrying': 'Primary',
                     'Employment Manufacturing': 'Secondary',
                     'Employment Electricity; gas; steam and air conditioning supply': 'Secondary',
+                    'Employment Water supply; sewerage, waste management and remediation activities': 'Secondary',
                     'Employment Construction': 'Secondary',
                     'Employment Wholesale and retail trade; repair of motor vehicles and motorcycles': 'Tertiary', 
                     'Employment Transportation and storage': 'Tertiary',
                     'Employment Accomodation and food service activities': 'Tertiary',
+                    'Employment Information and communication': 'Tertiary',
                     'Employment Financial and insurance activities': 'Tertiary',
                     'Employment Real estate activities': 'Tertiary',
+                    'Employment Professional, scientific and technical activities': 'Tertiary',
+                    'Employment Administrative and support service activities': 'Tertiary',
                     'Employment Public administration and defence; compulsory social security': 'Tertiary',
                     'Employment Education': 'Tertiary',
                     'Employment Human health and social work activities': 'Tertiary',
-                    'Employment Other service activities': 'Tertiary'}             
+                    'Employment Arts, entertainment and recreation': 'Tertiary',
+                    'Employment Other service activities': 'Tertiary',
+                    'Employment Activities of households as employers; undifferentiated goods- and services-producing activities of households for own use': 'Secondary',
+                    'Employment Activities of extraterritorial organizations and bodies': 'Tertiary',
+                    'Employment Not elsewhere classified': 'Other'
+                    }             
 
 table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
 
@@ -628,6 +637,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
+        
         # If toggle not activated
         else:
             # Configure detailed pie chart
