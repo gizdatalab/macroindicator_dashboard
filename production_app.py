@@ -428,7 +428,7 @@ with col2:
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
-                        "Value": "US Dollars",
+                        "Value": "US Dollar",
                     }
                     )
 
