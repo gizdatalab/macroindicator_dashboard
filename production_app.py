@@ -187,83 +187,42 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 
 ############################ ROW 1 ###################################
 
-# # Display subheading 
-# st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
+st.subheader("")
 
 # Configure columns
 col1, col2, col3 = st.columns([1,0.02,1])
-
-# ### GRAPH AND TEXT 1 ###
-
-# with col1: 
-    
-#     # Text 
-#     st.markdown("""<div style="text-align: justify;">The best way to understand the concept of GDP is probably
-#                  by breaking it down into its components. Click through the tabs to explore the 
-#                 different components.</div>""",unsafe_allow_html=True)
-    
-#     # Tabs 
-#     tab1, tab2, tab3, tab4, tab5 = st.tabs(["Product", "Services", "Goods", "Domestic", "Gross"])
-
-#     with tab1: 
-#         st.markdown("""<div style="text-align: justify;">Let us start from the back and look at the term 
-#                         <strong>"Product"</strong> first: 
-#                         The GDP measures all final goods and services that have been produced within a defined time 
-#                         period (typically a year).  If this year, 
-#                         someone sells a house that has been build two years ago, it will not be part of 
-#                         this year's GDP. Also, if someone resells a car that has been manufactured and that 
-#                         she has bought this year it will only be counted once into the GDP since reselling 
-#                         is not producing.</div>""",unsafe_allow_html=True)
-
-#     with tab2: 
-#         st.markdown("""<div style="text-align: justify;">Examples for <strong>"Services"</strong> are a 
-#                         haircut, entertainment, a taxi ride, consultancy, a craft activity, renting out an apartment, 
-#                         formal schooling, or health care. They all have in common that you cannot store them.</div>""",unsafe_allow_html=True)
-    
-#     with tab3: 
-#         st.markdown("""<div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are 
-#                         tangible things such as food, clothes, books, computers, mobiles, machines in general, and even 
-#                         buildings.  What does the term <strong>final</strong> mean? A car is a final good – but the steel and 
-#                         glass a car manufacturer buys to produce 
-#                         the car are not final goods. That is: All the goods and services which directly end up 
-#                         in a product are not final goods. Machines, however, are final goods since they are used 
-#                         to produce goods, but do not directly end up in them.</div>""",unsafe_allow_html=True)
-
-#     with tab4: 
-#             st.markdown(""" <div style="text-align: justify;">Finally, <strong>"domestic"</strong> refers to the fact
-#                         that only those final goods and services are part of the GDP that are produced 
-#                         in the considered country. Whether a domestic factory belongs to a foreign owner or 
-#                         a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True)
 
 with col1:
 
     # Display subheading 
     st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
  
-   
+    st.subheader("")
+
+    with col1: 
     #### Explanatory text box 1
-    st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
-                by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
-                have been produced within a defined time period (typically a year).  If this year, 
-                someone sells a house that has been build two years ago, it will not be part of 
-                this year's GDP. Also, if someone resells a car that has been manufactured and that 
-                she has bought this year it will only be counted once into the GDP since reselling 
-                is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
-                consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
-                They all have in common that you cannot store them.</div> 
-                <br>
-                <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
-                computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
-                mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
-                the car are not final goods. That is: All the goods and services which directly end up 
-                in a product are not final goods. Machines, however, are final goods since they are used 
-                to produce goods, but do not directly end up in them.</div>  
-                <br>
-                <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
-                in the considered country. Whether a domestic factory belongs to a foreign owner or 
-                a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
-    )
-        
+        st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
+                    by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
+                    have been produced within a defined time period (typically a year).  If this year, 
+                    someone sells a house that has been build two years ago, it will not be part of 
+                    this year's GDP. Also, if someone resells a car that has been manufactured and that 
+                    she has bought this year it will only be counted once into the GDP since reselling 
+                    is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
+                    consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
+                    They all have in common that you cannot store them.</div> 
+                    <br>
+                    <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
+                    computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
+                    mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
+                    the car are not final goods. That is: All the goods and services which directly end up 
+                    in a product are not final goods. Machines, however, are final goods since they are used 
+                    to produce goods, but do not directly end up in them.</div>  
+                    <br>
+                    <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
+                    in the considered country. Whether a domestic factory belongs to a foreign owner or 
+                    a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
+        )
+
     st.header("")
 
 #### Graph 1
@@ -288,17 +247,23 @@ with col3:
                         color='Country',
                         title='Chart 1 - GDP per capita',
                         hover_name="Value",
-                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        color_discrete_sequence=px.colors.qualitative.Plotly,
+                        labels={
+                        "Value": "US Dollar",
+                    }
                         )
 
-        # # Move legend 
-        # fig.update_layout(legend=dict(
-        #     # orientation="h",
-        #     yanchor="bottom",
-        #     y=1.05,
-        #     xanchor="left",
-        #     x=0.01
-        #     ))
+        # Move legend 
+        fig.update_layout(legend=dict(
+            #orientation="h",
+            yanchor="bottom",
+            y=1.01,
+            xanchor="left",
+            x=0.9
+            ))
+        
+        # Fix y-axis to zero and add margin
+        fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
@@ -321,23 +286,29 @@ with col3:
                         color='Country',
                         title='Chart 2 - GDP',
                         hover_name="Value",
-                        color_discrete_sequence=px.colors.qualitative.Plotly
+                        color_discrete_sequence=px.colors.qualitative.Plotly,
+                        labels={
+                        "Value": "US Dollar",
+                    }
                         )
 
-        # # Move legend 
-        # fig.update_layout(legend=dict(
-        #     # orientation="h",
-        #     yanchor="bottom",
-        #     y=1.05,
-        #     xanchor="left",
-        #     x=0.01
-        #     ))
+        # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.01,
+            xanchor="left",
+            x=0.9
+            ))
+        
+        # Fix y-axis to zero and add margin
+        fig.update_yaxes(range = [0, ((max(chart2_data.Value))*1.2)])
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
 
         # Caption graph
-        st.caption('Data Sources: World Development Indicators (WDI)')
+        st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ############################# ROW 2 ###################################
@@ -413,7 +384,10 @@ with col1:
                     color='Country',
                     title='Chart 3 - Total Population',
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "Number of people",
+                    }
                     )
 
     # Move legend 
@@ -424,12 +398,15 @@ with col1:
         xanchor="left",
         x=0.01
         ))
+    
+    # Fix y-axis to zero and add margin
+    fig.update_yaxes(range = [0, ((max(chart3_data.Value))*1.5)])
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI)')
+    st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ### Chart Capital ###
@@ -449,7 +426,10 @@ with col2:
                     color='Country',
                     title='Chart 4 - Capital stock (in bil. 2011US$)',
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "US Dollar",
+                    }
                     )
 
     # Move legend 
@@ -460,19 +440,22 @@ with col2:
         xanchor="left",
         x=0.01
         ))
+    
+    # Fix y-axis to zero and add margin
+    fig.update_yaxes(range = [0, ((max(chart4_data.Value))*1.2)])
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('International Monetary Fund (IMF)')
+    st.caption('Data Source: International Monetary Fund (IMF)')
 
     ### Chart Capital ###
 
 with col3: 
     
   # Get data
-    chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
+    chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
 
     # ### Group data by year
     chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
@@ -484,7 +467,10 @@ with col3:
                     color='Indicator',
                     title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
                     hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly
+                    color_discrete_sequence=px.colors.qualitative.Plotly,
+                    labels={
+                        "Value": "Percentage",
+                    }
                     )
 
     # Move legend 
@@ -495,9 +481,12 @@ with col3:
         xanchor="left",
         x=0.01
         ))
+    
+    # Fix y-axis to zero and add margin
+    fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Value))*1.2)])
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('International Monetary Fund (IMF)')
+    st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
