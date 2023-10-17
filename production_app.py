@@ -192,9 +192,6 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 
 # ### GRAPH AND TEXT 1 ###
 
-# Display subheading 
-st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
-
 st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
                 by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
                 have been produced within a defined time period (typically a year).  If this year, 
@@ -210,46 +207,37 @@ st.subheader("")
 # Configure columns
 col1, col2, col3 = st.columns([1,0.02,1])
 
-
 with col1:
- 
-   
-    # #### Explanatory text box 1
-    # st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
-    #             by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
-    #             have been produced within a defined time period (typically a year).  If this year, 
-    #             someone sells a house that has been build two years ago, it will not be part of 
-    #             this year's GDP. Also, if someone resells a car that has been manufactured and that 
-    #             she has bought this year it will only be counted once into the GDP since reselling 
-    #             is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
-    #             consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
-    #             They all have in common that you cannot store them.</div> 
-    #             <br>
-    #             <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
-    #             computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
-    #             mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
-    #             the car are not final goods. That is: All the goods and services which directly end up 
-    #             in a product are not final goods. Machines, however, are final goods since they are used 
-    #             to produce goods, but do not directly end up in them.</div>  
-    #             <br>
-    #             <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
-    #             in the considered country. Whether a domestic factory belongs to a foreign owner or 
-    #             a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
-    # )
 
-    st.markdown("""<div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored 
-                    as they are tangible things such as food, clothes, books, 
+    # Display subheading 
+    st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
+ 
+    st.subheader("")
+
+    with col1: 
+    #### Explanatory text box 1
+        st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
+                    by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
+                    have been produced within a defined time period (typically a year).  If this year, 
+                    someone sells a house that has been build two years ago, it will not be part of 
+                    this year's GDP. Also, if someone resells a car that has been manufactured and that 
+                    she has bought this year it will only be counted once into the GDP since reselling 
+                    is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
+                    consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
+                    They all have in common that you cannot store them.</div> 
+                    <br>
+                    <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
                     computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
                     mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
                     the car are not final goods. That is: All the goods and services which directly end up 
                     in a product are not final goods. Machines, however, are final goods since they are used 
                     to produce goods, but do not directly end up in them.</div>  
                     <br>
-                    <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those 
-                    final goods and services are part of the GDP that are produced 
+                    <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
                     in the considered country. Whether a domestic factory belongs to a foreign owner or 
-                    a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True)
-            
+                    a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
+        )
+
     st.header("")
 
 #### Graph 1
