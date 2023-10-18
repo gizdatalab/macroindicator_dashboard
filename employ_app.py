@@ -596,9 +596,13 @@ new_row = pd.DataFrame({'Sector': ['Other'],
 # Append the new row to the DataFrame
 table2 = table2.append(new_row, ignore_index=True)
 
-# Sort ascending
+# Sort the values
 table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
-table2.sort_values(by='Employment Share (%)', ascending=False, inplace=True)
+order = ['Primary', 'Secondary', 'Tertiary', 'Other']
+table2 = table2.sort_values(by=['Sector', 'Employment Share (%)'], ascending=[True, False])
+table2['Sector'] = pd.Categorical(table2['Sector'], categories=order, ordered=True)
+table2 = table2.sort_values('Sector')
+table2 = table2.reset_index(drop=True)
 table2['Employment Share (%)'] = [f'{value:.2f}' for value in table2['Employment Share (%)']]
 
 # Check if data available
