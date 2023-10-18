@@ -600,8 +600,6 @@ table2 = table2.append(new_row, ignore_index=True)
 table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
 table2.sort_values(by='Employment Share (%)', ascending=False, inplace=True)
 table2['Employment Share (%)'] = [f'{value:.2f}' for value in table2['Employment Share (%)']]
-st.write(table2)
-
 
 # Check if data available
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
