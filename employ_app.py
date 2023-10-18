@@ -599,9 +599,9 @@ table2 = table2.append(new_row, ignore_index=True)
 # Sort the values
 table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
 order = ['Primary', 'Secondary', 'Tertiary', 'Other']
-table2 = table2.sort_values(by=['Sector', 'Employment Share (%)'], ascending=[True, False])
 table2['Sector'] = pd.Categorical(table2['Sector'], categories=order, ordered=True)
 table2 = table2.sort_values('Sector')
+table2 = table2.sort_values(by=['Sector', 'Employment Share (%)'], ascending=[True, False])
 table2 = table2.reset_index(drop=True)
 table2['Employment Share (%)'] = [f'{value:.2f}' for value in table2['Employment Share (%)']]
 
