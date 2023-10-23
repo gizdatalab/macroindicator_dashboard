@@ -13,7 +13,7 @@ featureMap_indicators={
     'NE.IMP.GNFS.CD': 'Imports of goods and services (current US$)',
     'TX.VAL.MRCH.CD.WT': 'Merchandise exports (current US$)', 
     'BX.GSR.NFSV.CD': 'Service exports (BoP, current US$)', 
-    'NE.TRD.GNFS.ZS': 'Trade (% of GDP)',
+    'NE.TRD.GNFS.ZS': 'Trade (GDP %)',
     'LP.LPI.OVRL.XQ': 'Logistics performance index: Overall (1=low to 5=high)',
     'LP.LPI.CUST.XQ': 'Logistics performance index: Efficiency of customs clearance process (1=low to 5=high)',
     'LP.LPI.INFR.XQ':'Logistics performance index: Quality of trade and transport-related infrastructure (1=low to 5=high)',
