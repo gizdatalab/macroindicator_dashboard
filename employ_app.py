@@ -525,9 +525,6 @@ st.header("")
 
 
 #### Table 2
-# Configure columns
-col1, col2, col3 = st.columns([1,0.05,0.7])
-
 
 table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
                     'Employment Mining and quarrying': 'Primary',
@@ -567,7 +564,8 @@ for ind in table2_featureMap.keys():
     employ_value = table2_data[table2_data['Indicator'] == ind].values[0][5]
 
     # Assign value
-    indicator_values_table2[ind] = format(round((employ_value / employment_in_year) *100,2),".2f")
+    #indicator_values_table2[ind] = format(round((employ_value / employment_in_year) *100,2),".2f")
+    indicator_values_table2[ind] = round((employ_value / employment_in_year) *100,2)
 
 table2_dict = {
     'Sub Sector': indicator_values_table2.keys(),
@@ -592,9 +590,16 @@ missing_value = round(missing_value,2)
 new_row = pd.DataFrame({'Sector': ['Other'],
                          'Sub Sector': ['Other'],
                          'Employment Share (%)': [missing_value]})
-
 # Append the new row to the DataFrame
 table2 = table2.append(new_row, ignore_index=True)
+
+# Combine both "Other" columns 
+rows_to_combine = table2[(table2['Sector'] == 'Other') | (table2['Sub Sector'] == 'Not elsewhere classified')]
+combined_value = rows_to_combine['Employment Share (%)'].sum()
+new_row = pd.DataFrame({'Employment Share (%)': [combined_value], 'Sub Sector': 'Other', 'Sector': 'Other'})
+table2 = table2.append(new_row, ignore_index=True)
+table2 = table2.drop(rows_to_combine.index)
+
 
 # Sort the values
 table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
@@ -605,42 +610,51 @@ table2 = table2.sort_values(by=['Sector', 'Employment Share (%)'], ascending=[Tr
 table2 = table2.reset_index(drop=True)
 table2['Employment Share (%)'] = [f'{value:.2f}' for value in table2['Employment Share (%)']]
 
+
 # Check if data available
 if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share (%)']) /2): 
 
-    with col1: 
+    #with col1: 
 
-        # Display table
-        st.table(table2.set_index("Sub Sector"))
+    # Display table
+    st.table(table2.set_index("Sub Sector"))
 
-        # Caption graph
-        st.caption('Data Source: International Labour Organization')
+    # Caption graph
+    st.caption('Data Source: International Labour Organization')
 
-    ### PIE CHART 
-    with col3: 
+    ###### CHARTS
+
+    # Set title 
+    st.subheader("Employment and GDP Share per Sector")
+
+    # Configure columns
+    col1, col2, col3 = st.columns([1,0.05,0.7])
+
+    # Pie Chart
+    with col1:
 
         on = st.toggle('Show aggregates')
 
-        # Get data 
+        # Get disaggregated data
         table2['Employment Share (%)'] = table2['Employment Share (%)'].astype(float)
         table2.loc[table2['Employment Share (%)'] < 4, 'Sub Sector'] = 'Other Sectors' # Represent only large countries
 
+        # Get aggregated data
+        table2_agg = table2
+        table2_agg['Employment Share (%)'] = table2_agg['Employment Share (%)'].astype(float)
+        table2_agg = table2_agg.groupby("Sector")["Employment Share (%)"].sum()
+        table2_agg = table2_agg.reset_index()
+
         # If the toggle is activated 
         if on:
-
-            # Aggregate data
-            table2_agg = table2
-            table2_agg['Employment Share (%)'] = table2_agg['Employment Share (%)'].astype(float)
-            table2_agg = table2_agg.groupby("Sector")["Employment Share (%)"].sum()
-            table2_agg = table2_agg.reset_index()
-            
+          
             # Display aggregate pie chart 
             fig_2 = px.pie(table2_agg,
                             values="Employment Share (%)",
                             #title=f"Employment Shares for {selected_country} in {selected_end_year}",
                             names="Sector")
                         
-            fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+            fig_2.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
             
@@ -655,13 +669,41 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
                         #title=f"Employment Shares for {selected_country} in {selected_end_year}",
                         names="Sub Sector")
             
-            fig_2.update_layout(margin=dict(t=35, b=1, l=1, r=1))
+            fig_2.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
             
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
+
+    ### BAR CHART
+    
+    with col3: 
+        
+        st.header("")
+
+        # define data 
+        gdp_share_data = get_filtered_data([selected_country], selected_end_year, selected_end_year, ['GDP Share Agriculture (%)', 'GDP Share Industry (%)', 'GDP Share Services (%)'])
+        bar_data = table2_agg
+        bar_data.insert(2, 'GDP Share (%)', gdp_share_data['Value'])
+        bar_data = bar_data[bar_data['Sector'] != 'Other']        
+        bar_data_long = pd.melt(bar_data, id_vars=["Sector"], var_name="Share Type", value_name="Share")
+
+        # Display bar chart
+        fig = px.bar(bar_data_long,
+                       x="Sector",
+                       y="Share",
+                       #title=f"Employment and GDP Shares for {selected_country} in {selected_end_year}",
+                       color="Share Type",
+                       barmode='group'
+                       )
+                                           
+        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+        #fig.update(layout_showlegend=False)
+        
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
 else: 
     with col1:
         st.error("Data for this year is not available. Try adjusting the selection on the side.")
