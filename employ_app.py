@@ -236,12 +236,17 @@ with col3:
                     y="Value", 
                     color='Indicator',
                     hover_name="Value",
+                    title=f"Chart 1 - Employment and Labour Force in the population in {selected_country}",
                     labels={
                      "Value": "Number of people",
                  }
                     )
     
-    # Move legend 
+    # Title
+    fig.update_layout(title_text=f"Chart 1 - Employment and Labour Force in the population in {selected_country}",
+                      title_y=1)
+    
+    # Legend
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
@@ -255,7 +260,7 @@ with col3:
 
     # Fix y-axis to zero and add margin
     fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
-
+    
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 

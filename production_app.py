@@ -189,16 +189,16 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 
 st.subheader("")
 
+# Display subheading 
+st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
+st.subheader("")
+
+
 # Configure columns
 col1, col2, col3 = st.columns([1,0.02,1])
 
 with col1:
-
-    # Display subheading 
-    st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
- 
-    st.subheader("")
-
+    
     with col1: 
     #### Explanatory text box 1
         st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
