@@ -633,6 +633,14 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     # Pie Chart
     with col1:
 
+        # Explanatory text
+        st.markdown(f"""<div style="text-align: justify;">The pie chart below shows a graphical representation
+                    of the share of employment in the different subsectors. To see the aggregated division of employment 
+                    between the primary, secondary and tertiary sector, please click on the toggle below.</div>""", unsafe_allow_html=True)
+        
+        st.header("")
+
+        # Toggle
         on = st.toggle('Show aggregates')
 
         # Get disaggregated data
@@ -680,7 +688,13 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     ### BAR CHART
     
     with col3: 
+
+        # Explanatory text
+        st.markdown(f"""<div style="text-align: justify;"> To get a better picture of the productivity in the different sectors, 
+                    one can see a comparison between Employment Share (%) and GDP Share (%) in the bar chart below. The chart also 
+                    gives an indication of the labour- and capital-intensivity of the three sectors.</div>""", unsafe_allow_html=True)
         
+        st.subheader("")
         st.header("")
 
         # define data 
