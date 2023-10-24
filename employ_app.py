@@ -221,9 +221,6 @@ with col1:
 
 with col3: 
 
-    # Create distance
-    #st.header("")
-
     # Get data
     chart1_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, ['Population', 'Population in working age', 'Labour force', 'Employment'])
     
@@ -236,16 +233,11 @@ with col3:
                     y="Value", 
                     color='Indicator',
                     hover_name="Value",
-                    title=f"Chart 1 - Employment and Labour Force in the population in {selected_country}",
                     labels={
                      "Value": "Number of people",
                  }
                     )
-    
-    # Title
-    fig.update_layout(title_text=f"Chart 1 - Employment and Labour Force in the population in {selected_country}",
-                      title_y=1)
-    
+     
     # Legend
     fig.update_layout(legend=dict(
         orientation="h",
@@ -264,8 +256,13 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
+    # Subtitle
+    st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - Employment and labour force as a 
+                share of the population in {selected_country} (Data Sources: WDI, ILOSTAT)</div></em>""", unsafe_allow_html=True)
+    st.header("")
+
 # Caption graph
-st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+#st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
 
 # Create distance
 st.header("")
@@ -338,6 +335,11 @@ with col3:
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
+
+        # Subtitle
+        st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - Unemployment and labour force 
+                    participation rate in {selected_country} (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+        st.header("")
     
     with tab2: 
 
@@ -347,6 +349,7 @@ with col3:
         
         # if peer selection chosen display graph
         else:
+
             # Configure plot
             fig = px.line(chart2_data_unemp,
                             x="Year", 
@@ -372,6 +375,11 @@ with col3:
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
+
+            # Subtitle
+            st.markdown(f"""<div style="text-align: justify;"><em>Chart 2.1 - Comparison of unemployment 
+                        rates across the selected countries (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+            st.header("")
     
     with tab3: 
         
@@ -381,6 +389,7 @@ with col3:
         
         # if peer selection chosen display graph
         else:
+          
             # Configure plot
             fig = px.line(chart2_data_lf,
                             x="Year", 
@@ -406,9 +415,14 @@ with col3:
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
+
+            # Subtitle
+            st.markdown(f"""<div style="text-align: justify;"><em>Chart 2.2 - Comparison of labour force rates across the selected 
+                        countries (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+            st.header("")
     
 #with col3: 
-st.caption('Data Source: International Labour Organization')
+#st.caption('Data Source: International Labour Organization')
 
 
 ############################# ROW 2 ###################################
@@ -435,8 +449,6 @@ st.markdown(f"""<div style="text-align: justify;">Additionally, the indicators c
 st.header("")    
 
     #### (3) Table 1
-
-    #with col3:
 
 table1_indicators = ['Population', 
                     'Population in working age',
@@ -488,8 +500,12 @@ try:
 except ValueError: 
     st.error("Data for this year is not available. Try adjusting the selection on the side.")
     
+# Subtitle
+st.markdown(f"""<div style="text-align: justify;"><em>Table 1 - Women's share (Data Sources: WDI, ILOSTAT)</div></em>""", unsafe_allow_html=True)
+st.header("")
+
 # Caption graph
-st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
+#st.caption('Data Sources: World Development Indicators (WDI), International Labour Organization')
 
 #st.table(chart1_data)
 # Create distance
@@ -624,13 +640,17 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     # Display table
     st.table(table2.set_index("Sub Sector"))
 
+    # Subtitle
+    st.markdown(f"""<div style="text-align: justify;"><em>Table 2 - Employment share across different subsectors (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+    st.header("")
+
     # Caption graph
-    st.caption('Data Source: International Labour Organization')
+    #st.caption('Data Source: International Labour Organization')
 
     ###### CHARTS
 
     # Set title 
-    st.subheader("Employment and GDP Share per Sector")
+    #st.subheader("Employment and GDP Share per Sector")
 
     # Configure columns
     col1, col2, col3 = st.columns([1,0.05,1])
@@ -639,9 +659,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     with col1:
 
         # Explanatory text
-        st.markdown(f"""<div style="text-align: justify;">The pie chart below shows a graphical representation
-                    of the share of employment in the different subsectors. To see the aggregated division of employment 
-                    between the primary, secondary and tertiary sector, please click on the toggle below.</div>""", unsafe_allow_html=True)
+        st.markdown(f"""<div style="text-align: justify;">As a graphical representation of the table above, 
+                    the pie chart below provides a visual overview of employment shares across the different 
+                    subsectors. To see the aggregated shares of employment for the primary, secondary and 
+                    tertiary sector, please click on the toggle below. A remaining percentage share of employment
+                    has not been classified. This can be seen in the graph under the category "Other".</div>""", unsafe_allow_html=True)
         
         st.header("")
 
@@ -673,7 +695,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
-        
+
+            # Subtitle
+            st.subheader("")
+            st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Employment share across the three main sectors (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+                    
         # If toggle not activated
         else:
             # Configure detailed pie chart
@@ -689,6 +715,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
+            # Subtitle
+            st.subheader("")
+            st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Employment share across different subsectors (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
+            
+
 
     ### BAR CHART
     
@@ -697,7 +728,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         # Explanatory text
         st.markdown(f"""<div style="text-align: justify;"> To get a better picture of the productivity in the different sectors, 
                     one can see a comparison between Employment Share (%) and GDP Share (%) in the bar chart below. The chart also 
-                    gives an indication of the labour- and capital-intensivity of the three sectors.</div>""", unsafe_allow_html=True)
+                    gives an indication of the labour- and capital-intensivity of the three different sectors.</div>""", unsafe_allow_html=True)
         
         st.subheader("")
         st.header("")
@@ -723,6 +754,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
+
+        # Subtitle
+        st.subheader("")
+        st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Employment vs GDP Share (Data Sources: WDI, ILOSTAT)</div></em>""", unsafe_allow_html=True)
+        
 else: 
     with col1:
         st.error("Data for this year is not available. Try adjusting the selection on the side.")
