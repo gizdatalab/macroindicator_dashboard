@@ -327,7 +327,7 @@ st.subheader("So how do people actually manage that their economies grow?")
 st.header("")
 
 # Configure columns
-col1, col2, col3, col4, col5 = st.columns([0.4,0.02,0.5,0.02,0.5])
+col1, col2, col3 = st.columns([0.4,0.02,1])
 
 with col1:
     
@@ -359,22 +359,22 @@ with col1:
     
     st.subheader("")
     
-# with col1:
+with col1:
                 
-#     st.markdown("""                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
-#                 <strong>quality</strong> of 
-#                 both factors matters as well: If people are better educated and trained they 
-#                 will, most likely, be able to work more efficient and will consequently produce 
-#                 more per hour than before. In this context, one also often refers to the 
-#                 term “human capital”. What education is to humans, innovation (or science) is 
-#                 to capital: If the same number of machines and production processes suddenly 
-#                 function with a more efficient technology, due to an innovation, then again 
-#                 production increases – thus, the economy grows.</div>
-#                 <br>
-#                 <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
-#                 and production processes suddenly function with a more efficient technology, due to an innovation, 
-#                 then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
-#         )
+    st.markdown("""                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
+                <strong>quality</strong> of 
+                both factors matters as well: If people are better educated and trained they 
+                will, most likely, be able to work more efficient and will consequently produce 
+                more per hour than before. In this context, one also often refers to the 
+                term “human capital”. What education is to humans, innovation (or science) is 
+                to capital: If the same number of machines and production processes suddenly 
+                function with a more efficient technology, due to an innovation, then again 
+                production increases – thus, the economy grows.</div>
+                <br>
+                <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
+                and production processes suddenly function with a more efficient technology, due to an innovation, 
+                then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
+        )
 
 # Configure columns
 #col1, col2, col3 = st.columns([1,1,1])
@@ -427,7 +427,7 @@ with col3:
 
 ### Chart Capital ###
 
-with col5: 
+with col3: 
     
   # Get data
     chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
@@ -473,25 +473,25 @@ with col5:
 
 ### Chart Annual Growth Rates ###
 
-col1, col2, col3 = st.columns([0.4, 0.02, 1])
+#col1, col2, col3 = st.columns([0.4, 0.02, 1])
 
 # Text
-with col1:
+# with col1:
                 
-    st.markdown("""                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
-                <strong>quality</strong> of 
-                both factors matters as well: If people are better educated and trained they 
-                will, most likely, be able to work more efficient and will consequently produce 
-                more per hour than before. In this context, one also often refers to the 
-                term “human capital”. What education is to humans, innovation (or science) is 
-                to capital: If the same number of machines and production processes suddenly 
-                function with a more efficient technology, due to an innovation, then again 
-                production increases – thus, the economy grows.</div>
-                <br>
-                <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
-                and production processes suddenly function with a more efficient technology, due to an innovation, 
-                then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
-        )
+#     st.markdown("""<div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
+#                 <strong>quality</strong> of 
+#                 both factors matters as well: If people are better educated and trained they 
+#                 will, most likely, be able to work more efficient and will consequently produce 
+#                 more per hour than before. In this context, one also often refers to the 
+#                 term “human capital”. What education is to humans, innovation (or science) is 
+#                 to capital: If the same number of machines and production processes suddenly 
+#                 function with a more efficient technology, due to an innovation, then again 
+#                 production increases – thus, the economy grows.</div>
+#                 <br>
+#                 <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
+#                 and production processes suddenly function with a more efficient technology, due to an innovation, 
+#                 then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
+#         )
 
 with col3: 
     
