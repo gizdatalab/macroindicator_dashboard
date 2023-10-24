@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
+import plotly.graph_objects as go
+
 
 # Git checkout
 # Use full screen 
@@ -188,7 +190,7 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 st.header("")
 
 # Display subheading 
-st.subheader(f"Who is working in the economy in {selected_country}?")
+st.subheader(f"Understanding {selected_country}'s Trade Landscape: Goods and Services")
 
 # Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
@@ -217,7 +219,8 @@ with col1:
                 High exports of goods and services are typically seen as a benchmark for success. 
                 However, exports are not an end. Rather, high exports are the mean that allows a country to specialize in 
                 those sectors in which it has a relatively high productivity (comparative advantage) and to purchase and 
-                consume goods and services from abroad.</li> </div>""", unsafe_allow_html=True
+                consume goods and services from abroad.
+                </li> </div>""", unsafe_allow_html=True
     )
     
     #st.header("")
@@ -225,6 +228,15 @@ with col1:
     #### Graph 1
 
 with col3: 
+    ### Explanatory text box 2
+    st.markdown("""<div style="text-align: justify;">
+                The indicator <i>trade in goods and services</i> measures total exports and respectively imports  in terms of their 
+                value in current US-Dollar.
+                This indicator is further broken down into <i>exports of goods and exports of services</i>, 
+                also in terms of their value in current US-dollar.
+                </div>""", unsafe_allow_html=True
+                )
+
 
     # Create distance
     #st.header("")
@@ -233,18 +245,107 @@ with col3:
     chart1_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, 
                                     ['Exports of goods and services (current US$)', 
                                      'Imports of goods and services (current US$)'])
+    chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year,
+                                    ['Merchandise exports (current US$)',
+                                    'Service exports (BoP, current US$)'])
     
-    ### Group data by year
-    chart1_data = chart1_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-    
+    #  Graphs
+    tab1, tab2 = st.tabs(["Exports and Imports", "Merchandise and service exports"])
+
     # Configure plot
-    fig = px.line(chart1_data,
-                    x="Year", 
-                    y="Value", 
-                    color='Indicator',
-                    hover_name="Value",
-                    )
+    with tab1:
+        fig = px.line(chart1_data,
+                        x="Year", 
+                        y="Value", 
+                        color='Indicator',
+                        hover_name="Value",
+                        )
+        
+        # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="left",
+            x=0.01,
+            ))
+        
+        # Set yaxis to zero
+        #fig.update_yaxes(rangemode="tozero")
+
+        # Fix y-axis to always show (100%)
+        fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
+        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+    with tab2:
+        fig = px.line(chart2_data,
+                        x="Year", 
+                        y="Value", 
+                        color='Indicator',
+                        hover_name="Value",
+                        )
+        
+        # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="left",
+            x=0.01,
+            ))
+        
+        # Set yaxis to zero
+        #fig.update_yaxes(rangemode="tozero")
+
+        # Fix y-axis to always show (100%)
+        fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
+        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
+
+        # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+    # Caption graph
+    st.caption('Data Sources: World Development Indicators (WDI)')
+
+# Create distance
+st.header("")
+
+
+############################# ROW 2 ###################################
+# Subheader 
+st.subheader("")
+
+### GRAPH AND TEXT 2 ###
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
+
+with col1:
+    st.subheader("Assessing Trade Openness: A Crucial Economic Indicator")
+
+    st.markdown(f"""<div style="text-align: justify;">
+                A frequently used indicator for trade openness is the share of trade in gross domestic product (GDP). 
+                Trade is defined as the sum of exports and imports of goods and services. The indicator measures trade 
+                openness as an outcome. Factors such as barriers to trade  (e.g. tariffs, technical barriers to trade  
+                such as labelling or certification requirements), geographic remoteness and the size and structure 
+                of the economy influence how high or low the share of trade in GDP is.
+                </div>""", unsafe_allow_html=True
+            )
     
+with col3:
+    # Get data
+    chart3_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, 
+                                    ['Trade (GDP %)'])
+    # Configure plot
+    fig = px.line(chart3_data,
+                  x="Year",
+                  y="Value",
+                  color='Indicator',
+                  hover_name="Value",
+                  labels={
+                      "Value": "Percentage"})
+        
     # Move legend 
     fig.update_layout(legend=dict(
         orientation="h",
@@ -253,22 +354,156 @@ with col3:
         xanchor="left",
         x=0.01,
         ))
-    
-    # Set yaxis to zero
-    #fig.update_yaxes(rangemode="tozero")
+        
+        # Set yaxis to zero
+        #fig.update_yaxes(rangemode="tozero")
 
-    # Fix y-axis to always show (100%)
-    fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
-    #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
+        # Fix y-axis to always show (100%)
+    fig.update_yaxes(range = [0, ((max(chart3_data.Value))*1.2)])
+        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
 
-    # Display graph
+        # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
-# Caption graph
-st.caption('Data Sources: World Development Indicators (WDI)')
+############################# ROW 3 ###################################
+# Subheader 
+st.subheader("")
 
-# Create distance
-st.header("")
+### GRAPH AND TEXT 2 ###
+
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
+with col1:
+    st.subheader("Insights from the World Bank's Logistics Performance Index")
+    st.markdown(f"""<div style="text-align: justify;">
+                    <i>The World Bank Logistics Performance Index</i>  ranks countries’ performance on trade logistics, 
+                    based on quantitative data on the performance of the logistics chain as well as responses 
+                    from a survey among logistics operators. The Index is composed of six sub-components, 
+                    of which <i>“Efficiency of customs clearance process”</i> (e.g., speed, simplicity and predictability 
+                    of formalities) and <i>“Quality of trade and transport-related infrastructure”</i>(e.g., ports, railroads, roads, 
+                    information technology) are reported here.
+                    </div>""", unsafe_allow_html=True
+                )
+
+with col3:
+    # Get data
+    chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
+                                    ['Logistics performance index: Overall (1=low to 5=high)'])
+
+    chart3_data_efficiency = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
+                                    ['Logistics performance index: Efficiency of customs clearance process (1=low to 5=high)'])
+
+    chart3_data_quality = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
+                                    ['Logistics performance index: Quality of trade and transport-related infrastructure (1=low to 5=high)'])
+
+    #Graphs
+    tab1, tab2, tab3 = st.tabs(["Overall", "Efficiency", "Quality"])                                
+    with tab1:
+        st.markdown("LPI: \nOverall (1=low to 5=high)")
+        fig = px.bar(chart3_data,
+                    x="Year",
+                    y="Value",
+                    color='Country',
+                    barmode='group',
+                    hover_name='Value')
+            
+        # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="left",
+            x=0.01,
+            ))
+            
+            # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+    with tab2:
+        st.markdown("LPI: \nEfficiency of customs clearance process (1=low to 5=high)")
+        fig = px.bar(chart3_data_efficiency,
+                    x="Year",
+                    y="Value",
+                    color='Country',
+                    barmode='group',
+                    hover_name="Value",
+                    )
+            
+        # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="left",
+            x=0.01,
+            ))
+            
+            # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+    with tab3:
+        st.markdown("LPI: \nQuality of trade and transport-related infrastructure (1=low to 5=high)")
+        fig = px.bar(chart3_data_quality,
+                    x="Year",
+                    y="Value",
+                    color='Country',
+                    barmode='group',
+                    hover_name='Value',
+                    )
+            
+            # Move legend 
+        fig.update_layout(legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.1,
+            xanchor="left",
+            x=0.01,
+            ))
+            
+            # Display graph
+        st.plotly_chart(fig, use_container_width=True)
+
+############################# ROW 4 ###################################
+# Subheader 
+st.subheader("")
+
+### GRAPH AND TEXT 2 ###
+
+# Configure columns
+col1, col2, col3 = st.columns([1,0.05,1])
+with col1:
+    st.subheader("The Logic Behind Trade-Weighted Tariffs")
+    st.markdown(f"""<div style="text-align: justify;">
+                The trade-weighted tariff rate is the weighted average tariff on imported goods.
+                The indicator  is calculated by weighting each tariff of an imported good by the total value 
+                (price * amount) of that good. Thereby, it is assured those tariffs on goods that are traded 
+                a lot are weighted more than tariffs on goods that are barely traded. Considered are only those 
+                tariffs that are actually applied by customs authorities . For example, an exporter might avail 
+                to tariffs under WTO(World Trade Organisation) rules or tariffs under the rules of a trade 
+                agreement (if there is one).
+                </div>""", unsafe_allow_html=True
+                )
+
+with col3:
+    # Get data
+    chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
+                                    ['Tariff rate, applied, weighted mean, all products (%)'])
+    fig = px.line(chart4_data,
+                  x="Year",
+                  y="Value",
+                  color='Country',
+                  hover_name="Value",
+                  )
+            
+            # Move legend 
+    fig.update_layout(legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=1.1,
+        xanchor="left",
+        x=0.01,
+        ))
 
 
-############################# ROW 2 ###################################
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)  
