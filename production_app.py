@@ -234,6 +234,11 @@ with col3:
 
     with tab1: 
 
+        # Subtitle
+        st.subheader("")
+        st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - GDP per capita (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+            
+
         # Get data
         chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
 
@@ -245,7 +250,7 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        title='Chart 1 - GDP per capita',
+                       # title='Chart 1 - GDP per capita',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
@@ -269,7 +274,7 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         # Caption graph
-        st.caption('Data Sources: World Development Indicators (WDI)')
+        #st.caption('Data Sources: World Development Indicators (WDI)')
     
     with tab2: 
         
@@ -279,12 +284,16 @@ with col3:
         # ### Group data by year
         chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
+        # Subtitle
+        st.subheader("")
+        st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - GDP (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+            
         # Configure plot
         fig = px.line(chart2_data,
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        title='Chart 2 - GDP',
+                        # title = 'Chart 2 - GDP',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
@@ -341,15 +350,17 @@ with col1:
                 products. Hence, increasing the capital stock is one way to make an economy grow.</div>  
                 <br>
                 <div style="text-align: justify;">The last and third factor of production is <strong>labour</strong>. Labour is provided by people. 
-                That means, if the population is growing, there are more people around who can work.
+                That means, if the population is growing, there are more people around who can work. Thus, usually, an economy grows when its population is growing (for more 
+                information on employment, check out our other dashboards).
+                <br>
                 </div>""", unsafe_allow_html=True
         )    
-with col3:
+    
+    st.subheader("")
+    
+with col1:
                 
-    st.markdown("""<div style="text-align: justify;">Thus, usually, an economy grows when its population is growing (for more 
-                information on employment, check out our other dashboards).</div>  
-                <br>
-                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
+    st.markdown("""                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
                 <strong>quality</strong> of 
                 both factors matters as well: If people are better educated and trained they 
                 will, most likely, be able to work more efficient and will consequently produce 
@@ -365,11 +376,11 @@ with col3:
         )
 
 # Configure columns
-col1, col2, col3 = st.columns([1,1,1])
+#col1, col2, col3 = st.columns([1,1,1])
 
-### Chart Capital ###
+### Chart Population ###
 
-with col1: 
+with col3: 
     
   # Get data
     chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Total population'])
@@ -377,12 +388,16 @@ with col1:
     # ### Group data by year
     chart3_data = chart3_data.groupby([chart3_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
+    # Subtitle
+    st.subheader("")
+    st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Population (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+            
     # Configure plot
     fig = px.line(chart3_data,
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    title='Chart 3 - Total Population',
+                    #title='Chart 3 - Total Population',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -406,12 +421,12 @@ with col1:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('Data Source: World Development Indicators (WDI)')
+    #st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ### Chart Capital ###
 
-with col2: 
+with col3: 
     
   # Get data
     chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
@@ -419,12 +434,16 @@ with col2:
     # ### Group data by year
     chart4_data = chart4_data.groupby([chart4_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
+    # Subtitle
+    st.subheader("")
+    st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)</div></em>""", unsafe_allow_html=True)
+            
     # Configure plot
     fig = px.line(chart4_data,
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    title='Chart 4 - Capital stock (in bil. 2011US$)',
+                    #title='Chart 4 - Capital stock (in bil. 2011US$)',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -448,7 +467,7 @@ with col2:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('Data Source: International Monetary Fund (IMF)')
+    #st.caption('Data Source: International Monetary Fund (IMF)')
 
     ### Chart Capital ###
 
@@ -460,12 +479,17 @@ with col3:
     # ### Group data by year
     chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
+    # Subtitle
+    st.subheader("")
+    st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Source: WDI, IMF)</div></em>""", unsafe_allow_html=True)
+            
+
     # Configure plot
     fig = px.line(chart5_data,
                     x="Year", 
                     y="Value",   
                     color='Indicator',
-                    title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
+                    #title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -489,4 +513,4 @@ with col3:
     st.plotly_chart(fig, use_container_width=True)
 
     # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
+    #st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
