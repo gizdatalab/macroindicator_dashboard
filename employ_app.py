@@ -628,7 +628,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
     st.subheader("Employment and GDP Share per Sector")
 
     # Configure columns
-    col1, col2, col3 = st.columns([1,0.05,0.7])
+    col1, col2, col3 = st.columns([1,0.05,1])
 
     # Pie Chart
     with col1:
