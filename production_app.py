@@ -114,12 +114,6 @@ st.sidebar.caption("""If you want to compare the values of the chosen country
                    to peer countries, please make a selection below.""")
 
 # PEER COUNTRY INPUT WIDGET
-#selected_region = st.sidebar.multiselect(
- #   "Choose regions for comparison",
-  #  df_sub_region
-  #  )
-
-# REGION INPUT WIDGET
 selected_peer = st.sidebar.multiselect(
     "Choose comparison countries",
     df_countries
@@ -167,13 +161,16 @@ st.sidebar.info("""Please note that this dashboard is a prototype.
 #---------------------------------------- MAIN PAGE --------------------------------------------
 
 # Add a title and intro text
-st.title("Production dashboard")
+st.title("Production Indicators")
 
 st.write("""
-         Explore a comprehensive production dashboard that provides a holistic view of key employment indicators. 
-         This interactive platform synthesizes diverse metrics, offering insights into job market trends, labor 
-         force participation, and economic vitality. With intuitive visualizations and data-driven analysis, gain 
-         a deeper understanding of workforce dynamics and make informed decisions for the future.
+        This dashboard provides a holistic 
+        overview of the economic situation in different countries, using the most important 
+        macroeconomic indicators for production. The data displayed 
+        is derived from reputable international organizations. More information can be found 
+        in the data sources tab below. This interactive platform allows users to get a quick 
+        overview of the current production situation in different 
+        countries while taking a gender perspective and allowing for comparison with peer countries. 
          """)
 
 
@@ -190,7 +187,7 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
 st.subheader("")
 
 # Display subheading 
-st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean? ")
+st.subheader("Everyone is talking about  Gross Domestic Product (GDP) - but what does it actually mean?")
 st.subheader("")
 
 
@@ -235,11 +232,6 @@ with col3:
 
     with tab1: 
 
-        # Subtitle
-        st.subheader("")
-        st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - GDP per capita (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-            
-
         # Get data
         chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
 
@@ -261,11 +253,11 @@ with col3:
 
         # Move legend 
         fig.update_layout(legend=dict(
-            #orientation="h",
+            orientation="h",
             yanchor="bottom",
-            y=1.01,
+            y=1.10,
             xanchor="left",
-            x=0.9
+            x=-0.12
             ))
         
         # Fix y-axis to zero and add margin
@@ -273,6 +265,11 @@ with col3:
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
+
+        # Subtitle
+        #st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - GDP per capita (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+        st.caption("Chart 1 - GDP per capita (Data Source: WDI)")
+        st.header("")
 
         # Caption graph
         #st.caption('Data Sources: World Development Indicators (WDI)')
@@ -284,11 +281,7 @@ with col3:
 
         # ### Group data by year
         chart2_data = chart2_data.groupby([chart2_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-        # Subtitle
-        st.subheader("")
-        st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - GDP (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-            
+       
         # Configure plot
         fig = px.line(chart2_data,
                         x="Year", 
@@ -306,9 +299,9 @@ with col3:
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.01,
+            y=1.10,
             xanchor="left",
-            x=0.9
+            x=-0.12
             ))
         
         # Fix y-axis to zero and add margin
@@ -317,8 +310,13 @@ with col3:
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
 
+        # Subtitle
+        #st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - GDP (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+        st.caption("Chart 2 - GDP (Data Source: WDI)")
+        st.header("")
+        
         # Caption graph
-        st.caption('Data Source: World Development Indicators (WDI)')
+        #st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ############################# ROW 2 ###################################
@@ -389,11 +387,7 @@ with col3:
 
     # ### Group data by year
     chart3_data = chart3_data.groupby([chart3_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-    # Subtitle
-    #st.subheader("")
-    st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Population (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-            
+          
     # Configure plot
     fig = px.line(chart3_data,
                     x="Year", 
@@ -413,7 +407,7 @@ with col3:
         yanchor="bottom",
         y=1.01,
         xanchor="left",
-        x=0.8
+        x=-0.12
         ))
     
     # Fix y-axis to zero and add margin
@@ -422,7 +416,13 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
+    # Subtitle
+    #st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Population (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
+    #st.subheader("")
+    
     # Caption graph
+    st.caption("Chart 3 - Population (Data Source: WDI)")
+
     #st.caption('Data Source: World Development Indicators (WDI)')
 
 
@@ -435,11 +435,7 @@ with col3:
 
     # Group data by year
     chart4_data = chart4_data.groupby([chart4_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-    # Subtitle
-    st.subheader("")
-    st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)</div></em>""", unsafe_allow_html=True)
-            
+        
     # Configure plot
     fig = px.line(chart4_data,
                     x="Year", 
@@ -459,7 +455,7 @@ with col3:
         yanchor="bottom",
         y=1.01,
         xanchor="left",
-        x=0.8
+        x=-0.12
         ))
     
     # Fix y-axis to zero and add margin
@@ -467,6 +463,11 @@ with col3:
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
+
+    # Subtitle
+    #st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)</div></em>""", unsafe_allow_html=True)
+    st.caption("Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)")
+    st.subheader("")
 
     # Caption graph
     #st.caption('Data Source: International Monetary Fund (IMF)')
@@ -494,18 +495,13 @@ with col3:
 #                 then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
 #         )
 
-#with col3: 
+#with col1: 
     
 # Get data
 chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
 
 # ### Group data by year
 chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-# Subtitle
-st.subheader("")
-st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Source: WDI, IMF)</div></em>""", unsafe_allow_html=True)
-        
 
 # Configure plot
 fig = px.line(chart5_data,
@@ -522,11 +518,11 @@ fig = px.line(chart5_data,
 
 # Move legend 
 fig.update_layout(legend=dict(
-    # orientation="h",
+    #orientation="h",
     yanchor="bottom",
-    y=-0.5,
+    y=1.10,
     xanchor="left",
-    x=0.01
+    x=0
     ))
 
 # Fix y-axis to zero and add margin
@@ -534,6 +530,11 @@ fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Valu
 
 # Display graph
 st.plotly_chart(fig, use_container_width=True)
+
+# Subtitle
+#st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Sources: WDI, IMF)</div></em>""", unsafe_allow_html=True)
+st.caption("Chart 5 - Annual Growth Rates [%] (Data Sources: WDI, IMF)")
+st.subheader("")
 
 # Caption graph
 #st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
