@@ -409,11 +409,11 @@ with col3:
 
     # Move legend 
     fig.update_layout(legend=dict(
-        # orientation="h",
+        orientation="h",
         yanchor="bottom",
-        y=-0.5,
+        y=1.01,
         xanchor="left",
-        x=0.01
+        x=0.8
         ))
     
     # Fix y-axis to zero and add margin
@@ -455,15 +455,15 @@ with col3:
 
     # Move legend 
     fig.update_layout(legend=dict(
-        # orientation="h",
+        orientation="h",
         yanchor="bottom",
-        y=-0.5,
+        y=1.01,
         xanchor="left",
-        x=0.01
+        x=0.8
         ))
     
     # Fix y-axis to zero and add margin
-    fig.update_yaxes(range = [0, ((max(chart4_data.Value))*1.2)])
+    fig.update_yaxes(range = [0, ((max(chart4_data.Value))*1.5)])
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
