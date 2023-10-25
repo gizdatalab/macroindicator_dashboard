@@ -422,6 +422,7 @@ with col3:
     
     # Caption graph
     st.caption("Chart 3 - Population (Data Source: WDI)")
+    st.header("")
 
     #st.caption('Data Source: World Development Indicators (WDI)')
 
@@ -529,6 +530,7 @@ fig.update_layout(legend=dict(
 fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Value))*1.2)])
 
 # Display graph
+st.header("")
 st.plotly_chart(fig, use_container_width=True)
 
 # Subtitle
