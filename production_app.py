@@ -200,6 +200,7 @@ col1, col2, col3 = st.columns([1,0.02,1])
 with col1:
     
     with col1: 
+
     #### Explanatory text box 1
         st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
                     by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
@@ -327,7 +328,7 @@ st.subheader("So how do people actually manage that their economies grow?")
 st.header("")
 
 # Configure columns
-col1, col2, col3 = st.columns([0.4,0.02,1])
+col1, col2, col3 = st.columns([1,0.02,1])
 
 with col1:
     
@@ -361,7 +362,7 @@ with col1:
     
 with col1:
                 
-    st.markdown("""                <div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
+    st.markdown("""<div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
                 <strong>quality</strong> of 
                 both factors matters as well: If people are better educated and trained they 
                 will, most likely, be able to work more efficient and will consequently produce 
@@ -390,7 +391,7 @@ with col3:
     chart3_data = chart3_data.groupby([chart3_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
     # Subtitle
-    st.subheader("")
+    #st.subheader("")
     st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Population (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
             
     # Configure plot
@@ -429,10 +430,10 @@ with col3:
 
 with col3: 
     
-  # Get data
+    # Get data
     chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
 
-    # ### Group data by year
+    # Group data by year
     chart4_data = chart4_data.groupby([chart4_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
     # Subtitle
@@ -493,46 +494,46 @@ with col3:
 #                 then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
 #         )
 
-with col3: 
+#with col3: 
     
-  # Get data
-    chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
+# Get data
+chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
 
-    # ### Group data by year
-    chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+# ### Group data by year
+chart5_data = chart5_data.groupby([chart5_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
 
-    # Subtitle
-    st.subheader("")
-    st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Source: WDI, IMF)</div></em>""", unsafe_allow_html=True)
-            
+# Subtitle
+st.subheader("")
+st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Source: WDI, IMF)</div></em>""", unsafe_allow_html=True)
+        
 
-    # Configure plot
-    fig = px.line(chart5_data,
-                    x="Year", 
-                    y="Value",   
-                    color='Indicator',
-                    #title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
-                    hover_name="Value",
-                    color_discrete_sequence=px.colors.qualitative.Plotly,
-                    labels={
-                        "Value": "Percentage",
-                    }
-                    )
+# Configure plot
+fig = px.line(chart5_data,
+                x="Year", 
+                y="Value",   
+                color='Indicator',
+                #title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
+                hover_name="Value",
+                color_discrete_sequence=px.colors.qualitative.Plotly,
+                labels={
+                    "Value": "Percentage",
+                }
+                )
 
-    # Move legend 
-    fig.update_layout(legend=dict(
-        # orientation="h",
-        yanchor="bottom",
-        y=-0.5,
-        xanchor="left",
-        x=0.01
-        ))
-    
-    # Fix y-axis to zero and add margin
-    fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Value))*1.2)])
+# Move legend 
+fig.update_layout(legend=dict(
+    # orientation="h",
+    yanchor="bottom",
+    y=-0.5,
+    xanchor="left",
+    x=0.01
+    ))
 
-    # Display graph
-    st.plotly_chart(fig, use_container_width=True)
+# Fix y-axis to zero and add margin
+fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Value))*1.2)])
 
-    # Caption graph
-    #st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
+# Display graph
+st.plotly_chart(fig, use_container_width=True)
+
+# Caption graph
+#st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
