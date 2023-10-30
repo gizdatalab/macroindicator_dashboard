@@ -288,7 +288,7 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        title = 'Chart 2 - GDP',
+                        title = 'Chart 2 - GDP (constant 2017 international $)',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
