@@ -146,7 +146,7 @@ st.sidebar.header("")
 
 st.sidebar.download_button(label="Click here to download data as csv",
                    data=csv, 
-                   file_name='employment_data.xlsx')
+                   file_name='production_data.csv')
 
 st.sidebar.header("")
 
@@ -200,23 +200,24 @@ with col1:
 
     #### Explanatory text box 1
         st.markdown("""<div style="text-align: justify;">The best way to understand GDP is probably
-                    by breaking it down into its components. Let us start with <strong>"Product"</strong>: The GDP measures all final goods and services that 
+                    by breaking it down into its components. Let us start with <strong>Product</strong>: 
+                    The GDP measures all <em>final goods</em> and <em>services</em> that 
                     have been produced within a defined time period (typically a year).  If this year, 
                     someone sells a house that has been build two years ago, it will not be part of 
-                    this year's GDP. Also, if someone resells a car that has been manufactured and that 
-                    she has bought this year it will only be counted once into the GDP since reselling 
-                    is not producing.Examples for <strong>"services"</strong> are a haircut, entertainment, a taxi ride, 
-                    consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
-                    They all have in common that you cannot store them.</div> 
+                    this year's GDP. Also, if someone resells a car that has been both, manufactured 
+                    and bought this year, it will only be counted once 
+                    into GDP since reselling is not producing.</div> 
                     <br>
-                    <div style="text-align: justify;"><strong>"Goods"</strong>, in turn, can be stored as they are tangible things such as food, clothes, books, 
+                    <div style="text-align: justify;">Examples for <strong>services</strong> are a haircut, entertainment, a taxi ride, 
+                    consultancy, a craft activity, renting out an apartment, formal schooling, or health care. 
+                    They all have in common that you cannot store them. <strong>Goods</strong>, in turn, can 
+                    be stored as they are tangible things such as food, clothes, books, 
                     computers, mobiles, machines in general, and even buildings.  What does the term <strong>final</strong> 
                     mean? A car is a final good – but the steel and glass a car manufacturer buys to produce 
                     the car are not final goods. That is: All the goods and services which directly end up 
                     in a product are not final goods. Machines, however, are final goods since they are used 
-                    to produce goods, but do not directly end up in them.</div>  
-                    <br>
-                    <div style="text-align: justify;"><strong>"Domestic"</strong>: Only those final goods and services are part of the GDP that are produced 
+                    to produce goods, but do not directly end up in them. <strong>Domestic</strong>: Only those 
+                    final goods and services are part of the GDP that are produced 
                     in the considered country. Whether a domestic factory belongs to a foreign owner or 
                     a domestic one does not matter - it only matters that the good is produced in the regarded country.</div>""", unsafe_allow_html=True
         )
@@ -243,11 +244,11 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                       # title='Chart 1 - GDP per capita',
+                        title='Chart 1 - GDP per capita (constant 2017 international $)',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
-                        "Value": "US Dollar",
+                        "Value": "US Dollar (constant 2017 international $)",
                     }
                         )
 
@@ -255,9 +256,9 @@ with col3:
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.10,
+            y=-0.4,
             xanchor="left",
-            x=-0.12
+            x=-0.05
             ))
         
         # Fix y-axis to zero and add margin
@@ -268,7 +269,7 @@ with col3:
 
         # Subtitle
         #st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - GDP per capita (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-        st.caption("Chart 1 - GDP per capita (Data Source: WDI)")
+        #st.caption("Chart 1 - GDP per capita (Data Source: WDI)")
         st.header("")
 
         # Caption graph
@@ -287,11 +288,11 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        # title = 'Chart 2 - GDP',
+                        title = 'Chart 2 - GDP',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
-                        "Value": "US Dollar",
+                        "Value": "US Dollar (constant 2017 international $)",
                     }
                         )
 
@@ -299,9 +300,9 @@ with col3:
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.10,
+            y=-0.4,
             xanchor="left",
-            x=-0.12
+            x=-0.05
             ))
         
         # Fix y-axis to zero and add margin
@@ -312,7 +313,7 @@ with col3:
 
         # Subtitle
         #st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - GDP (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-        st.caption("Chart 2 - GDP (Data Source: WDI)")
+        #st.caption("Chart 2 - GDP (Data Source: WDI)")
         st.header("")
         
         # Caption graph
@@ -351,8 +352,7 @@ with col1:
                 <br>
                 <div style="text-align: justify;">The last and third factor of production is <strong>labour</strong>. Labour is provided by people. 
                 That means, if the population is growing, there are more people around who can work. Thus, usually, an economy grows when its population is growing (for more 
-                information on employment, check out our other dashboards).
-                <br>
+                information on employment, check out our other <a href="https://employment-dashboard.streamlit.app/">employment dashboard)</a>).
                 </div>""", unsafe_allow_html=True
         )    
     
@@ -365,14 +365,12 @@ with col1:
                 both factors matters as well: If people are better educated and trained they 
                 will, most likely, be able to work more efficient and will consequently produce 
                 more per hour than before. In this context, one also often refers to the 
-                term “human capital”. What education is to humans, innovation (or science) is 
+                term “human capital”</div>
+                <br>
+                <div style="text-align: justify;">What education is to humans, innovation (or science) is 
                 to capital: If the same number of machines and production processes suddenly 
                 function with a more efficient technology, due to an innovation, then again 
-                production increases – thus, the economy grows.</div>
-                <br>
-                <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
-                and production processes suddenly function with a more efficient technology, due to an innovation, 
-                then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
+                production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
         )
 
 # Configure columns
@@ -393,7 +391,7 @@ with col3:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    #title='Chart 3 - Total Population',
+                    title='Chart 3 - Total Population',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -405,9 +403,9 @@ with col3:
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
-        y=1.01,
+        y=-0.4,
         xanchor="left",
-        x=-0.12
+        x=-0.05
         ))
     
     # Fix y-axis to zero and add margin
@@ -421,7 +419,7 @@ with col3:
     #st.subheader("")
     
     # Caption graph
-    st.caption("Chart 3 - Population (Data Source: WDI)")
+    #st.caption("Chart 3 - Population (Data Source: WDI)")
     st.header("")
 
     #st.caption('Data Source: World Development Indicators (WDI)')
@@ -442,7 +440,7 @@ with col3:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    #title='Chart 4 - Capital stock (in bil. 2011US$)',
+                    title='Chart 4 - Capital stock (in bil. 2011US$)',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -450,13 +448,13 @@ with col3:
                     }
                     )
 
-    # Move legend 
+   # Move legend 
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
-        y=1.01,
+        y=-0.4,
         xanchor="left",
-        x=-0.12
+        x=-0.05
         ))
     
     # Fix y-axis to zero and add margin
@@ -467,7 +465,7 @@ with col3:
 
     # Subtitle
     #st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)</div></em>""", unsafe_allow_html=True)
-    st.caption("Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)")
+    #st.caption("Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)")
     st.subheader("")
 
     # Caption graph
@@ -509,7 +507,7 @@ fig = px.line(chart5_data,
                 x="Year", 
                 y="Value",   
                 color='Indicator',
-                #title="Chart 5 - Your Country's Annual Growth Rates [%]: GDP, Population & Capital",
+                title=f"Chart 5 - {selected_country}'s Annual Growth Rates [%]",
                 hover_name="Value",
                 color_discrete_sequence=px.colors.qualitative.Plotly,
                 labels={
@@ -521,13 +519,24 @@ fig = px.line(chart5_data,
 fig.update_layout(legend=dict(
     #orientation="h",
     yanchor="bottom",
-    y=1.10,
+    y=-0.6,
     xanchor="left",
-    x=0
+    x=-0.05
     ))
 
 # Fix y-axis to zero and add margin
 fig.update_yaxes(range = [((min(chart5_data.Value))*1.2), ((max(chart5_data.Value))*1.2)])
+
+# Update legend names
+newnames = {'Population Growth Rate': 'Population growth rate', 
+            'GDP Growth': 'GDP growth rate', 
+            'Growth rate in total capital (%)': 'Total capital growth rate (%)'}
+
+fig.for_each_trace(lambda t: t.update(name = newnames[t.name],
+                                      legendgroup = newnames[t.name],
+                                      hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])
+                                     )
+                  )
 
 # Display graph
 st.header("")
@@ -535,7 +544,7 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Subtitle
 #st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Sources: WDI, IMF)</div></em>""", unsafe_allow_html=True)
-st.caption("Chart 5 - Annual Growth Rates [%] (Data Sources: WDI, IMF)")
+#st.caption(f"Chart 5 - {selected_country}'s annual Growth Rates [%] (Data Sources: WDI, IMF)")
 st.subheader("")
 
 # Caption graph
