@@ -182,8 +182,17 @@ st.write("""
 with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
-        Add the data sources here
-        """)
+        <ul>
+        <li>World Bank. “Exports of goods and services (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NE.EXP.GNFS.CD.</li>
+        <li>World Bank. “Imports of goods and services (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NE.IMP.GNFS.CD.</li> 
+        <li>World Bank. “Merchandise exports (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/TX.VAL.MRCH.CD.WT.</li> 
+        <li>World Bank. “Service exports (BoP, current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/BX.GSR.NFSV.CD.</li> 
+        <li>World Bank. “Trade (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NE.TRD.GNFS.ZS.</li> 
+        <li>World Bank. “Logistics performance index: Efficiency of customs clearance process (1=low to 5=high).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/LP.LPI.OVRL.XQ.</li> 
+        <li>World Bank. “Logistics performance index: Quality of trade and transport-related infrastructure (1=low to 5=high).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/LP.LPI.INFR.XQ.</li> 
+        <li>World Bank. “Tariff rate, applied, weighted mean, all products (%).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/TM.TAX.MRCH.WM.AR.ZS.</li> 
+        </ul>
+        """,unsafe_allow_html=True)
     
 ############################# ROW 1 ###################################
 

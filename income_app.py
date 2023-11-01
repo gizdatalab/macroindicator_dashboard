@@ -177,8 +177,19 @@ st.write("""
 with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
-        Add the data sources here
-        """)
+        <ul>
+        <li>International Labour Organization. “Labour income share as percent of GDP (%).” ILO Modelled Estimates, International Labour Organization, 2021, ilo.org/shinyapps/bulkexplorer4/?id=LAP_2GDP_NOC_RT_A.</li>  
+        <li>World Bank. “GDP per capita, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD.</li> 
+        <li>World Bank. “GNI per capita, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GNP.PCAP.PP.KD.</li> 
+        <li>World Bank. “Gini index.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.POV.GINI.</li> 
+        <li>World Bank. “Income share held by highest 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.05TH.20.</li> 
+        <li>World Bank. “Income share held by fourth 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.04TH.20.</li> 
+        <li>World Bank. “Income share held by third 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.03RD.20.</li> 
+        <li>World Bank. “Income share held by second 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.02ND.20.</li> 
+        <li>World Bank. “Income share held by lowest 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.FRST.20.</li> 
+        <li>World Bank. “Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.POV.DDAY.</li> 
+        </ul>
+        """,unsafe_allow_html=True)
     
     ############################# ROW 1 ###################################
 

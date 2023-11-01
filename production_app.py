@@ -178,8 +178,15 @@ st.write("""
 with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
-        Add the data sources here
-        """)
+        <ul>
+        <li>World Bank. “GDP, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.MKTP.PP.KD.</li> 
+        <li>World Bank. “GDP per capita, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD.</li> 
+        <li>World Bank. “Population, total.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.</li> 
+        <li>World Bank. “Population growth (annual %).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.GROW.</li> 
+        <li>International Monetary Fund. “Capital stock at constant 2011 national prices (in bil. 2011US$).” IMF Private and Public Capital Stock Dataset (PGCS), International Monetary Fund, 2017, dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/PGCS/A..rnna.?.</li> 
+        <li>International Monetary Fund. “Growth rate in total capital stock (%).” IMF Private and Public Capital Stock Dataset (PGCS), International Monetary Fund, 2017, dataservices.imf.org/REST/SDMX_JSON.svc/CompactData/PGCS/A..rnna_pch.?.</li>
+        </ul> 
+        """,unsafe_allow_html=True)
     
 
 ############################ ROW 1 ###################################

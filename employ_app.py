@@ -180,8 +180,21 @@ st.write("""
 with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
-        Add the data sources here
-        """)
+        <ul>
+        <li>World Bank. “Population, total.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.</li>
+        <li>International Labour Organization. “Population by sex and age (thousands).” ILO – Modelled Estimates, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id=POP_2POP_SEX_AGE_NB_A.</li> 
+        <li>International Labour Organization. “Labour force by sex and age (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EAP_TEAP_SEX_AGE_NB_A.</li>
+        <li>International Labour Organization. “Employment by sex and age (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EMP_TEMP_SEX_AGE_NB_A.</li> 
+        <li>International Labour Organization. “Labour force participation rate by sex and age (%).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EAP_DWAP_SEX_AGE_RT_A.</li> 
+        <li>International Labour Organization. “Unemployment rate by sex and age (%).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= UNE_DEAP_SEX_AGE_RT_A.</li> 
+        <li>World Bank. “Population, female (% of total population).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.FE.ZS.</li> 
+        <li>World Bank. “Population, female.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.FE.IN.</li> 
+        <li>International Labour Organization. “Employment by sex and economic activity (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EMP_TEMP_SEX_ECO_NB_A.</li> 
+        <li>World Bank. “Agriculture, forestry, and fishing, value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.AGR.TOTL.ZS.</li> 
+        <li>World Bank. “Industry (including construction), value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.IND.TOTL.ZS.</li> 
+        <li>World Bank. “Services, value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.SRV.TOTL.ZS.</li> 
+        <li>World Bank. “GDP, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.MKTP.PP.KD.</li> 
+        """,unsafe_allow_html=True)
     
 ############################# ROW 1 ###################################
 
