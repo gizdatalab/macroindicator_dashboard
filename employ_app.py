@@ -336,7 +336,7 @@ with col3:
                         )
         
         # Fix y-axis to always show (100%)
-        fig.update_yaxes(range=[0, 100])
+        fig.update_yaxes(range=[0, 50])
 
         # Move legend 
         fig.update_layout(legend=dict(
