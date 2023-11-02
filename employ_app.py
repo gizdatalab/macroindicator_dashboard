@@ -336,7 +336,7 @@ with col3:
                         )
         
         # Fix y-axis to always show (100%)
-        fig.update_yaxes(range=[0, 50])
+        fig.update_yaxes(range=[0, 100])
 
         # Move legend 
         fig.update_layout(legend=dict(
@@ -385,7 +385,7 @@ with col3:
                 ))
             
             # Fix y-axis to always show (100%)
-            fig.update_yaxes(range=[0, 100])
+            fig.update_yaxes(range=[0, 50])
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
