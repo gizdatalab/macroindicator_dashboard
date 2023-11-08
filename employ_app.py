@@ -679,11 +679,9 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
 
     # Caption graph
     st.caption('Data Source: ILO (for more information see data sources tab above)')
+    st.header("")
 
-    ###### CHARTS
-
-    # Set title 
-    #st.subheader("Employment and GDP Share per Sector")
+ ###### TEXT PIE AND BAR
 
     # Configure columns
     col1, col2, col3 = st.columns([1,0.05,1])
@@ -698,10 +696,26 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
                     tertiary sector, please click on the toggle below. A remaining percentage share of employment
                     has not been classified. This can be seen in the graph under the category "Other".</div>""", unsafe_allow_html=True)
         
+    with col3: 
+
+        # Explanatory text
+        st.markdown(f"""<div style="text-align: justify;"> To get a better picture of the productivity in the different sectors, 
+                    one can see a comparison between Employment Share (%) and GDP Share (%) in the bar chart below. The chart also 
+                    gives an indication of the labour- and capital-intensivity of the three different sectors.</div>""", unsafe_allow_html=True)
+        
+
+### PIE AND BAR CHARTS
+
+    # Configure columns
+    col1, col2, col3 = st.columns([1,0.05,1])
+
+    with col1:
+        
         # Title
         st.subheader("")
         st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares 
                     for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
+        
         st.subheader("")
 
         # Toggle
@@ -730,11 +744,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
 
-            # Title
-            st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Aggregated employment 
-                        shares across the three main sectors</div></b>""", unsafe_allow_html=True)
-
-            
+                    
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
@@ -768,17 +778,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
 
 
     ### BAR CHART
-    
-    with col3: 
 
-        # Explanatory text
-        st.markdown(f"""<div style="text-align: justify;"> To get a better picture of the productivity in the different sectors, 
-                    one can see a comparison between Employment Share (%) and GDP Share (%) in the bar chart below. The chart also 
-                    gives an indication of the labour- and capital-intensivity of the three different sectors.</div>""", unsafe_allow_html=True)
-        
+    with col3:
+
         # Title
-        st.header("")
-        st.header("")
+        st.subheader("")
         st.markdown(f"""<div style="text-align: justify;"><b> Chart 4 - Employment and GDP Shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
         st.header("")
         st.header("")
