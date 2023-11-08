@@ -729,13 +729,16 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             fig_2.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
+
+            # Title
+            st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Aggregated employment 
+                        shares across the three main sectors</div></b>""", unsafe_allow_html=True)
+
             
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
             # Subtitle
-            #st.subheader("")
-            #st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Employment share across the three main sectors (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
             st.caption("(Data Source: ILO (for more information see data sources tab above)")    
         
         # If toggle not activated
@@ -751,6 +754,10 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
             
+            # Title
+            st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares
+                        across different subsectors</div></b>""", unsafe_allow_html=True)
+
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
