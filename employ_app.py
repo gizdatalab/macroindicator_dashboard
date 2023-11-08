@@ -765,8 +765,8 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
             
             # Title
-            st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares
-                        across different subsectors</div></b>""", unsafe_allow_html=True)
+            #st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares
+             #           across different subsectors</div></b>""", unsafe_allow_html=True)
 
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
