@@ -183,7 +183,7 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
         <ul>
-        <li>World Bank. “Exports of goods and services (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NE.EXP.GNFS.CD.</li>
+        <li>World Bank. “Exports of goods and services (current US$).” World Development Indicators, The World Bank Group, 2022, <a>data.worldbank.org/indicator/NE.EXP.GNFS.CD</a>.</li>
         <li>World Bank. “Imports of goods and services (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NE.IMP.GNFS.CD.</li> 
         <li>World Bank. “Merchandise exports (current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/TX.VAL.MRCH.CD.WT.</li> 
         <li>World Bank. “Service exports (BoP, current US$).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/BX.GSR.NFSV.CD.</li> 
@@ -195,61 +195,48 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
         """,unsafe_allow_html=True)
     
 ############################# ROW 1 ###################################
-
 st.header("")
+st.subheader(f"What does {selected_country}’s trade look like? ")
 
-# Display subheading 
-st.subheader(f"Understanding {selected_country}'s Trade Landscape: Goods and Services")
-
-# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
-### GRAPH AND TEXT 1 ###
 
 with col1: 
-
     # Create distance
-    #st.header("")
-
+    st.header("")
     #### Explanatory text box 1
     st.markdown("""<div style="text-align: justify;">
                 Trade is composed of exports and imports of goods and services. 
-                Exports (imports) of goods are goods produced domestically (in a foreign country) 
-                and sold to a foreign country (domestically). Exports (imports) of services are services 
-                provided in one country for a national or resident of a foreign country (the own country). 
-                While trade in goods is rather intuitive, trade in services can be illustrated through the 
-                following examples:
-                <ol type="i"> 
-                <li>Tourism services are typically provided domestically for nationals or residents of a foreign country </li>
+                <ul>
+                <li>Exports of <b>goods</b> are goods produced <i>domestically</i> and sold to <i> a foreign country</i>. </li>
+                <li>Imports of <b>goods</b> are goods produced in <i>a foreign country</i> and sold <i>domestically</i>. </li>
+                <li>Exports of <b>services</b> are services provided <i>domestically</i> for a national or resident of <i>a foreign country</i>.</li> 
+                <li>Similarly, imports of <b>services</b> are services provided in <i>a foreign country</i> for a 
+                national or resident of <i>the domestic country</i>. </li>
+                </ul>
+                While trade in goods is rather intuitive, trade in services has different modes of supply and 
+                can be illustrated through the following examples:                
+                <ol type="i">
+                <li>Tourism services are typically provided domestically for nationals or residents of a foreign country. </li>
                 <li>Telecommunication services are typically provided to nationals or residents in a foreign country through 
                 the foreign subsidiary of a domestic telecommunication company. </li>
                 <li>Professional services such as consulting services can be provided to nationals or residents 
                 in a foreign country both domestically or through the dispatch of domestic staff to the foreign country. </li>
                 </ol>
-                High exports of goods and services are typically seen as a benchmark for success. 
-                However, exports are not an end. Rather, high exports are the mean that allows a country to specialize in 
-                those sectors in which it has a relatively high productivity (comparative advantage) and to purchase and 
-                consume goods and services from abroad.
+                For more details on the differences between goods and services take a look at our 
+                <a href="https://gdp-dashboard.streamlit.app/">production dashboard</a>. 
+                High exports of goods and services are typically seen as a benchmark for success. However, exports are not an end. 
+                Rather, high exports are the mean that allows a country to specialize in those sectors in which it has a relatively 
+                high productivity (comparative advantage) and to purchase and consume goods and services from abroad.
+                A country’s trade performance can be assessed in terms of outcomes and drivers. Outcomes measure how much is traded 
+                and what the structure of trade is. Drivers measure how easy it is to trade and the extent of tariff and non-tariff 
+                barriers. In chart 1, the indicator <i>trade in goods and services</i> measures total exports and respectively imports  
+                in terms of their value in current US-Dollars. In chart 2, total exports can be further broken down into 
+                <i>merchandise exports</i> and <i>exports of services</i>, also in terms of their value in current US-Dollars.
                 </li> </div>""", unsafe_allow_html=True
     )
     
-    #st.header("")
-    
-    #### Graph 1
 
 with col3: 
-    ### Explanatory text box 2
-    st.markdown("""<div style="text-align: justify;">
-                The indicator <i>trade in goods and services</i> measures total exports and respectively imports  in terms of their 
-                value in current US-Dollar.
-                This indicator is further broken down into <i>exports of goods and exports of services</i>, 
-                also in terms of their value in current US-dollar.
-                </div>""", unsafe_allow_html=True
-                )
-
-
-    # Create distance
-    #st.header("")
-
     # Get data
     chart1_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, 
                                     ['Exports of goods and services (current US$)', 
@@ -257,262 +244,264 @@ with col3:
     chart2_data = get_filtered_data(selected_country, selected_start_year, selected_end_year,
                                     ['Merchandise exports (current US$)',
                                     'Service exports (BoP, current US$)'])
-    
-    #  Graphs
-    tab1, tab2 = st.tabs(["Exports and Imports", "Merchandise and service exports"])
-
     # Configure plot
-    with tab1:
-        fig = px.line(chart1_data,
-                        x="Year", 
-                        y="Value", 
-                        color='Indicator',
-                        hover_name="Value",
-                        )
+    fig = px.line(chart1_data,
+                    x="Year", 
+                    y="Value", 
+                    title= "Chart 1 - Exports and imports of goods and services",
+                    color='Indicator',
+                    hover_name="Value",
+                    labels= {
+                        "Value": "current US $"
+                    }
+                    )
         
-        # Move legend 
-        fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.1,
-            xanchor="left",
-            x=0.01,
-            ))
+    # Move legend 
+    fig.update_layout(legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.4,
+        xanchor="left",
+        x=-0.05
+        ))
         
-        # Set yaxis to zero
-        #fig.update_yaxes(rangemode="tozero")
+    # Fix y-axis to always show (100%)
+    fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
 
-        # Fix y-axis to always show (100%)
-        fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
-        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
 
-        # Display graph
-        st.plotly_chart(fig, use_container_width=True)
-
-    with tab2:
-        fig = px.line(chart2_data,
-                        x="Year", 
-                        y="Value", 
-                        color='Indicator',
-                        hover_name="Value",
-                        )
+    fig = px.line(chart2_data,
+                    x="Year", 
+                    y="Value", 
+                    color='Indicator',
+                    title= 'Chart 2 - Merchandise and service exports',
+                    hover_name="Value",
+                    labels={
+                        "Value": "current US $"
+                    }
+                    )
         
-        # Move legend 
-        fig.update_layout(legend=dict(
-            orientation="h",
-            yanchor="bottom",
-            y=1.1,
-            xanchor="left",
-            x=0.01,
-            ))
+    # Move legend 
+    fig.update_layout(legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.4,
+        xanchor="left",
+        x=-0.05
+        ))
         
-        # Set yaxis to zero
-        #fig.update_yaxes(rangemode="tozero")
+    # Fix y-axis to always show (100%)
+    fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
 
-        # Fix y-axis to always show (100%)
-        fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
-        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
-
-        # Display graph
-        st.plotly_chart(fig, use_container_width=True)
+    # Display graph
+    st.plotly_chart(fig, use_container_width=True)
     # Caption graph
-    st.caption('Data Sources: World Development Indicators (WDI)')
-
-# Create distance
-st.header("")
+    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
 
 
 ############################# ROW 2 ###################################
-# Subheader 
-st.subheader("")
+st.header("")
+st.subheader("How can trade openness be assessed?")
 
-### GRAPH AND TEXT 2 ###
-# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1:
-    st.subheader("Assessing Trade Openness: A Crucial Economic Indicator")
-
+    # Create distance
+    st.header("")
     st.markdown(f"""<div style="text-align: justify;">
                 A frequently used indicator for trade openness is the share of trade in gross domestic product (GDP). 
-                Trade is defined as the sum of exports and imports of goods and services. The indicator measures trade 
-                openness as an outcome. Factors such as barriers to trade  (e.g. tariffs, technical barriers to trade  
-                such as labelling or certification requirements), geographic remoteness and the size and structure 
-                of the economy influence how high or low the share of trade in GDP is.
+                As explained above, trade is defined as the sum of exports and imports of goods and services. 
+                The indicator measures trade openness as an outcome. Factors such as barriers to trade (e.g., 
+                tariffs, technical barriers to trade  such as labelling or certification requirements), 
+                geographic remoteness and the size and structure of the economy influence how high or low the 
+                share of trade in GDP is.
                 </div>""", unsafe_allow_html=True
             )
     
 with col3:
     # Get data
     chart3_data = get_filtered_data(selected_country, selected_start_year, selected_end_year, 
-                                    ['Trade (GDP %)'])
+                                    ['Trade (% of GDP)'])
     # Configure plot
     fig = px.line(chart3_data,
                   x="Year",
                   y="Value",
                   color='Indicator',
+                  title='Chart 3 – Trade openness (in trade as % of GDP)',
                   hover_name="Value",
                   labels={
-                      "Value": "Percentage"})
+                      "Value": "Percentage"}
+                      )
         
     # Move legend 
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
-        y=1.1,
+        y=-0.4,
         xanchor="left",
-        x=0.01,
+        x=-0.05
         ))
-        
-        # Set yaxis to zero
-        #fig.update_yaxes(rangemode="tozero")
 
-        # Fix y-axis to always show (100%)
+    # Fix y-axis to always show (100%)
     fig.update_yaxes(range = [0, ((max(chart3_data.Value))*1.2)])
-        #fig.update_layout(yaxis=dict(range=[0,max(chart1_data.Value)*1.5]))
 
-        # Display graph
+    # Display graph
     st.plotly_chart(fig, use_container_width=True)
+    # Caption graph
+    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
 
 ############################# ROW 3 ###################################
-# Subheader 
-st.subheader("")
+st.header("")
+st.subheader("What are insights from the World Bank’s Logistics Performance Index? ")
 
-### GRAPH AND TEXT 2 ###
-
-# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 with col1:
-    st.subheader("Insights from the World Bank's Logistics Performance Index")
+    # Create distance
+    st.header("")
     st.markdown(f"""<div style="text-align: justify;">
-                    <i>The World Bank Logistics Performance Index</i>  ranks countries’ performance on trade logistics, 
-                    based on quantitative data on the performance of the logistics chain as well as responses 
-                    from a survey among logistics operators. The Index is composed of six sub-components, 
-                    of which <i>“Efficiency of customs clearance process”</i> (e.g., speed, simplicity and predictability 
-                    of formalities) and <i>“Quality of trade and transport-related infrastructure”</i>(e.g., ports, railroads, roads, 
-                    information technology) are reported here.
+                The World Bank’s <i>Logistics Performance Index (LPI)</i> ranks countries’ performance on 
+                trade logistics, based on quantitative data on the performance of the logistics chain as 
+                well as responses from a survey among logistics operators. The LPI is composed of six 
+                sub-components, of which <i>“Efficiency of customs clearance process”</i> (e.g., speed, simplicity 
+                and predictability of formalities) and <i>“Quality of trade and transport-related infrastructure”</i>  
+                (e.g., ports, railroads, roads, information technology) are reported here.
                     </div>""", unsafe_allow_html=True
                 )
 
 with col3:
     # Get data
-    chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
+    chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
                                     ['Logistics performance index: Overall (1=low to 5=high)'])
 
-    chart3_data_efficiency = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
+    chart4_data_efficiency = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
                                     ['Logistics performance index: Efficiency of customs clearance process (1=low to 5=high)'])
 
-    chart3_data_quality = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
+    chart4_data_quality = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year,
                                     ['Logistics performance index: Quality of trade and transport-related infrastructure (1=low to 5=high)'])
 
     #Graphs
     tab1, tab2, tab3 = st.tabs(["Overall", "Efficiency", "Quality"])                                
     with tab1:
-        st.markdown("LPI: \nOverall (1=low to 5=high)")
-        fig = px.bar(chart3_data,
+        fig = px.bar(chart4_data,
                     x="Year",
                     y="Value",
                     color='Country',
+                    title='Chart 4.1 – LPI: Overall (1=low to 5=high)',
                     barmode='group',
-                    hover_name='Value')
+                    hover_name='Value',
+                    labels={
+                        'Value':'Score'
+                    })
             
         # Move legend 
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.1,
+            y=-0.4,
             xanchor="left",
-            x=0.01,
+            x=-0.05
             ))
             
             # Display graph
         st.plotly_chart(fig, use_container_width=True)
 
     with tab2:
-        st.markdown("LPI: \nEfficiency of customs clearance process (1=low to 5=high)")
-        fig = px.bar(chart3_data_efficiency,
+        fig = px.bar(chart4_data_efficiency,
                     x="Year",
                     y="Value",
                     color='Country',
+                    title='Chart 4.2 – LPI: Efficiency of customs clearance <br>process (1=low to 5=high)',
                     barmode='group',
                     hover_name="Value",
+                    labels={
+                        'Value':'Score'
+                    }
                     )
             
         # Move legend 
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.1,
+            y=-0.4,
             xanchor="left",
-            x=0.01,
+            x=-0.05
             ))
             
-            # Display graph
+        # Display graph
         st.plotly_chart(fig, use_container_width=True)
 
     with tab3:
-        st.markdown("LPI: \nQuality of trade and transport-related infrastructure (1=low to 5=high)")
-        fig = px.bar(chart3_data_quality,
+        fig = px.bar(chart4_data_quality,
                     x="Year",
                     y="Value",
                     color='Country',
+                    title='Chart 4.3 – LPI: Quality of trade and transport-related <br>infrastructure (1=low to 5=high)',
                     barmode='group',
                     hover_name='Value',
+                    labels={
+                        'Value':'Score'
+                    }                    
                     )
             
-            # Move legend 
+        # Move legend 
         fig.update_layout(legend=dict(
             orientation="h",
             yanchor="bottom",
-            y=1.1,
+            y=-0.4,
             xanchor="left",
-            x=0.01,
+            x=-0.05
             ))
-            
-            # Display graph
+        # Display graph
         st.plotly_chart(fig, use_container_width=True)
 
+        # Caption graph
+        st.caption('Data Sources: World Bank (for more information see data sources tab above)')
+
 ############################# ROW 4 ###################################
-# Subheader 
-st.subheader("")
+st.header("")
+st.subheader("How do tariffs come into play? ")
 
-### GRAPH AND TEXT 2 ###
-
-# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 with col1:
-    st.subheader("The Logic Behind Trade-Weighted Tariffs")
+    # Create distance
+    st.header("")
     st.markdown(f"""<div style="text-align: justify;">
-                The trade-weighted tariff rate is the weighted average tariff on imported goods.
-                The indicator  is calculated by weighting each tariff of an imported good by the total value 
-                (price * amount) of that good. Thereby, it is assured those tariffs on goods that are traded 
-                a lot are weighted more than tariffs on goods that are barely traded. Considered are only those 
-                tariffs that are actually applied by customs authorities . For example, an exporter might avail 
-                to tariffs under WTO(World Trade Organisation) rules or tariffs under the rules of a trade 
-                agreement (if there is one).
+                The <i>trade-weighted tariff rate</i> is the weighted average tariff on imported goods. 
+                The indicator is calculated by weighting each tariff of an imported good by the 
+                total value (price times amount) of that good. Thereby, it is assured that those 
+                tariffs on goods which are traded a lot are weighted more than tariffs on goods 
+                that are barely traded. Considered are only those tariffs that are actually applied 
+                by customs authorities; i.e., an exporter might avail to tariffs under WTO 
+                (World Trade Organisation) rules or tariffs under the rules of a trade agreement (if there is one).
                 </div>""", unsafe_allow_html=True
                 )
 
 with col3:
     # Get data
-    chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
+    chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
                                     ['Tariff rate, applied, weighted mean, all products (%)'])
-    fig = px.line(chart4_data,
+    fig = px.line(chart5_data,
                   x="Year",
                   y="Value",
                   color='Country',
+                  title='Chart 5 – Applied trade-weighted tariff rate, <br>all products (%)',
                   hover_name="Value",
+                  labels={
+                      'Value': 'current US $'
+                    }
                   )
             
-            # Move legend 
+    # Move legend 
     fig.update_layout(legend=dict(
         orientation="h",
         yanchor="bottom",
-        y=1.1,
+        y=-0.4,
         xanchor="left",
-        x=0.01,
+        x=-0.05,
         ))
-
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)  
+    # Caption graph
+    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
