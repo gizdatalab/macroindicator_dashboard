@@ -140,7 +140,7 @@ csv = convert_df(df_employ)
 # Add empty space to create some distance 
 st.sidebar.header("")
 
-st.sidebar.download_button(label="Download full data as csv",
+st.sidebar.download_button(label="Download full data as csv file",
                    data=csv, 
                    file_name='employment_data.csv')
 
@@ -240,7 +240,7 @@ with col3:
                     y="Value", 
                     color='Indicator',
                     hover_name="Value",
-                    title='Chart 1 - Employment and labour force as a share of the population',
+                    #title='Chart 1 - Employment and labour force as a share of the population',
                     labels={
                      "Value": "Number of people",
                  }
@@ -261,14 +261,15 @@ with col3:
     # Fix y-axis to zero and add margin
     fig.update_yaxes(range = [0, ((max(chart1_data.Value))*1.2)])
     
+    #Title 
+    st.header("")
+    st.markdown(f"""<div style="text-align: justify;"><b>Chart 1 - Employment 
+                and labour force as a share of the population</div></b>""", unsafe_allow_html=True)
+
+
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
-
-    # Subtitle
-    #st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - Employment and labour force as a 
-    #            share of the population in {selected_country} (Data Sources: WDI, ILOSTAT)</div></em>""", unsafe_allow_html=True)
-    st.header("")
-
+    
     # Caption graph
     st.caption('Data Sources: World Bank, ILO (for more information see data sources tab above)')
 
@@ -325,7 +326,7 @@ with col3:
                         x="Year", 
                         y="Value", 
                         color='Indicator',
-                        title ="Chart 2 - Unemployment and labour force participation rate",
+                        #title ="Chart 2 - Unemployment and labour force participation rate",
                         hover_name="Value",
                         labels={
                         "Value": "Percentage",
@@ -343,6 +344,10 @@ with col3:
             xanchor="left",
             x=-0.05
             ))
+
+        # Title
+        st.markdown(f"""<div style="text-align: justify;"><b>Chart 2 - Unemployment 
+                    and labour force participation rate in {selected_country}</div></b>""", unsafe_allow_html=True)
 
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
@@ -370,7 +375,7 @@ with col3:
                             x="Year", 
                             y="Value", 
                             color='Country',
-                            title="Chart 2.1 - Comparison of unemployment rates across the selected countries",
+                            #title="Chart 2.1 - Comparison of unemployment rates across the selected countries",
                             hover_name="Value",
                             labels={
                             "Value": "Percentage"
@@ -386,16 +391,16 @@ with col3:
             x=-0.05
             ))
             
-            # Fix y-axis to always show (100%)
-            fig.update_yaxes(range=[0, 50])
+            # Fix y-axis to zero and add margin
+            fig.update_yaxes(range = [0, ((max(chart2_data_unemp.Value))*1.2)])
+
+            # Title
+            st.markdown(f"""<div style="text-align: justify;"><b>Chart 2.1 - Comparison 
+                        of unemployment rates across the selected countries</div></b>""", unsafe_allow_html=True)
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
 
-            # Subtitle
-            #st.markdown(f"""<div style="text-align: justify;"><em>Chart 2.1 - Comparison of unemployment 
-            #            rates across the selected countries (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
-            
              # Caption graph
             st.caption('Data Source: ILO (for more information see data sources tab above)')
             
@@ -415,7 +420,7 @@ with col3:
                             x="Year", 
                             y="Value", 
                             color='Country',
-                            title="Chart 2.2 - Comparison of labour force rates across the selected countries",
+                            #title="Chart 2.2 - Comparison of labour force rates across the selected countries",
                             hover_name="Value",
                             labels={
                             "Value": "Percentage"
@@ -431,23 +436,23 @@ with col3:
             x=-0.05
             ))
             
-            # Fix y-axis to always show (100%)
-            fig.update_yaxes(range=[0, 100])
+            # Fix y-axis to zero and add margin
+            fig.update_yaxes(range = [0, ((max(chart2_data_lf.Value))*1.2)])
+            
+            # Title
+            st.markdown(f"""<div style="text-align: justify;"><b>Chart 2.2 - 
+                        Comparison of labour force rates across the selected countries</div></b>""", unsafe_allow_html=True)
+
 
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
 
-            # Subtitle
-            #st.markdown(f"""<div style="text-align: justify;"><em>Chart 2.2 - Comparison of labour force rates across the selected 
-             #           countries (Data Source: ILOSTAT)</div></em>""", unsafe_allow_html=True)
-            
+    
              # Caption graph
             st.caption('Data Source: ILO (for more information see data sources tab above)')
             
             st.header("")
-    
-#with col3: 
-#st.caption('Data Source: International Labour Organization')
+
 
 
 ############################# ROW 2 ###################################
@@ -520,7 +525,7 @@ try:
 
     # Display table
 
-    # Subtitle
+    # Title
     st.markdown(f"""<div style="text-align: justify;"><b>Table 1 - Women's share</div></b>""", unsafe_allow_html=True)
     st.header("")
     
@@ -695,7 +700,8 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         
         # Title
         st.subheader("")
-        st.markdown(f"""<div style="text-align: justify;"><b>Employment shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
+        st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares 
+                    for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
         st.subheader("")
 
         # Toggle
@@ -764,9 +770,9 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
                     gives an indication of the labour- and capital-intensivity of the three different sectors.</div>""", unsafe_allow_html=True)
         
         # Title
-        st.subheader("")
-        st.subheader("")
-        st.markdown(f"""<div style="text-align: justify;"><b>Employment and GDP Shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
+        st.header("")
+        st.header("")
+        st.markdown(f"""<div style="text-align: justify;"><b> Chart 4 - Employment and GDP Shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
         st.header("")
         st.header("")
 

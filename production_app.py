@@ -144,7 +144,7 @@ csv = convert_df(df_prod)
 # Add empty space to create some distance 
 st.sidebar.header("")
 
-st.sidebar.download_button(label="Click here to download data as csv",
+st.sidebar.download_button(label="Download full data as csv file",
                    data=csv, 
                    file_name='production_data.csv')
 

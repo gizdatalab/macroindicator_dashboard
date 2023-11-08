@@ -339,11 +339,12 @@ with col1:
 
 #### Graph 3
 with col3: 
+
     st.markdown("""<div style="text-align: justify;"> Bearing all this in mind, GNI per capita 
                 still gives you some orientation whether your gross income, and thus somehow your standard of living, is above average 
-                or below.
-            </div>""", unsafe_allow_html=True
+                or below. </div>""", unsafe_allow_html=True
             )
+    
     # Get data
     chart3_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
     
@@ -377,6 +378,7 @@ with col3:
     st.caption('Data Sources: World Development Indicators (WDI)')
 
 ###################### Row 3 ######################
+
 # Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 with col1: 
@@ -419,9 +421,11 @@ with col1:
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
+
 with col3:
     # Subheader for poverty share
     st.subheader("Share of population that lives with less than 6$ per person a day")
+
     # Get data for the poverty share
     chart4_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['Poverty Share'])
     
