@@ -33,6 +33,8 @@ df_income['Year'] = df_income['Year'].astype(int)
 
 # Data Selection 
 
+# Data Selection 
+
 def get_filtered_data(country_selec, start_year_selec, end_year_selec, indicator_selec):
 
     """
@@ -262,10 +264,8 @@ with col3:
 ############### Row 2 ####################
 st.header("")
 st.subheader("Income and production – two sides of the same coin")
-st.header("")
 # Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
-
 with col1: 
     st.header("")
     st.markdown(f"""<div style="text-align: justify;">If the value of the <i>newly produced final goods and services (GDP)</i> flows 
@@ -310,7 +310,7 @@ with col3:
         
         # Move legend 
         fig.update_layout(legend=dict(
-        # orientation="h",
+            orientation="h",
             yanchor="bottom",
             y=-0.4,
             xanchor="left",
@@ -321,8 +321,8 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         st.markdown("""*To allow comparison across time and between countries, 
-                    all $ values are in 2017 international $ reflecting purchasing power 
-                    parity (between countries) and constant prices (across time).*""")
+                    all \$ values are in 2017 international \$ reflecting purchasing power parity 
+                    (between countries) and constant prices (across time).*""")
         
         # Caption graph
         st.caption('Data Source: World Bank (for more information see data sources tab above)')
@@ -346,7 +346,7 @@ with col3:
             
             # Move legend 
             fig.update_layout(legend=dict(
-            # orientation="h",
+                orientation="h",
                 yanchor="bottom",
                 y=-0.4,
                 xanchor="left",
@@ -356,7 +356,9 @@ with col3:
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
 
-            st.markdown("""*To allow comparison across time and between countries, all $ values are in 2017 international $ reflecting purchasing power parity (between countries) and constant prices (across time).*""")
+            st.markdown("""*To allow comparison across time and between countries, 
+                        all \$ values are in 2017 international \$ reflecting purchasing power parity 
+                        (between countries) and constant prices (across time).*""")
 
             # Caption graph
             st.caption('Data Source: World Bank (for more information see data sources tab above)')
@@ -379,7 +381,7 @@ with col3:
             
             # Move legend 
             fig.update_layout(legend=dict(
-            # orientation="h",
+                orientation="h",
                 yanchor="bottom",
                 y=-0.4,
                 xanchor="left",
@@ -389,8 +391,9 @@ with col3:
             # Display graph
             st.plotly_chart(fig, use_container_width=True)
 
-            st.markdown("""*To allow comparison across time and between countries, all $ values are in 2017 
-                        international $ reflecting purchasing power parity (between countries) and constant prices (across time).*""")
+            st.markdown("""*To allow comparison across time and between countries, all \$ values are in 2017 
+                        international \$ reflecting purchasing power parity (between countries) 
+                        and constant prices (across time).*""")
 
             # Caption graph
             st.caption('Data Source: World Bank (for more information see data sources tab above)')
@@ -418,13 +421,8 @@ with col1:
     
 #### Graph 3
 with col3: 
-    st.markdown("""<div style="text-align: justify;"> Bearing all this in mind, GNI per capita 
-                still gives you some orientation whether your gross income, and thus somehow your standard of living, is above average 
-                or below.
-            </div>""", unsafe_allow_html=True
-            )
     # Get data
-    chart3_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
+    chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Gini index'])
     
     ### Group data by year
     chart3_data = chart3_data.groupby(['Indicator'],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,['Year'])
@@ -441,7 +439,7 @@ with col3:
 
     # Move legend 
     fig.update_layout(legend=dict(
-       # orientation="h",
+        orientation="h",
         yanchor="bottom",
         y=-0.4,
         xanchor="left",
@@ -459,64 +457,82 @@ with col3:
 
 ###################### Row 3 ######################
 # Configure columns
+#col1, col2, col3 = st.columns([1,0.05,1])
+
+#with col1:
+st.header("")
+#### Explanatory text box 4
+st.markdown("""<div style="text-align: justify;"> What the Gini Index measures can alternatively be illustrated by ranking a society by 
+            its income and showing how income is allocated to <i>five</i> citizen groups of <i>equal size</i>. 
+            The result of this approach is presented in chart 4. What does it say? That (in most countries) 
+            the “upper 20%” of the population receives an over-proportional share of the generated income. 
+            Can 20% of a society work that hard that they actually produce and should therefore gain sometimes 
+            up to 50% of the total income created by that society? Consequently, can the “lowest 20%” of a society 
+            work so little that their group should receive only around 5% of GNI? Chart 3 approximates what these 
+            relative values are in actual annual gross income in <a href="https://en.wikipedia.org/wiki/International_dollar"> 2017 international $</a>. 
+            </div>""", unsafe_allow_html=True
+            ) 
+#with col3:
+# Get data
+chart4_data =  get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
+                                        ['Income share held by lowest 20%',
+                                        'Income share held by fourth 20%',
+                                        'Income share held by third 20%',
+                                        'Income share held by second 20%',
+                                        'Income share held by highest 20%', 
+                                        ])
+### Group data by year
+chart4_data = chart4_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
+
+# Configure plot
+fig = px.bar(chart4_data,
+                x="Year", 
+                y="Value",
+                color='Indicator',
+                facet_col='Country',
+                title='Chart 4 – Income shares of GNI',
+                facet_col_wrap=2,
+                hover_name="Country",
+                labels={
+                    'Value':'Percentage'
+                }
+                )
+
+# Fix y-axis to always show (100%)
+#fig.update_yaxes(matches='y')
+
+# Update facet_col settings for better display
+#fig.update_xaxes(matches='x')
+
+# Move legend 
+fig.update_layout(legend=dict(
+        orientation="h",
+        yanchor="bottom",
+        y=-0.4,
+        xanchor="left",
+        x=-0.05
+        ),
+        height=600)
+
+# Display graph
+st.plotly_chart(fig, use_container_width=True)
+# Caption graph
+st.caption('Data Source: World Bank (for more information see data sources tab above)')
+
+
+# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1:
     st.header("")
-    #### Explanatory text box 4
-    st.markdown("""<div style="text-align: justify;"> What the Gini Index measures can alternatively be illustrated by ranking a society by 
-                its income and showing how income is allocated to <i>five</i> citizen groups of <i>equal size</i>. 
-                The result of this approach is presented in chart 4. What does it say? That (in most countries) 
-                the “upper 20%” of the population receives an over-proportional share of the generated income. 
-                Can 20% of a society work that hard that they actually produce and should therefore gain sometimes 
-                up to 50% of the total income created by that society? Consequently, can the “lowest 20%” of a society 
-                work so little that their group should receive only around 5% of GNI? Chart 3 approximates what these 
-                relative values are in actual annual gross income in <a href="https://en.wikipedia.org/wiki/International_dollar"> 2017 international $</a>. 
+    st.markdown("""<div style="text-align: justify;"> Let us last focus on those that have the lowest income in society. 
+                Chart 5 presents the percentage of the population living from less than 2.15 <i>2017</i> international $ per day 
+                (i.e., an <i>annual</i> income of 785 $ <i>after</i> taxes). . 
                 </div>""", unsafe_allow_html=True
-                ) 
+                )
+
+
 with col3:
-    # Get data
-    chart4_data =  get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, 
-                                          ['Income share held by lowest 20%',
-                                           'Income share held by fourth 20%',
-                                           'Income share held by third 20%',
-                                           'Income share held by second 20%',
-                                           'Income share held by highest 20%', 
-                                           ])
-    ### Group data by year
-    chart4_data = chart4_data.groupby([chart1_data.Indicator],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,'Year')
-
-    # Configure plot
-    fig = px.bar(chart4_data,
-                  x="Year", 
-                  y="Value",
-                  color='Indicator',
-                  facet_col='Country',
-                  title='Chart 4 – Income shares of GNI',
-                  facet_col_wrap=2,
-                  hover_name="Country",
-                  labels={
-                      'Value':'Percentage'
-                  }
-                  )
-    
-    # Fix y-axis to always show (100%)
-    fig.update_yaxes(range=[0, 100])
-
-    # Move legend 
-    fig.update_layout(legend=dict(
-            #orientation="h",
-            yanchor="bottom",
-            y=-0.7,
-            xanchor="left",
-            x=-0.05
-            ))
-
-    # Display graph
-    st.plotly_chart(fig, use_container_width=True)
-with col3:
-    # Subheader for poverty share
-    st.subheader("Share of population that lives with less than 6$ per person a day")
     # Get data for the poverty share
     chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Poverty Share'])
     
@@ -527,9 +543,8 @@ with col3:
     fig = px.line(chart5_data,
                     x="Year", 
                     y="Value",   
-                    color='Indicator',
+                    color='Country',
                     title='Chart 5 – Share of population that lives with less than 2.15$ per person a day',
-                    line_group='Country', 
                     hover_name="Country",
                     labels={
                         'Value':'Percentage'
@@ -538,7 +553,7 @@ with col3:
 
     # Move legend 
     fig.update_layout(legend=dict(
-       # orientation="h",
+        orientation="h",
         yanchor="bottom",
         y=-0.4,
         xanchor="left",
