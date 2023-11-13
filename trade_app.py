@@ -297,7 +297,7 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
     # Caption graph
-    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
+    st.caption('Data Source: World Bank (for more information see data sources tab above)')
 
 
 ############################# ROW 2 ###################################
@@ -349,7 +349,7 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
     # Caption graph
-    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
+    st.caption('Data Source: World Bank (for more information see data sources tab above)')
 
 ############################# ROW 3 ###################################
 st.header("")
@@ -405,6 +405,9 @@ with col3:
             
             # Display graph
         st.plotly_chart(fig, use_container_width=True)
+        # Caption graph
+        st.caption('Data Source: World Bank (for more information see data sources tab above)')
+
 
     with tab2:
         fig = px.bar(chart4_data_efficiency,
@@ -430,6 +433,8 @@ with col3:
             
         # Display graph
         st.plotly_chart(fig, use_container_width=True)
+        # Caption graph
+        st.caption('Data Source: World Bank (for more information see data sources tab above)')
 
     with tab3:
         fig = px.bar(chart4_data_quality,
@@ -456,7 +461,7 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         # Caption graph
-        st.caption('Data Sources: World Bank (for more information see data sources tab above)')
+        st.caption('Data Source: World Bank (for more information see data sources tab above)')
 
 ############################# ROW 4 ###################################
 st.header("")
@@ -504,4 +509,4 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)  
     # Caption graph
-    st.caption('Data Sources: World Bank (for more information see data sources tab above)')
+    st.caption('Data Source: World Bank (for more information see data sources tab above)')
