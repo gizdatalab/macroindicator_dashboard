@@ -417,8 +417,14 @@ with col1:
                 )
     
 #### Graph 3
-with col3:
-    chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Gini index'])
+with col3: 
+    st.markdown("""<div style="text-align: justify;"> Bearing all this in mind, GNI per capita 
+                still gives you some orientation whether your gross income, and thus somehow your standard of living, is above average 
+                or below.
+            </div>""", unsafe_allow_html=True
+            )
+    # Get data
+    chart3_data = get_filtered_data(selected_country, selected_peer, selected_start_year, selected_end_year, ['GDP per capita', 'GNI per capita'])
     
     ### Group data by year
     chart3_data = chart3_data.groupby(['Indicator'],group_keys=False,sort=False).apply(pd.DataFrame.sort_values,['Year'])
@@ -451,6 +457,8 @@ with col3:
     # Caption graph
     st.caption('Data Source: World Bank (for more information see data sources tab above)')
 
+###################### Row 3 ######################
+# Configure columns
 col1, col2, col3 = st.columns([1,0.05,1])
 
 with col1:
@@ -506,18 +514,9 @@ with col3:
 
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
-
-col1, col2, col3 = st.columns([1,0.05,1])
-with col1:
-    st.header("")
-    #### Explanatory text box 4
-    st.markdown("""<div style="text-align: justify;"> Let us last focus on those that have the lowest income in 
-                society. Chart 5 presents the percentage of the population living from less than 2.15 <i>2017</i>
-                international $ per day   (i.e., an <i>annual</i> income of 785 $ <i>after</i> taxes). 
-                </div>""", unsafe_allow_html=True
-                ) 
-    
 with col3:
+    # Subheader for poverty share
+    st.subheader("Share of population that lives with less than 6$ per person a day")
     # Get data for the poverty share
     chart5_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Poverty Share'])
     
