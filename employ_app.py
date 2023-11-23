@@ -600,7 +600,7 @@ table2_featureMap = {'Employment Agriculture; forestry and fishing': 'Primary',
                     'Employment Activities of households as employers; undifferentiated goods- and services-producing activities of households for own use': 'Secondary',
                     'Employment Activities of extraterritorial organizations and bodies': 'Tertiary',
                     'Employment Not elsewhere classified': 'Other'
-                    }             
+                    }                     
 
 table2_data = get_filtered_data(selected_country, selected_end_year, selected_end_year, table2_featureMap.keys())
 
@@ -738,6 +738,11 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             fig_2 = px.pie(table2_agg,
                             values="Employment Share (%)",
                             #title=f"Aggregated employment shares for {selected_country} in {selected_end_year}",
+                            color = ['Primary', 'Secondary', 'Tertiary', 'Other'],
+                            color_discrete_map={'Primary': '#ef3c2d',
+                                                'Secondary': '#3a0ca3',
+                                                'Tertiary': '#4895ef',
+                                                'Other': 'grey'},
                             names="Sector")
                         
             fig_2.update_layout(margin=dict(t=0, b=0, l=0, r=0))
@@ -749,7 +754,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             st.plotly_chart(fig_2, use_container_width=True)
 
             # Subtitle
-            st.caption("(Data Source: ILO (for more information see data sources tab above)")    
+            st.caption("Data Source: ILO (for more information see data sources tab above)")    
         
         # If toggle not activated
         else:
@@ -757,17 +762,37 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
             # Configure detailed pie chart
             fig_2 = px.pie(table2,
                         values="Employment Share (%)",
-                        #title=f"Employment shares across different subsectors for {selected_country} in {selected_end_year}",
-                        names="Sub Sector")
+                        names="Sub Sector",
+                        color_discrete_map={
+                            'Agriculture; forestry and fishing': '#033270',
+                            'Mining and quarrying': '#1368aa',
+                            'Manufacturing': '#4091c9',
+                            'Electricity; gas; steam and air conditioning supply': '#f29479',
+                            'Water supply; sewerage, waste management and remediation activities': '#fedfd4',
+                            'Construction': '#9dcee2',
+                            'Wholesale and retail trade; repair of motor vehicles and motorcycles': '#033270', 
+                            'Transportation and storage': '#ef3c2d',
+                            'Accomodation and food service activities': '#cb1b16',
+                            'Information and communication': '#65010c',
+                            'Financial and insurance activities': '#e66063',
+                            'Real estate activities': '#e66063',
+                            'Professional, scientific and technical activities': '#ec8385',
+                            'Administrative and support service activities': '#f1a7a9',
+                            'Public administration and defence; compulsory social security': '#e66063',
+                            'Education': '#bbdefb',
+                            'Human health and social work activities': '#90caf6',
+                            'Arts, entertainment and recreation': '#64b5f2',
+                            'Other service activities': '#42a5f5',
+                            'Activities of households as employers; undifferentiated goods- and services-producing activities of households for own use': '#1e88e5',
+                            'Activities of extraterritorial organizations and bodies': '#f26a4f',
+                            'Not elsewhere classified': '#0d47a1',
+                            'Other Sectors': 'd3d3d3'}, 
+                        color = (table2["Sub Sector"]))
             
             fig_2.update_layout(margin=dict(t=0, b=0, l=0, r=0))
             fig_2.update(layout_showlegend=False)
             fig_2.update_traces(textposition='inside', textinfo='percent+label')
             
-            # Title
-            #st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Employment shares
-             #           across different subsectors</div></b>""", unsafe_allow_html=True)
-
             # Display graph
             st.plotly_chart(fig_2, use_container_width=True)
 
@@ -783,7 +808,7 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
 
         # Title
         st.subheader("")
-        st.markdown(f"""<div style="text-align: justify;"><b> Chart 4 - Employment and GDP Shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
+        st.markdown(f"""<div style="text-align: justify;"><b> Chart 4 - Employment and GDP shares for {selected_country} in {selected_end_year}</div></b>""", unsafe_allow_html=True)
         st.header("")
         st.header("")
 
@@ -823,5 +848,5 @@ if sum(table2['Employment Share (%)'] == 'nan') < (len(table2['Employment Share 
         #st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Employment vs GDP Share (Data Sources: WDI, ILOSTAT)</div></em>""", unsafe_allow_html=True)
         st.caption("Data Sources: World Bank, ILO (for more information see data sources tab above)")
 else: 
-    with col1:
+    #with col1:
         st.error("Data for this year is not available. Try adjusting the selection on the side.")

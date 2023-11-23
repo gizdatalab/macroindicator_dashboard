@@ -240,6 +240,10 @@ with col3:
 
     with tab1: 
 
+        # Title
+        st.subheader("")
+        st.markdown(f"""<div style="text-align: justify;"><b>Chart 1 - GDP per capita for {selected_country}</div></b>""", unsafe_allow_html=True)
+
         # Get data
         chart1_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP per capita'])
 
@@ -251,7 +255,7 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        title='Chart 1 - GDP per capita (constant 2017 international $)',
+                        #title='Chart 1 - GDP per capita (constant 2017 international $)',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
@@ -275,14 +279,17 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         # Subtitle
-        #st.markdown(f"""<div style="text-align: justify;"><em>Chart 1 - GDP per capita (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-        #st.caption("Chart 1 - GDP per capita (Data Source: WDI)")
+        st.caption("Data Source: World Bank (for more information see data sources tab above)")
         st.header("")
 
         # Caption graph
         #st.caption('Data Sources: World Development Indicators (WDI)')
     
     with tab2: 
+        
+        # Title
+        st.subheader("")
+        st.markdown(f"""<div style="text-align: justify;"><b>Chart 2 - GDP for {selected_country}</div></b>""", unsafe_allow_html=True)
         
         # Get data
         chart2_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['GDP'])
@@ -295,7 +302,7 @@ with col3:
                         x="Year", 
                         y="Value",   
                         color='Country',
-                        title = 'Chart 2 - GDP (constant 2017 international $)',
+                        #title = 'Chart 2 - GDP (constant 2017 international $)',
                         hover_name="Value",
                         color_discrete_sequence=px.colors.qualitative.Plotly,
                         labels={
@@ -319,8 +326,7 @@ with col3:
         st.plotly_chart(fig, use_container_width=True)
 
         # Subtitle
-        #st.markdown(f"""<div style="text-align: justify;"><em>Chart 2 - GDP (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-        #st.caption("Chart 2 - GDP (Data Source: WDI)")
+        st.caption("Data Source: World Bank (for more information see data sources tab above)")
         st.header("")
         
         # Caption graph
@@ -380,14 +386,15 @@ with col1:
                 production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
         )
 
-# Configure columns
-#col1, col2, col3 = st.columns([1,1,1])
 
 ### Chart Population ###
 
 with col3: 
+
+    # Title
+    st.markdown(f"""<div style="text-align: justify;"><b>Chart 3 - Total Population of {selected_country}</div></b>""", unsafe_allow_html=True)
     
-  # Get data
+    # Get data
     chart3_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Total population'])
 
     # ### Group data by year
@@ -398,7 +405,7 @@ with col3:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    title='Chart 3 - Total Population',
+                    #title='Chart 3 - Total Population',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
@@ -421,20 +428,17 @@ with col3:
     # Display graph
     st.plotly_chart(fig, use_container_width=True)
 
-    # Subtitle
-    #st.markdown(f"""<div style="text-align: justify;"><em>Chart 3 - Population (Data Source: WDI)</div></em>""", unsafe_allow_html=True)
-    #st.subheader("")
-    
     # Caption graph
-    #st.caption("Chart 3 - Population (Data Source: WDI)")
+    st.caption("Data Source: World Bank (for more information see data sources tab above)")
     st.header("")
-
-    #st.caption('Data Source: World Development Indicators (WDI)')
 
 
 ### Chart Capital ###
 
-with col3: 
+with col3:
+
+    # Title
+    st.markdown(f"""<div style="text-align: justify;"><b>Chart 4 - Capital stock in {selected_country}</div></b>""", unsafe_allow_html=True) 
     
     # Get data
     chart4_data = get_filtered_data([selected_country] + selected_peer, selected_start_year, selected_end_year, ['Capital stock (in bil. 2011US$)'])
@@ -447,11 +451,10 @@ with col3:
                     x="Year", 
                     y="Value",   
                     color='Country',
-                    title='Chart 4 - Capital stock (in bil. 2011US$)',
                     hover_name="Value",
                     color_discrete_sequence=px.colors.qualitative.Plotly,
                     labels={
-                        "Value": "US Dollar",
+                        "Value": "US Dollar (in bil. 2011US$)",
                     }
                     )
 
@@ -471,38 +474,15 @@ with col3:
     st.plotly_chart(fig, use_container_width=True)
 
     # Subtitle
-    #st.markdown(f"""<div style="text-align: justify;"><em>Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)</div></em>""", unsafe_allow_html=True)
-    #st.caption("Chart 4 - Capital stock (in bil. 2011US$) (Data Source: IMF)")
+    st.caption("Data Source: IMF (for more information see data sources tab above)")
     st.subheader("")
-
-    # Caption graph
-    #st.caption('Data Source: International Monetary Fund (IMF)')
 
 
 ### Chart Annual Growth Rates ###
 
-#col1, col2, col3 = st.columns([0.4, 0.02, 1])
-
-# Text
-# with col1:
-                
-#     st.markdown("""<div style="text-align: justify;">Besides the pure quantity of people and capital items around, the 
-#                 <strong>quality</strong> of 
-#                 both factors matters as well: If people are better educated and trained they 
-#                 will, most likely, be able to work more efficient and will consequently produce 
-#                 more per hour than before. In this context, one also often refers to the 
-#                 term “human capital”. What education is to humans, innovation (or science) is 
-#                 to capital: If the same number of machines and production processes suddenly 
-#                 function with a more efficient technology, due to an innovation, then again 
-#                 production increases – thus, the economy grows.</div>
-#                 <br>
-#                 <div style="text-align: justify;">What education is to humans, innovation (or science) is to capital: If the same number of machines 
-#                 and production processes suddenly function with a more efficient technology, due to an innovation, 
-#                 then again production increases – thus, the economy grows.</div>""", unsafe_allow_html=True
-#         )
-
-#with col1: 
-    
+# Title
+st.markdown(f"""<div style="text-align: justify;"><b>Chart 5 - {selected_country}'s Annual Growth Rates [%]</div></b>""", unsafe_allow_html=True) 
+  
 # Get data
 chart5_data = get_filtered_data([selected_country], selected_start_year, selected_end_year, ['Population Growth Rate', 'GDP Growth', 'Growth rate in total capital (%)'])
 
@@ -514,7 +494,7 @@ fig = px.line(chart5_data,
                 x="Year", 
                 y="Value",   
                 color='Indicator',
-                title=f"Chart 5 - {selected_country}'s Annual Growth Rates [%]",
+                #title=f"Chart 5 - {selected_country}'s Annual Growth Rates [%]",
                 hover_name="Value",
                 color_discrete_sequence=px.colors.qualitative.Plotly,
                 labels={
@@ -544,15 +524,18 @@ fig.for_each_trace(lambda t: t.update(name = newnames[t.name],
                                       hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])
                                      )
                   )
+# Fix y-axis to zero and add margin
+if (min(chart5_data.Value)) < 0:
+    fig.update_yaxes(range = [((min(chart5_data.Value)) - 5), ((max(chart5_data.Value)) + 5)])
+else:
+    fig.update_yaxes(range = [((min(chart5_data.Value)) + 5), ((max(chart5_data.Value)) + 5)])
+
+
 
 # Display graph
 st.header("")
 st.plotly_chart(fig, use_container_width=True)
 
 # Subtitle
-#st.markdown(f"""<div style="text-align: justify;"><em>Chart 5 - {selected_country}'s Annual Growth Rates [%] (Data Sources: WDI, IMF)</div></em>""", unsafe_allow_html=True)
-#st.caption(f"Chart 5 - {selected_country}'s annual Growth Rates [%] (Data Sources: WDI, IMF)")
+st.caption(f"Data Sources: World Bank, IMF (for more information see data sources tab above)")
 st.subheader("")
-
-# Caption graph
-#st.caption('Data Sources: World Development Indicators (WDI), International Monetary Fund (IMF)')
