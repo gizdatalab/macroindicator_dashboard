@@ -149,7 +149,7 @@ csv = convert_df(df_trade)
 # Add empty space to create some distance 
 st.sidebar.header("")
 
-st.sidebar.download_button(label="Download full data as csv",
+st.sidebar.download_button(label="Download full data as csv file",
                    data=csv, 
                    file_name='trade_data.csv')
 
