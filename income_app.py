@@ -201,9 +201,9 @@ with col1:
     # Create distance 
     st.header("")
     ### Explanatory text box 1
-    st.markdown("""<div style="text-align: justify;">Considering the amount of goods and services produced 
-                every year (GDP), one might start to ask the questions: <i>Who buys all these products?</i> 
-                And where actually <i>do these people get all the money from?</i> To answer these questions just 
+    st.markdown("""<div style="text-align: justify;">Considering <a href="https://gdp-dashboard.streamlit.app/">the amount of goods and services produced 
+                every year (GDP)</a>, one might start to ask the questions: <i>Who buys all these products?</i> 
+                <i>And where actually do these people get all the money from?</i> To answer these questions just 
                 think about what the companies are doing with the money they earn by selling newly produced 
                 products: They use it either
                 <ol type="i">
@@ -213,7 +213,8 @@ with col1:
                 These other costs (iii) are in turn the earnings of supplying companies 
                 which again distribute their earnings in the ways (i)-(iii). However, following the supply chain 
                 to its very end, all earnings sooner or later flow as (i) capital share or (ii) labour share to 
-                households. Graph 1 shows estimates of these two shares.</div>""", unsafe_allow_html=True
+                <i>households</i>. Graph 1 shows estimates of whether the value of the annual production of a country (GDP) 
+                either flows to owners and lenders (capital share) or to employees (labour share).</div>""", unsafe_allow_html=True
                 )
     
 
@@ -304,7 +305,7 @@ with col3:
                         y="Value",   
                         color='Indicator',
                         title='Chart 2.1 – GDP per capita and GNI per capita',
-                        labels={'Value': 'PPP current international $'},
+                        labels={'Value': '2017 international $'},
                         hover_name="Country",
                         )
         
@@ -340,7 +341,7 @@ with col3:
                             y="Value",   
                             color='Country',
                             title='Chart 2.2 – Comparison of GDP per capita across the selected countries',
-                            labels={'Value': 'PPP current international $'},
+                            labels={'Value': '2017 international $'},
                             hover_name="Country",
                             )
             
@@ -375,7 +376,7 @@ with col3:
                             y="Value",   
                             color='Country',
                             title='Chart 2.3 – Comparison of GNI per capita across the selected countries',
-                            labels={'Value': 'PPP current international $'},
+                            labels={'Value': '2017 international $'},
                             hover_name="Country",
                             )
             
@@ -468,8 +469,7 @@ st.markdown("""<div style="text-align: justify;"> What the Gini Index measures c
             the “upper 20%” of the population receives an over-proportional share of the generated income. 
             Can 20% of a society work that hard that they actually produce and should therefore gain sometimes 
             up to 50% of the total income created by that society? Consequently, can the “lowest 20%” of a society 
-            work so little that their group should receive only around 5% of GNI? Chart 3 approximates what these 
-            relative values are in actual annual gross income in <a href="https://en.wikipedia.org/wiki/International_dollar"> 2017 international $</a>. 
+            work so little that their group should receive sometimes only around 5% of GNI?  
             </div>""", unsafe_allow_html=True
             ) 
 #with col3:
@@ -527,7 +527,10 @@ with col1:
     st.header("")
     st.markdown("""<div style="text-align: justify;"> Let us last focus on those that have the lowest income in society. 
                 Chart 5 presents the percentage of the population living from less than 2.15 <i>2017</i> international $ per day 
-                (i.e., an <i>annual</i> income of 785 $ <i>after</i> taxes). . 
+                (i.e., an <i>annual</i> income of 785 $ <i>after</i> taxes). It is worthwhile to notice that worldwide, this share 
+                decreased within 30 years (1989-2019) from 38,4% to 9%. However, if you consider the higher poverty line of 6.85 
+                international $ per day (i.e., an annual income of 2,500$ after taxes), still 47% of the world population lived 
+                beneath this line in 2019. 
                 </div>""", unsafe_allow_html=True
                 )
 
