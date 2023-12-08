@@ -176,19 +176,16 @@ with st.expander("ℹ️ - About the data sources", expanded=False):
     st.write(
         """
         <ul>
-        <li>World Bank. “Population, total.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.</li>
-        <li>International Labour Organization. “Population by sex and age (thousands).” ILO – Modelled Estimates, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id=POP_2POP_SEX_AGE_NB_A.</li> 
-        <li>International Labour Organization. “Labour force by sex and age (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EAP_TEAP_SEX_AGE_NB_A.</li>
-        <li>International Labour Organization. “Employment by sex and age (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EMP_TEMP_SEX_AGE_NB_A.</li> 
-        <li>International Labour Organization. “Labour force participation rate by sex and age (%).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EAP_DWAP_SEX_AGE_RT_A.</li> 
-        <li>International Labour Organization. “Unemployment rate by sex and age (%).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= UNE_DEAP_SEX_AGE_RT_A.</li> 
-        <li>World Bank. “Population, female (% of total population).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.FE.ZS.</li> 
-        <li>World Bank. “Population, female.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SP.POP.TOTL.FE.IN.</li> 
-        <li>International Labour Organization. “Employment by sex and economic activity (thousands).” LFS – Labour Force Survey, International Labour Organization, 2022, ilo.org/shinyapps/bulkexplorer4/?id= EMP_TEMP_SEX_ECO_NB_A.</li> 
-        <li>World Bank. “Agriculture, forestry, and fishing, value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.AGR.TOTL.ZS.</li> 
-        <li>World Bank. “Industry (including construction), value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.IND.TOTL.ZS.</li> 
-        <li>World Bank. “Services, value added (% of GDP).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NV.SRV.TOTL.ZS.</li> 
-        <li>World Bank. “GDP, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.MKTP.PP.KD.</li> 
+        <li>International Labour Organization. “Labour income share as percent of GDP (%).” ILO Modelled Estimates, International Labour Organization, 2021, ilo.org/shinyapps/bulkexplorer4/?id=LAP_2GDP_NOC_RT_A.</li>  
+        <li>World Bank. “GDP per capita, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GDP.PCAP.PP.KD.</li> 
+        <li>World Bank. “GNI per capita, PPP (constant 2017 international $).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/NY.GNP.PCAP.PP.KD.</li>  
+        <li>World Bank. “Gini index.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.POV.GINI.</li>  
+        <li>World Bank. “Income share held by highest 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.05TH.20.</li>  
+        <li>World Bank. “Income share held by fourth 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.04TH.20.</li>  
+        <li>World Bank. “Income share held by third 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.03RD.20.</li>  
+        <li>World Bank. “Income share held by second 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.02ND.20.</li>  
+        <li>World Bank. “Income share held by lowest 20%.” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.DST.FRST.20.</li>  
+        <li>World Bank. “Poverty headcount ratio at $2.15 a day (2017 PPP) (% of population).” World Development Indicators, The World Bank Group, 2022, data.worldbank.org/indicator/SI.POV.DDAY.</li>
         """, unsafe_allow_html=True)
     
 ############################# ROW 1 ###################################
