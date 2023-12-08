@@ -106,8 +106,7 @@ selected_country = st.sidebar.selectbox(
     )
 
 # DESCRIPTION REGIONS/PEER COUNTRIES
-st.sidebar.caption("""If you want to compare the values of the chosen country
-                   to one or more peer countries, please make a selection below.""")
+st.sidebar.caption("""If you want to compare the values of the chosen country to peer countries, please make a selection below.""")
 
 # PEER COUNTRY INPUT WIDGET
 selected_peer = st.sidebar.multiselect(
